@@ -1,0 +1,191 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="yio.io.sifaapp.fragment.NuevoClienteFragment">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorwhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:hint="@string/customer.form.names"
+                    android:background="@drawable/mybotton2"
+                    android:id="@+id/editname" />
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:hint="@string/customer.form.lastname"
+                    android:background="@drawable/mybotton2"
+                    android:id="@+id/editlastname" />
+
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="5dp"
+                    android:hint="@string/customer.form.CID"
+                    android:background="@drawable/mybotton2"
+                    android:id="@+id/editcid" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginBottom="5dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Seleccionar genero"
+                    android:textColor="@color/colorPurple"
+                    android:id="@+id/textView2" />
+
+                <RadioGroup
+                    android:id="@+id/generoradiogroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:checked="true"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/customer.form.genero.male"
+                        android:id="@+id/male" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/customer.form.genero.female"
+                        android:id="@+id/female" />
+
+                </RadioGroup>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:hint="@string/customer.form.phone"
+                    android:background="@drawable/mybotton2"
+                    android:id="@+id/editphone"
+                    android:inputType="phone"
+                    android:layout_gravity="center_horizontal" />
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner_country"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:hint="@string/customer.form.country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner_city"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:hint="@string/customer.form.country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="5dp"
+                    android:hint="@string/customer.form.address"
+                    android:inputType="textMultiLine"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/mybotton2"
+                    android:ems="10"
+                    android:id="@+id/editAddress" />
+
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner_ruta"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:hint="@string/customer.form.ruta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="bottom"
+
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nuevaEncargo"
+                        android:id="@+id/btnsave_nuevo_encargo"
+                        android:background="@drawable/mybutton"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/colorPurple"
+                        android:layout_gravity="center_horizontal" />
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nuevaVenta"
+                        android:id="@+id/btnsave_nueva_venta"
+                        android:background="@drawable/mybutton"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/colorPurple"
+                        android:layout_gravity="center_horizontal" />
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SAVE"
+                        android:id="@+id/btnsave"
+                        android:background="@drawable/mybutton"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/colorPurple"
+                        android:layout_gravity="center_horizontal" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cancelar"
+                        android:id="@+id/btncancelar"
+                        android:background="@color/colorPurple"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:textColor="@color/colorwhite"
+                        android:layout_gravity="center_horizontal" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+</FrameLayout>
+

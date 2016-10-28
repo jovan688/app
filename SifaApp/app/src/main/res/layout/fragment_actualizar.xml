@@ -1,0 +1,297 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="yio.io.sifaapp.fragment.ActualizarFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Actualizar Cliente"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:layout_weight="4"
+                android:layout_marginTop="10dp"
+                android:textAlignment="gravity"
+                android:textColor="#212121"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:text="100"
+                android:id="@+id/clientenum"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.93"
+                android:background="@drawable/round_button"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:layout_marginRight="10dp" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/black"
+            android:layout_marginTop="10dp" />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Actualizar Cartera"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:layout_weight="4"
+                android:layout_marginTop="10dp"
+                android:textAlignment="gravity"
+                android:textColor="#212121"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:text="100"
+                android:id="@+id/cateranum"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.93"
+                android:background="@drawable/round_button"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:layout_marginRight="10dp" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/black"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Actualizar Registro de Ventas"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:layout_weight="4"
+                android:textColor="#212121"
+                android:layout_marginTop="10dp"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:text="100"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:layout_weight="1.60"
+                android:background="@drawable/round_button"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/black" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Actualizar Devoluciones"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:textColor="#212121"
+                android:layout_weight="4"
+                android:layout_marginTop="10dp"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:text="100"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:layout_weight="1.20"
+                android:background="@drawable/round_button"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/black" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Actualizar Encargos"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:textColor="#212121"
+                android:layout_weight="4"
+                android:layout_marginTop="10dp"
+                android:textAlignment="gravity"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:text="100"
+                android:layout_marginLeft="15dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/black"
+            android:layout_marginBottom="20dp" />
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp">
+
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_backup_white_24dp"
+                    android:id="@+id/Local"
+                    android:background="@drawable/round_button" />
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:text="Subir"
+                    android:gravity="center"
+                    android:background="#00000000"
+                    android:textColor="#FF000000"
+                    android:layout_gravity="center_horizontal" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp">
+
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_button"
+                    android:src="@drawable/ic_cloud_download_white_24dp"
+                    android:id="@+id/Server" />
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:text="Bajar"
+                    android:gravity="center"
+                    android:background="#00000000"
+                    android:textColor="#FF000000"
+                    android:layout_gravity="center_horizontal" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtmessage"
+                android:layout_gravity="center"
+                android:text="Message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:minHeight="50dp"
+                android:minWidth="200dp"
+                android:progress="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

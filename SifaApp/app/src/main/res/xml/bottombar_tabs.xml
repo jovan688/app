@@ -1,0 +1,18 @@
+<tabs>
+    <tab
+        id="@+id/mncontact"
+        icon="@drawable/ic_person_add_black_24dp"
+        inActiveColor="#ffffff"
+        activeColor="#d1c4e9"
+        barColorWhenSelected="#512da8"
+
+        title="Contacto" />
+    <tab
+        id="@+id/mncartera"
+        icon="@drawable/ic_business_center_black_24dp"
+        inActiveColor="#ffffff"
+        activeColor="#d1c4e9"
+        barColorWhenSelected="#512da8"
+        title="Cartera" />
+
+</tabs>

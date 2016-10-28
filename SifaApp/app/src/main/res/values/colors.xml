@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#512da8</color>
+    <color name="colorPrimaryDark">#512da8</color>
+    <color name="colorAccent">#512da8</color>
+    <color name="colorBackground">#d1c4e9</color>
+    <color name="colorwhite">#ffffff</color>
+    <color name="colordarkblue">#231a4d</color>
+    <color name="white">#ffffff</color>
+    <color name="btnIngresar">#231a4d</color>
+    <color name="moneyitem">#4caf50</color>
+    <color name="colorNumItem">#46a3d3</color>
+    <color name="colorNameItem">#28607d</color>
+    <color name="colorGray">#8d979c</color>
+    <color name="colorGrayDark">#727272</color>
+    <color name="colorCalendar">#0c86c5</color>
+    <color name="colorGrayLigth">#f2f2f2</color>
+    <color name="colorPurple">#512da8</color>
+    <color name="colorBlack">#000000</color>
+    <color name="NavyBlue">#fff666</color>
+    <color name="CarolinaBlue">#ff42a7</color>
+    <color name="colorRed">#D50000</color>
+    <color name="window_background">#FFF5F5F5</color>
+
+    <color name="primaryColor">#346D7D</color>
+    <color name="primaryDarkColor">#1F515F</color>
+    <color name="accentColor">#03A9F4</color>
+</resources>

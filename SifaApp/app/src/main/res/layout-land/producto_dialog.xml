@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorwhite"
+    android:id="@+id/lmaincliente">
+
+    <!-- Included header.xml here -->
+    <ViewStub android:id="@+id/vsHeader"
+        android:inflatedId="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout="@layout/header" />
+
+    <LinearLayout
+        android:id="@+id/llheader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorwhite">
+
+        <EditText android:id="@+id/EditText_Client"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:gravity="left"
+            android:hint="Filtrar Producto"
+            android:textColor="@color/colorBlack">
+        </EditText>
+        <TextView
+            android:id="@+id/ctextv_gridheader"
+            style="StyleFontTextViewActionBar"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:text="@string/txtproduct_tittle"
+            android:gravity="center"
+            android:textColor="@color/colorwhite"
+            android:background="@drawable/bg_actionbar29"
+            />
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/llbody"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorwhite" >
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:divider="@color/bb_inActiveBottomBarItemColor"
+            android:dividerHeight="0.3sp"
+            android:listSelector="@drawable/statelist"
+            android:layout_height="0dp"
+            android:layout_weight="0.85"
+            android:background="@color/background_floating_material_light"
+            android:id="@+id/ProductRecyclerview" />
+
+        <TextView
+            android:id="@+id/ctxtview_enty"
+            android:textSize="12dp"
+            android:textColor="@color/colorPurple"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/txtclient_entymessage"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

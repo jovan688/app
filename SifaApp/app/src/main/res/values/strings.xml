@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">Sifac</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">INGRESAR USUARIO</string>
+    <string name="prompt_password">INGRESAR CONTRASEÑA</string>
+    <string name="action_sign_in">INGRESAR</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="login.message.username.Error">Usuario Inválido</string>
+    <string name="login.message.password.Error">Password Inválido</string>
+    <string name="invalid_user">Usuario No Valido</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="login.message.footer">Todos los derechos reservados 2016</string>
+
+    <string name="auth_type">com.ni.SifacCode</string>
+
+
+    <string name="customer.detail.fecha_abono">Fecha de abono :</string>
+    <string name="customer.detail.cuota">Cuota :</string>
+    <string name="customer.detail.saldo">Saldo Pendiente :</string>
+    <string name="customer.detail.detailtitle">Detalle del Abono</string>
+    <string name="abonar">ABONAR</string>
+    <string name="Noabonar">NO ABONO</string>
+    <string name="customer.form.names">Ingresar nombre</string>
+    <string name="customer.form.lastname">Ingresar apellidos</string>
+    <string name="customer.form.CID">Ingresar cedula</string>
+    <string name="customer.form.genero.male">Másculino</string>
+    <string name="customer.form.genero.female">Femenino</string>
+    <string name="customer.form.phone">Ingrese teléfono</string>
+    <string name="customer.form.city">Ingresar Ciudad</string>
+    <string name="customer.form.country">Ingresar País</string>
+    <string name="customer.form.ruta">Ingrese la Ruta</string>
+    <string name="customer.form.address">Ingresar dirección</string>
+
+
+    <string name="menu_title">DISTRIBUIDORA MEZA</string>
+    <string name="cartera_item">CARTERA</string>
+    <string name="ventas_item">REGISTRO DE VENTAS</string>
+    <string name="devolucion_item">DEVOLUCIONES</string>
+    <string name="encargos_item">ENCARGOS</string>
+    <string name="log_out_item">CERRAR SESSION</string>
+    <string name="configuracion_item"></string>
+    <string name="title_activity_main3">Main3Activity</string>
+    <string name="sicronizando_clientes">Sincronzando Clientes</string>
+    <string name="sicronizando_cartera">Sincronizando Lista de Cartera</string>
+    <string name="sicronizando_producto">Sincronizando Productos</string>
+    <string name="sicronizando_catalogo">Sincronizando Catalago</string>
+    <string name="sicronizando_ciudad">Sincronizando Ciudades</string>
+    <string name="sicronizando_descuento">Sincronizando Descuentos</string>
+    <string name="sicronizando_Categoria">Sincronizando Categorias</string>
+    <string name="actualizar_item">ACTUALIZACION DE DATOS</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="nuevaVenta">REGISTRAR Y ASOCIAR VENTA</string>
+    <string name="nuevaEncargo">REGISTRAR Y ASOCIAR ENCARGO</string>
+    <string name="SAVE">REGISTRAR</string>
+    <string name="Aceptar">Aceptar</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_venta_list">VentaListActivity</string>
+    <string name="title_activity_devolucion_list">VentaListActivity</string>
+    <string name="title_activity_encargo_list">VentaListActivity</string>
+
+    <string name="txtclient_entymessage">No hay Registros</string>
+    <string name="txtclient_tittle">LISTA CLIENTE</string>
+    <string name="txtproduct_tittle">LISTA PRODUCTO</string>
+
+    <string name="txt_ruta">RUTAS</string>
+    <string name="message.vacio.Error">Campo vacio</string>
+    <string name="calendar_date_picker_result_values">  %3$s - %2$s -  %1$s </string>
+    <string name="message.descuento.maximo.Error">Descuento Minimo Erroneo</string>
+    <string name="message.descuento.minimo.Error">Descuento Maximo Erroneo</string>
+    <string name="message.producto.vacio">Agregue al menos un producto</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="draweroptions">
+        <item>CARTERA</item>
+        <item>REGISTRO DE VENTAS</item>
+        <item>DEVOLUCIONES</item>
+        <item>ENCARGOS</item>
+        <item>ACTUALIZACION DE DATOS</item>
+        <item>CERRAR SESION</item>
+    </string-array>
+</resources>

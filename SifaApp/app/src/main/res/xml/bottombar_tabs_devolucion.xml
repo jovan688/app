@@ -1,0 +1,6 @@
+<tabs>
+    <tab
+        id="@+id/tab_favorites"
+        icon="@drawable/ic_add_black_24dp"
+        title="Ventas" />
+</tabs>
