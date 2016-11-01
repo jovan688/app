@@ -32,8 +32,11 @@ public class Encargo extends BaseModel implements Serializable {
     private Integer objSrhEmpleadoID ;
     @Column
     private Integer UsuarioCreacion ;
+    @Column
+    private Boolean offline;
 
-
+    @Column
+    private Date fechaCreacion;
 
     public Date getFechaCreacion() {
         return fechaCreacion;
@@ -43,8 +46,7 @@ public class Encargo extends BaseModel implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    @Column
-    private Date fechaCreacion;
+
 
     private List<EncargoDetalle> detalle ;
 
@@ -88,6 +90,14 @@ public class Encargo extends BaseModel implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Boolean getOffline() {
+        return offline;
+    }
+
+    public void setOffline(Boolean offline) {
+        this.offline = offline;
     }
 
 }

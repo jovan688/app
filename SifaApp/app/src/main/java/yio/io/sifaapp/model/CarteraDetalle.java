@@ -28,13 +28,27 @@ public class CarteraDetalle extends BaseModel implements Serializable {
     @Column
     private Float Precio;
 
+    public int getObjSfaFacturaID() {
+        return objSfaFacturaID;
+    }
+
+    public void setObjSfaFacturaID(int objSfaFacturaID) {
+        this.objSfaFacturaID = objSfaFacturaID;
+    }
+
+    @Column
+
+    public int objSfaFacturaID;
+
+
     public CarteraDetalle() {
     }
 
-    public CarteraDetalle(int sivProductoID , int ClienteID, Float precio) {
-        Precio = precio;
-        this.ClienteID = ClienteID;
+    public CarteraDetalle(int clienteID, int objSfaFacturaID, int sivProductoID, Float precio) {
+        ClienteID = clienteID;
+        this.objSfaFacturaID = objSfaFacturaID;
         SivProductoID = sivProductoID;
+        Precio = precio;
     }
 
     public int getClienteID() {

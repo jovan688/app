@@ -1,5 +1,7 @@
 package yio.io.sifaapp.Actualizacion;
 
+import android.content.Context;
+
 /**
  * Created by JUANCARLOS on 25/10/2016.
  */
@@ -7,8 +9,8 @@ public class UpdateInteractorImpl implements IUpdateInteractor {
 
     IUpdateRepository repository;
 
-    public UpdateInteractorImpl() {
-        repository = new UpdateRepositoryImp();
+    public UpdateInteractorImpl( Context context) {
+        repository = new UpdateRepositoryImp(context);
     }
 
     @Override
@@ -39,5 +41,10 @@ public class UpdateInteractorImpl implements IUpdateInteractor {
     @Override
     public void GetClienteCounter() {
         repository.GetCLienteContador();
+    }
+
+    @Override
+    public void CountOfflineData() {
+        repository.CountOfflineData();
     }
 }

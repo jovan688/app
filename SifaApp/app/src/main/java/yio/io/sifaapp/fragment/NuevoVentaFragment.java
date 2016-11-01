@@ -504,17 +504,21 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             {
                 Venta venta = new Venta();
                 venta.setCedula(customer.getCedula());
-                venta.setFecha(fecha);
+                String fech = new SimpleDateFormat("yyyy-MM-dd").format(fecha);
+                venta.setFecha(fech);
                 venta.setDescuento(descuento);
                 venta.setObjVendedorID(((sifacApplication) getActivity().getApplication()).getUsuario());
                 venta.setObservaciones(EditTextObservaciones.getText().toString());
                 venta.setPrima(0);
                 venta.setSaldo(montocondescuento);
                 venta.setTotal(montosindescuento);
-                venta.setObjTerminoPagoID(plazo.getStbValorCatalogoID());
+                venta.setObjTerminoPagoID(150); // plazo.getStbValorCatalogoID());
                 if(discount!=null)
                     venta.setObjDescuentoID(discount.getSccDescuentoID());
-                venta.setObjEstadoID(392);
+                venta.setObjEstadoID(502);
+                venta.setOffline(true);
+                if(cuota!=null)
+                    venta.setObjModalidadPagoID(505 ); //cuota.getStbValorCatalogoID());
                 venta.save();
 
                 for (Producto producto: productos) {

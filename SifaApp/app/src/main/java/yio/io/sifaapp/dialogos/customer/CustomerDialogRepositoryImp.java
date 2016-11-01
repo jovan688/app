@@ -32,7 +32,7 @@ public class CustomerDialogRepositoryImp implements CustomerDialogRepository {
 
     @Override
     public void OnFetchData(int rutaid) {
-        List<Customer> list = new Select().from(Customer.class).where(String.format("objRutaID=%d",rutaid)).queryList();
+        List<Customer> list = new Select().from(Customer.class).where(String.format("StbRutaID=%d",rutaid)).queryList();
         postEvent(Events.onFetchDataSucess,list);
 
     }

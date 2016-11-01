@@ -363,22 +363,13 @@ public class LoginRepositoryImplement implements LoginRepository {
                         c.setStbRutaID(cartera.getStbRutaID());
                         List<Producto> items = new ArrayList<Producto>();
                         c.setSccCuentaID(cartera.getSccCuentaID());
+                        c.setOffline(true);
                         c.setCobrado(false);
-
-                        /*
-                        for(Productos p : cartera.getProductos())
-                        {
-                            Producto producto = new Select().from(Producto.class).where(Condition.column(Producto$Table.SIVPRODUCTOID).eq(p.getSivProductoID())).querySingle();
-                            if(producto!=null) {
-                                items.add(producto);
-                            }
-                        }
-                        */
                         //c.setProductos(items);
                         c.save();
                         for(Productos p : cartera.getProductos())
                         {
-                            CarteraDetalle detalle = new CarteraDetalle(p.getSivProductoID() , c.getClienteID() ,p.getPrecio().floatValue());
+                            CarteraDetalle detalle = new CarteraDetalle(p.getSivProductoID() ,p.getObjSfaFacturaID() , c.getClienteID() ,p.getPrecio().floatValue());
                             detalle.save();
                         }
                     }

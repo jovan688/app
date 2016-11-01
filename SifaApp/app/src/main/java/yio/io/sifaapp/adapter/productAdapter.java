@@ -75,6 +75,7 @@ public class productAdapter extends RecyclerView.Adapter<productHolder> implemen
     }
 
     public void setData(List<Producto> lista) {
+       // if (list != null ) this.list.clear();
         this.list = lista;
     }
 
@@ -93,8 +94,11 @@ public class productAdapter extends RecyclerView.Adapter<productHolder> implemen
 
                 FilterResults results = new FilterResults();
                 List<Producto> FilteredArrList = new ArrayList<Producto>();
-                if (mOriginalValues == null && list != null)
+
+               // => if (mOriginalValues == null && list != null)
+                if (list != null)
                     mOriginalValues = new ArrayList<Producto>(list); // guardar los datos originales en  mOriginalValues
+
                 if (constraint == null || constraint.length() == 0) {
                     // setear los valores originales a returnar
                     results.count = mOriginalValues.size();

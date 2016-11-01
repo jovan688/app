@@ -31,6 +31,7 @@ public class encargoAdapter extends RecyclerView.Adapter<encargoViewHolder> {
     }
 
     public void setData(List<Encargo> lista) {
+        this.list.clear();
         this.list = lista;
     }
 

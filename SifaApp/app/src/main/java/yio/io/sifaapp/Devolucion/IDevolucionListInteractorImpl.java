@@ -21,4 +21,9 @@ public class IDevolucionListInteractorImpl implements IDevolucionListInteractor 
     public void getCliente(int customerid) {
         repository.getCliente(customerid);
     }
+
+    @Override
+    public void obtenerDetalle(int customerid) {
+        repository.obtenerDetalle(customerid);
+    }
 }

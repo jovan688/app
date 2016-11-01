@@ -51,11 +51,32 @@ public class Devolucion extends BaseModel implements Serializable {
     @Column
     public String RazonDevolucion;
     @Column
-    public Date Fecha;
+    public String Fecha;
     @Column
     public Float TotalDevolucion;
+
+    public String getFecha() {
+        return Fecha;
+    }
+
+    public void setFecha(String fecha) {
+        Fecha = fecha;
+    }
+
     @Column
+
     public Integer UsuarioCreacion;
+
+    @Column
+    private Boolean offline;
+
+    public Boolean getOffline() {
+        return offline;
+    }
+
+    public void setOffline(Boolean offline) {
+        this.offline = offline;
+    }
 
     public Devolucion() {}
 
@@ -109,13 +130,6 @@ public class Devolucion extends BaseModel implements Serializable {
         RazonDevolucion = razonDevolucion;
     }
 
-    public Date getFecha() {
-        return Fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        Fecha = fecha;
-    }
 
     public Float getTotalDevolucion() {
         return TotalDevolucion;

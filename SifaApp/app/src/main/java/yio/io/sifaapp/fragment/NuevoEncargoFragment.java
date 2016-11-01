@@ -75,7 +75,7 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
     private List<Producto> productos;
     private List<Categoria> categorias;
     private Display display;
-    private Categoria categoria;
+    private Categoria categoria = null;
     private ProductoDialog dp = null;
     private View view = null;
     private String productoname;
@@ -157,7 +157,8 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (!setted) {
+                //if (!setted)
+                {
                     ProductRecyclerview.setVisibility(View.VISIBLE);
                     if (adapter != null) {
                         adapter.getFilter().filter(s.toString());
@@ -175,9 +176,9 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
                 if (adapter != null) {
                     adapter.getFilter().filter(s.toString());
                 }
-                if (TextUtils.isEmpty(s)) {
+                /*if (TextUtils.isEmpty(s)) {
                     setted = false;
-                }
+                }*/
             }
         });
 
@@ -225,11 +226,14 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 categoria = categorias.get(position);
                 presenter.GetProductos(categoria.getCategoriaID());
+                Log.d("onItemSelected","categorias" );
             }
         });
-        spinnerCategoria.setSelectedIndex(0);
-        categoria = categorias.get(0);
-        presenter.GetProductos(categoria.getCategoriaID());
+        if(categoria == null) {
+            spinnerCategoria.setSelectedIndex(0);
+            categoria = categorias.get(0);
+            presenter.GetProductos(categoria.getCategoriaID());
+        }
     }
 
     @Override
@@ -308,11 +312,11 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
                 encargo.setUsuarioCreacion(((sifacApplication) getActivity().getApplication()).getUsuario());
                 encargo.setObjSrhEmpleadoID(((sifacApplication) getActivity().getApplication()).getUsuario());
                 encargo.setFechaCreacion(Calendar.getInstance().getTime());
+                encargo.setOffline(true);
                 encargo.save();
 
                 for (String item: encargos ) {
                     EncargoDetalle detalle = new EncargoDetalle();
-                    detalle.setSivProductoID(0);
                     detalle.setObservaciones(txtObservaciones.getText().toString());
                     detalle.setObjCategoriaID(categoria.getCategoriaID());
                     detalle.setEncargoid(encargo.id);

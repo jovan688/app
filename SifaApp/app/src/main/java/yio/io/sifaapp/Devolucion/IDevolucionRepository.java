@@ -7,5 +7,6 @@ public interface IDevolucionRepository {
 
     void getCliente(int customerid);
     public void getList();
+    void obtenerDetalle(int customerid);
 
 }

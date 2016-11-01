@@ -12,5 +12,7 @@ public interface IUpdateRepository {
     void UpdateEncargos();
     void GetCLienteContador();
 
+    void CountOfflineData();
+
 
 }

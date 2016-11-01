@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -33,6 +34,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import yio.io.sifaapp.BaseActivity;
+import yio.io.sifaapp.Devolucion.IDevolucionListPresenter;
+import yio.io.sifaapp.Devolucion.IDevolucionListPresenterImpl;
+import yio.io.sifaapp.Devolucion.IDevolucionView;
+import yio.io.sifaapp.Devolucion.NewDevolucionPresenter;
 import yio.io.sifaapp.DevolucionListActivity;
 import yio.io.sifaapp.R;
 import yio.io.sifaapp.Venta.AppDialog;
@@ -44,13 +49,14 @@ import yio.io.sifaapp.dialogos.CustomerDialog;
 import yio.io.sifaapp.dialogos.ProductoDialog;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Devolucion;
+import yio.io.sifaapp.model.DevolucionProductos;
 import yio.io.sifaapp.model.Producto;
 import yio.io.sifaapp.sifacApplication;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NuevoDevolucionFragment extends Fragment implements setOnLongClickListener {
+public class NuevoDevolucionFragment extends Fragment implements IDevolucionView, setOnLongClickListener {
 
 
     @Bind(R.id.txtbuscar)
@@ -81,8 +87,9 @@ public class NuevoDevolucionFragment extends Fragment implements setOnLongClickL
     Button btncancel;
     @Bind(R.id.btnobservaciones)
     EditText btnobservaciones;
-
+    IDevolucionListPresenter presenter;
     private Display display;
+    List<DevolucionProductos>  detalles = new ArrayList<DevolucionProductos>();
 
     public NuevoDevolucionFragment() {
         // Required empty public constructor
@@ -109,6 +116,8 @@ public class NuevoDevolucionFragment extends Fragment implements setOnLongClickL
         FacturaRecyclerview.setAdapter(adapter);
         FacturaRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        presenter = new IDevolucionListPresenterImpl(this);
+        presenter.onCreated();
         ((BaseActivity) getActivity()).getBottomBar().hide();
     }
 
@@ -176,6 +185,7 @@ public class NuevoDevolucionFragment extends Fragment implements setOnLongClickL
             dc.unbind();
             dc.hide();
             SetCliente();
+            presenter.obtenerDetalle(customer.getClienteID());
         }
         if (type == TypeLongClick.PRODUCTO) {
             productos.clear();
@@ -236,18 +246,23 @@ public class NuevoDevolucionFragment extends Fragment implements setOnLongClickL
 
             try {
                 Devolucion devolucion = new Devolucion();
-                devolucion.setUsuarioCreacion(((sifacApplication) getActivity().getApplication()).getUsuario());
                 devolucion.setCedula(customer.getCedula());
                 devolucion.setObjSccCuentaID(Integer.parseInt((((sifacApplication) getActivity().getApplication()).getSsgCuentaID())));
+                devolucion.setObjStbRutaID(customer.getStbRutaID());
+                devolucion.setObjSivProductoID(productos.get(0).getSivProductoID());
+                devolucion.setTotalDevolucion(productos.get(0).getPrecio_Credito());
+
+                if(detalles!=null)
+                    devolucion.setObjSfaFacturaID(detalles.get(0).getObjSfaFacturaID());
+
                 if (!TextUtils.isEmpty(btnobservaciones.getText())) {
                     devolucion.setRazonDevolucion(btnobservaciones.getText().toString());
                 }
-                devolucion.setTotalDevolucion(productos.get(0).getPrecio_Credito());
-                devolucion.setObjSivProductoID(productos.get(0).getSivProductoID());
-
-                devolucion.setFecha(Calendar.getInstance().getTime());
-                devolucion.setObjStbRutaID(customer.getObjRutaID());
-                devolucion.setObjSivProductoID(productos.get(0).getSivProductoID());
+                devolucion.setObjVendedorID(((sifacApplication) getActivity().getApplication()).getUsuario());
+                devolucion.setUsuarioCreacion(((sifacApplication) getActivity().getApplication()).getUsuario());
+                String fecha = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+                devolucion.setFecha(fecha);
+                devolucion.setOffline(true);
                 devolucion.save();
 
             } catch (Exception ex) {
@@ -280,4 +295,38 @@ public class NuevoDevolucionFragment extends Fragment implements setOnLongClickL
         });
     }
 
+    @Override
+    public void enableInputs() {
+
+    }
+
+    @Override
+    public void disableInputs() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void onDataFetch(List<Devolucion> devolucions) {
+
+    }
+
+    @Override
+    public void onCustomer(Customer c) {
+
+    }
+
+    @Override
+    public void obtenerDetalle(List<DevolucionProductos> detalle) {
+        detalles = detalle;
+    }
 }

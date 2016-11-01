@@ -5,17 +5,12 @@ import java.math.BigDecimal;
 /**
  * Created by JUANCARLOS on 03/08/2016.
  */
-public class Productos {
+public class Productos
+{
+
     private BigDecimal Precio;
+
     private int SivProductoID;
-
-    public int getObjSfaFacturaID() {
-        return objSfaFacturaID;
-    }
-
-    public void setObjSfaFacturaID(int objSfaFacturaID) {
-        this.objSfaFacturaID = objSfaFacturaID;
-    }
 
     private int objSfaFacturaID;
 
@@ -37,4 +32,13 @@ public class Productos {
     public void setSivProductoID(int sivProductoID) {
         SivProductoID = sivProductoID;
     }
+
+    public int getObjSfaFacturaID() {
+        return objSfaFacturaID;
+    }
+
+    public void setObjSfaFacturaID(int objSfaFacturaID) {
+        this.objSfaFacturaID = objSfaFacturaID;
+    }
+
 }

@@ -9,6 +9,7 @@ public interface productopresenter {
 
     void getAllProducts();
     void getProductsByCustomerId(int customerId);
+
     void onCreated();
     void onDestroy();
     void onEventMainThread(Events event);

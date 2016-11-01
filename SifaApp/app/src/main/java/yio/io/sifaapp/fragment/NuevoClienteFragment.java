@@ -336,7 +336,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
             if (spinnerRuta.getSelectedIndex() != -1) {
                 ruta = listrutas.get(spinnerRuta.getSelectedIndex());
                 customer.setRutaAsignada(ruta.getNombre());
-                customer.setObjRutaID(ruta.getStbRutaID());
+                customer.setStbRutaID(ruta.getStbRutaID());
             }
 
             if (spinnerCountry.getSelectedIndex() != -1) {

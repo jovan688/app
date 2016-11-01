@@ -17,9 +17,11 @@ import yio.io.sifaapp.utils.SifacDataBase;
 public class Cobro extends BaseModel {
 
 
-    @Column
-    private int objSccClienteID;
+
     @PrimaryKey
+    @Column
+    private String Cedula;
+
     @Column
     private int objSccCuentaID;
 
@@ -50,6 +52,18 @@ public class Cobro extends BaseModel {
     @Column
     private int UsuarioCreacion;
 
+    @Column
+    private Boolean offline;
+
+
+    public String getCedula() {
+        return Cedula;
+    }
+
+    public void setCedula(String cedula) {
+        Cedula = cedula;
+    }
+
     public Boolean getOffline() {
         return offline;
     }
@@ -58,8 +72,6 @@ public class Cobro extends BaseModel {
         this.offline = offline;
     }
 
-    @Column
-    private Boolean offline;
 
     public Cobro() {
     }
@@ -80,13 +92,7 @@ public class Cobro extends BaseModel {
         FechaAbono = fechaAbono;
     }
 
-    public int getObjSccClienteID() {
-        return objSccClienteID;
-    }
 
-    public void setObjSccClienteID(int objSccClienteID) {
-        this.objSccClienteID = objSccClienteID;
-    }
 
     public int getObjSccCuentaID() {
         return objSccCuentaID;

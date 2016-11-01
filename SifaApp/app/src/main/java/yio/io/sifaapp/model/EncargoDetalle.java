@@ -26,8 +26,6 @@ public class EncargoDetalle  extends BaseModel implements Serializable {
     private String Nombre_Producto ;
     @Column
     private String Observaciones ;
-    @Column
-    private Integer SivProductoID;
 
     @Column
     private int encargoid;
@@ -77,12 +75,6 @@ public class EncargoDetalle  extends BaseModel implements Serializable {
         Observaciones = observaciones;
     }
 
-    public Integer getSivProductoID() {
-        return SivProductoID;
-    }
 
-    public void setSivProductoID(Integer sivProductoID) {
-        SivProductoID = sivProductoID;
-    }
 
 }

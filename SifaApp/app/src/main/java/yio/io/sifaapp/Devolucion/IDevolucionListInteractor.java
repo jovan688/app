@@ -7,4 +7,5 @@ public interface IDevolucionListInteractor {
 
     void getList();
     void getCliente(int customerid);
+    void obtenerDetalle(int customerid);
 }

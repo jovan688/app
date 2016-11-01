@@ -224,7 +224,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
             cobro.setMontoAbonado(amt);
             cobro.setMotivoNoAbono("");
             cobro.setObjCobradorID(cartera.getOjbCobradorID());
-            cobro.setObjSccClienteID(cartera.getClienteID());
+            cobro.setCedula(cartera.getCedula());
             cobro.setObjSccCuentaID(Integer.parseInt(cartera.getSccCuentaID()));
             cobro.setObjStbRutaID(cartera.getStbRutaID());
             cobro.setSaldo(cartera.getSaldo());

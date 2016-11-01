@@ -7,4 +7,6 @@ public interface productorepository {
     void getAllProducts();
     void getProductsByCustomerId(int customerId);
 
+    void getCarteraDetalleByCustomerId(int customerId);
+
 }

@@ -11,6 +11,7 @@ public interface IDevolucionListPresenter {
     void  onDestroy();
     void  getList();
     void  getCliente(int customerid);
+    void obtenerDetalle(int customerid);
     void  onEventMainThread(Events event);
 
 }

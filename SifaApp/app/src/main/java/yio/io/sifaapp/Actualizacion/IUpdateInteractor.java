@@ -11,4 +11,5 @@ public interface IUpdateInteractor {
     void UpdateDevoluciones();
     void UpdateEncargos();
     void GetClienteCounter();
+    void CountOfflineData();
 }

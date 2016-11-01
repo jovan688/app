@@ -24,6 +24,7 @@ import yio.io.sifaapp.adapter.devolucionAdapter;
 import yio.io.sifaapp.adapter.ventaAdapter;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Devolucion;
+import yio.io.sifaapp.model.DevolucionProductos;
 import yio.io.sifaapp.model.modelSend.Venta;
 
 
@@ -119,4 +120,11 @@ public class DevolucionListFragment extends Fragment implements IDevolucionView 
         customer = c;
         adapter.setCustomer(c);
     }
+
+    @Override
+    public void obtenerDetalle(List<DevolucionProductos> detalle) {
+
+    }
+
+
 }

@@ -103,23 +103,6 @@ public class Cartera  extends BaseModel implements Serializable {
         this.id = id;
     }
 
-    public Cartera(Long id, String Cedula, String Ciudad, Integer ClienteID, String Direccion, String FechaAbono, Float MontoCuota, String NombreCompleto, int OrdenCobro, String Pais, String RutaAsignada, Float Saldo, String SccCuentaID, Integer StbRutaID, Integer ojbCobradorID) {
-        this.id = id;
-        this.Cedula = Cedula;
-        this.Ciudad = Ciudad;
-        this.ClienteID = ClienteID;
-        this.Direccion = Direccion;
-        this.FechaAbono = FechaAbono;
-        this.MontoCuota = MontoCuota;
-        this.NombreCompleto = NombreCompleto;
-        this.OrdenCobro = OrdenCobro;
-        this.Pais = Pais;
-        this.RutaAsignada = RutaAsignada;
-        this.Saldo = Saldo;
-        this.SccCuentaID = SccCuentaID;
-        this.StbRutaID = StbRutaID;
-        this.ojbCobradorID = ojbCobradorID;
-    }
 
     public Long getId() {
         return id;

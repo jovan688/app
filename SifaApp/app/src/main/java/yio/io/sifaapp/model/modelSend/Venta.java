@@ -31,14 +31,24 @@ public class Venta extends BaseModel {
     @Column
     public int  objDescuentoID;
     @Column
-    public Date Fecha;
+    public String Fecha;
     @Column
     public float  Subtotal;
     @Column
     public float  Descuento;
     @Column
     public float  Total;
+
+    public String getFecha() {
+        return Fecha;
+    }
+
+    public void setFecha(String fecha) {
+        Fecha = fecha;
+    }
+
     @Column
+
     public float  Prima;
     @Column
     public float  Saldo;
@@ -46,12 +56,33 @@ public class Venta extends BaseModel {
     public String observaciones;
     @Column
     public int  UsuarioCreacion;
+    @Column
+    private Boolean offline;
+
+    public int getObjModalidadPagoID() {
+        return ObjModalidadPagoID;
+    }
+
+    public void setObjModalidadPagoID(int objModalidadPagoID) {
+        ObjModalidadPagoID = objModalidadPagoID;
+    }
+
+    @Column
+    private int ObjModalidadPagoID;
+
+    public Boolean getOffline() {
+        return offline;
+    }
+
+    public void setOffline(Boolean offline) {
+        this.offline = offline;
+    }
 
     private  List<FacturaProformaDetalle> FacturaProformaDetalle ;
 
     public List<FacturaProformaDetalle> getFacturaDetalle(){
         if(FacturaProformaDetalle==null){
-            FacturaProformaDetalle = new Select().from(FacturaProformaDetalle.class).where(String.format("cedula=%s",this.cedula)).queryList();
+            FacturaProformaDetalle = new Select().from(FacturaProformaDetalle.class).where(String.format("cedula='%s'",this.cedula)).queryList();
         }
         return  FacturaProformaDetalle;
     }
@@ -104,14 +135,6 @@ public class Venta extends BaseModel {
 
     public void setObjDescuentoID(int objDescuentoID) {
         this.objDescuentoID = objDescuentoID;
-    }
-
-    public Date getFecha() {
-        return Fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        Fecha = fecha;
     }
 
     public float getSubtotal() {

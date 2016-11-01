@@ -19,6 +19,7 @@ import yio.io.sifaapp.utils.SifacDataBase;
  */
 @Table(databaseName = SifacDataBase.NAME)
 public class Producto  extends BaseModel implements Serializable {
+
     @Column
     @PrimaryKey
     private Integer SivProductoID;

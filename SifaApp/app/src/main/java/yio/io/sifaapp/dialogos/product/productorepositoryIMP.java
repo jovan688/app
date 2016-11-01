@@ -38,6 +38,12 @@ public class productorepositoryIMP implements  productorepository {
         postEvent(Events.onFetchDataSucess, productos);
     }
 
+    @Override
+    public void getCarteraDetalleByCustomerId(int customerId) {
+        List<CarteraDetalle> detalle = new Select().from(CarteraDetalle.class).where(String.format("ClienteID=%d", customerId)).queryList();
+        postEvent(Events.onCarteraDetalleDataSucess, detalle);
+    }
+
 
     private void postEvent(int type, Object obj) {
         Events event = new Events();

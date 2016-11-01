@@ -1,5 +1,6 @@
 package yio.io.sifaapp.Actualizacion;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.ExclusionStrategy;
@@ -19,12 +20,28 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import yio.io.sifaapp.Actualizacion.Models.Cliente;
+import yio.io.sifaapp.model.Cartera;
+import yio.io.sifaapp.model.Cobro;
+import yio.io.sifaapp.model.ContadorModel;
 import yio.io.sifaapp.model.Customer;
+import yio.io.sifaapp.model.Devolucion;
+import yio.io.sifaapp.model.Encargo;
+import yio.io.sifaapp.model.EncargoDetalle;
+import yio.io.sifaapp.model.modelSend.AplFacturasProformaDetalles;
+import yio.io.sifaapp.model.modelSend.AplFacturasProformas;
+import yio.io.sifaapp.model.modelSend.FacturaProformaDetalle;
+import yio.io.sifaapp.model.modelSend.Venta;
+import yio.io.sifaapp.model.modelSend.cobro;
+import yio.io.sifaapp.model.modelSend.devolucion;
+import yio.io.sifaapp.model.modelSend.encargo;
+import yio.io.sifaapp.model.modelSend.encargodetalle;
 import yio.io.sifaapp.utils.ConfiguracionServicio;
 import yio.io.sifaapp.utils.EventBus;
 import yio.io.sifaapp.utils.Events;
 import yio.io.sifaapp.utils.GreenRobotEventBus;
 import yio.io.sifaapp.utils.IServicioRemoto;
+import yio.io.sifaapp.utils.Network;
+import yio.io.sifaapp.utils.ResponseMessage;
 
 /**
  * Created by JUANCARLOS on 25/10/2016.
@@ -35,7 +52,10 @@ public class UpdateRepositoryImp implements IUpdateRepository {
     Retrofit retrofit = null;
     IServicioRemoto service;
     int contador = 0;
-    public UpdateRepositoryImp() {
+    Context context;
+    public UpdateRepositoryImp(Context context) {
+            this.context = context;
+
             if (retrofit == null) {
                 Gson gson = new GsonBuilder()
                         .setExclusionStrategies(new ExclusionStrategy() {
@@ -59,85 +79,368 @@ public class UpdateRepositoryImp implements IUpdateRepository {
 
     @Override
     public void UpdateCartera() {
+        ResponseMessage message = Network.isPhoneConnected(context);
+        if(message!=null && message.isHasError()){
+            postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
+        }
+        else {
 
+
+            List<Cobro> list = new Select().from(Cobro.class).where(String.format("offline=1")).queryList();
+            contador = list.size();
+            if (contador == 0) {
+                postEvent(Events.onUpdateCobroSucess, null);
+            }
+            else {
+
+                for (Cobro item : list) {
+
+
+                    cobro c  = new cobro();
+                    c.setObjStbRutaID(item.getObjStbRutaID());
+                    c.setAbono(item.getAbono());
+                    c.setCancelo(item.getCancelo());
+                    c.setFechaAbono("1987-10-30");
+                    c.setMontoAbonado(item.getMontoAbonado());
+                    c.setMotivoNoAbono(item.getMotivoNoAbono());
+                    c.setCedula(item.getCedula());
+                    c.setSaldo(item.getSaldo());
+                    c.setUsuarioCreacion(String.valueOf(item.getUsuarioCreacion()));
+                    c.setObjCobradorID(item.getObjCobradorID());
+                    c.setObjSccCuentaID(String.valueOf(item.getObjSccCuentaID()));
+
+                    Call<Integer> call = service.CreateCobro(c);
+
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            contador--;
+                            if (response.body() != 0) {
+                                if (contador == 0) {
+                                    postEvent(Events.onUpdateCobroSucess, null);
+                                } else {
+
+                                    postEvent(Events.UpdateCobroContador, null, contador);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            contador--;
+                            Log.d("UpdateRepository", String.valueOf(t.getCause()));
+                            postEvent(Events.OnMessage, null, t.getMessage());
+                        }
+                    });
+                }
+            }
+
+            //postEvent(Events.onUpdateCobroSucess, null);
+           // postEvent(Events.OnMessage, null, "Sincronizando Cobros ...");
+        }
     }
 
     @Override
     public void UpdateCliente() {
-        List<Cliente> clientes =  new ArrayList<Cliente>();
 
-        List<Customer> list = new Select().from(Customer.class).where(String.format("offline=1")).queryList();
-        for (Customer customer: list) {
-            Cliente c = new Cliente();
-            c.setApellido1(customer.getApellido1());
-            c.setApellido2(customer.getApellido2());
-            c.setCedula(customer.getCedula());
-            c.setDireccion(customer.getDireccion());
-            c.setFechaNacimiento("1987-10-30");
-            c.setNombre1(customer.getNombre1());
-            c.setNombre2(customer.getNombre2());
-            c.setObjCiudadID(customer.getObjCiudadID());
-            c.setObjPaisID(customer.getObjPaisID());
-            c.setObjGeneroID(customer.getObjGeneroID());
-            c.setOrdenCobro(customer.getOrdenCobro());
-            c.setObjRutaID(customer.getObjRutaID());
-            c.setTelefonos(customer.getTelefonos());
-            c.setObjTipoEntradaID(2);
-            c.setUsuarioCreacion("ADMIN");
-            clientes.add(c);
+        ResponseMessage message = Network.isPhoneConnected(context);
+        if(message!=null && message.isHasError()){
+            postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
         }
+        else
+        {
 
-        if (clientes.size() > 0) {
+            // Datos a enviar
+            List<Cliente> clientes = new ArrayList<Cliente>();
 
-            contador = clientes.size();
+            List<Customer> list = new Select().from(Customer.class).where(String.format("offline=1")).queryList();
 
-            service = retrofit.create(IServicioRemoto.class);
+            if(list.size() > 0 ) {
 
-            for (Cliente cliente : clientes) {
+                for (Customer customer : list) {
+                    Cliente c = new Cliente();
+                    c.setApellido1(customer.getApellido1());
+                    c.setApellido2(customer.getApellido2());
+                    c.setCedula(customer.getCedula());
+                    c.setDireccion(customer.getDireccion());
+                    c.setFechaNacimiento("1987-10-30");
+                    c.setNombre1(customer.getNombre1());
+                    c.setNombre2(customer.getNombre2());
+                    c.setObjCiudadID(customer.getObjCiudadID());
+                    c.setObjPaisID(customer.getObjPaisID());
+                    c.setObjGeneroID(customer.getObjGeneroID());
+                    c.setOrdenCobro(customer.getOrdenCobro());
+                    c.setObjRutaID(customer.getStbRutaID());
+                    c.setTelefonos(customer.getTelefonos());
+                    c.setObjTipoEntradaID(2);
+                    c.setUsuarioCreacion("ADMIN");
+                    clientes.add(c);
+                }
 
-                Call<Integer> call = service.CreateCliente(cliente);
-                call.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        if(response.body()!= 0) {
-                            Log.d("UpdateRepository",String.valueOf(response.body()));
+                contador = clientes.size();
+
+                service = retrofit.create(IServicioRemoto.class);
+
+                for (Cliente cliente : clientes) {
+
+                    Call<Integer> call = service.CreateCliente(cliente);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            contador--;
+                            if (response.body() != 0) {
+                                Log.d("UpdateRepository", String.valueOf(response.body()));
+                                if (contador == 0) {
+                                    postEvent(Events.onClienteUpdateSucess, null);
+                                } else {
+
+                                    postEvent(Events.UpdateClienteContador, null, contador);
+                                }
+
+                            }
+                            if (response.isSuccessful()) {
+                                Log.d("UpdateRepository", String.valueOf(response.isSuccessful()));
+
+                            }
                         }
-                        if(response.isSuccessful()) {
-                            Log.d("UpdateRepository",String.valueOf(response.isSuccessful()));
-                        }
-                        contador--;
-                        postEvent(Events.UpdateClienteContador,null , contador);
-                    }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
-                        Log.d("UpdateRepository",String.valueOf(t.getCause()));
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            contador--;
+                            Log.d("UpdateRepository", String.valueOf(t.getCause()));
+                            postEvent(Events.OnMessage, null, t.getMessage());
+                        }
+                    });
+                }
+
             }
-            postEvent(Events.onClienteUpdateSucess,null , "Sincronizando Cartera ...");
+            else
+            {
+               postEvent(Events.onClienteUpdateSucess, null);
+            }
         }
     }
 
     @Override
     public void UpdateVentas() {
+        ResponseMessage message = Network.isPhoneConnected(context);
+        if(message!=null && message.isHasError()){
+            postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
+        }
+        else {
 
+            List<Venta> list = new Select().from(Venta.class).where(String.format("offline=1")).queryList();
+            contador = list.size();
+
+            service = retrofit.create(IServicioRemoto.class);
+            if (contador == 0) {
+                postEvent(Events.onVentasUpdateSucess, null);
+            }
+            else {
+                for (Venta item : list) {
+
+                    AplFacturasProformas venta = new AplFacturasProformas();
+                    venta.setCedula(item.getCedula());
+                    venta.setObjVendedorID(item.getObjVendedorID());
+                    venta.setObjEstadoID(502); //item.getObjEstadoID());
+                    venta.setObjTerminoPagoID(150);
+                    venta.setObjModalidadPagoID(505); //item.getObjModalidadPagoID());
+                    venta.setObjDescuentoID(item.getObjDescuentoID());
+                    venta.setFecha(item.getFecha());
+                    venta.setSubtotal(item.getSubtotal());
+                    venta.setDescuento(item.getDescuento());
+                    venta.setTotal(item.getTotal());
+                    venta.setPrima(item.getPrima());
+                    venta.setSaldo(item.getSaldo());
+                    venta.setObservaciones(item.getObservaciones());
+                    venta.setUsuarioCreacion(String.valueOf(item.getUsuarioCreacion()));
+
+                    List<AplFacturasProformaDetalles> listdetalle = new ArrayList<AplFacturasProformaDetalles>();
+
+                    for (FacturaProformaDetalle proforma:item.getFacturaDetalle()) {
+                        AplFacturasProformaDetalles d = new AplFacturasProformaDetalles();
+                        d.setObjSivProductoID(proforma.getObjSivProductoID());
+                        d.setCantidad(proforma.getCantidad());
+                        d.setPrecio(proforma.getPrecio());
+                        d.setSubtotal(proforma.getSubtotal());
+                        d.setDescuento(proforma.getDescuento());
+                        d.setTotal(proforma.getTotal());
+                        listdetalle.add(d);
+                    }
+                    venta.setFacturaProformaDetalle(listdetalle);
+
+                    Call<Integer> call = service.CreateVentas(venta);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            contador--;
+                            if (response.body() != 0) {
+                                if (contador == 0) {
+                                    postEvent(Events.onVentasUpdateSucess, null);
+                                } else {
+
+                                    postEvent(Events.UpdateVentasContador, null, contador);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            contador--;
+                            Log.d("UpdateRepository", String.valueOf(t.getCause()));
+                            postEvent(Events.OnMessage, null, t.getMessage());
+                        }
+                    });
+                }
+            }
+            //postEvent(Events.OnMessage, null, "Sincronizando Ventas ...");
+        }
     }
 
     @Override
     public void UpdateDevoluciones() {
+        ResponseMessage message = Network.isPhoneConnected(context);
+        if(message!=null && message.isHasError()){
+            postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
+        }
+        else {
 
+            List<Devolucion> list = new Select().from(Devolucion.class).where(String.format("offline=1")).queryList();
+            contador = list.size();
+            if (contador == 0) {
+                postEvent(Events.onDescuentosSucess, null);
+            }
+            else
+            {
+                for (Devolucion item : list) {
+                    devolucion dev = new devolucion();
+                    dev.setCedula(item.getCedula());
+                    dev.setUsuarioCreacion(item.getUsuarioCreacion().toString());
+                    dev.setFecha(item.getFecha().toString());
+                    dev.setObjSccCuentaID(item.getObjSccCuentaID());
+                    dev.setObjSfaFacturaID(item.getObjSfaFacturaID());
+                    dev.setObjSivProductoID(item.getObjSivProductoID());
+                    dev.setObjStbRutaID(item.getObjStbRutaID());
+                    dev.setObjVendedorID(item.getObjVendedorID());
+                    dev.setRazonDevolucion(item.getRazonDevolucion());
+                    dev.setTotalDevolucion(item.getTotalDevolucion());
+                    Call<Integer> call = service.CreateDevoluciones(dev);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            contador--;
+                            if (response.body() != 0) {
+                                if (contador == 0) {
+                                    postEvent(Events.onDescuentosSucess, null);
+                                } else {
+                                    postEvent(Events.UpdateDevolucionesContador, null, contador);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            Log.d("UpdateRepository", String.valueOf(t.getCause()));
+                            contador--;
+                            postEvent(Events.OnMessage, null, t.getMessage());
+                        }
+                    });
+                }
+            }
+
+            //postEvent(Events.OnMessage, null, "Sincronizando Devoluciones ...");
+        }
     }
 
     @Override
     public void UpdateEncargos() {
+        ResponseMessage message = Network.isPhoneConnected(context);
+        if(message!=null && message.isHasError()){
+            postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
+        }
+        else {
 
+            List<Encargo> list = new Select().from(Encargo.class).where(String.format("offline=1")).queryList();
+            contador = list.size();
+
+            if (contador == 0) {
+                postEvent(Events.onEncargoUpdateSucess, null);
+            }
+            else
+            {
+                postEvent(Events.OnMessage, null, "Sincronizando Encargo... ");
+
+                for (Encargo item : list) {
+                    encargo _encargo = new encargo();
+                    _encargo.setCedula(item.getCedula());
+                    _encargo.setObjSrhEmpleadoID(item.getObjSrhEmpleadoID().toString());
+                    _encargo.setUsuarioCreacion(item.getUsuarioCreacion().toString());
+
+                    List<encargodetalle> detail = new ArrayList<encargodetalle>();
+
+                    for (EncargoDetalle det : item.getdetalle()) {
+
+                        encargodetalle detalle = new encargodetalle();
+                        detalle.setNombre_Producto(det.getNombre_Producto());
+                        detalle.setObjCategoriaID(det.getObjCategoriaID());
+                        detalle.setObservaciones(det.getObservaciones());
+                        detail.add(detalle);
+                        //_encargo.getEncargoDetalle().add(detalle);
+                    }
+
+                    _encargo.setEncargoDetalle(detail);
+
+                    Call<Integer> call = service.CreateEncargo(_encargo);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            contador--;
+                            if (response.body() != 0) {
+                                if (contador == 0) {
+                                    postEvent(Events.onEncargoUpdateSucess, null);
+                                } else {
+                                    postEvent(Events.UpdateEncargosContador, null, contador);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            Log.d("UpdateRepository", String.valueOf(t.getCause()));
+                            postEvent(Events.OnMessage, null, t.getMessage());
+                            contador--;
+                        }
+                    });
+                }
+
+
+            }
+        }
     }
 
     @Override
     public void GetCLienteContador() {
         List<Customer> list = new Select().from(Customer.class).where(String.format("offline=1")).queryList();
         postEvent(Events.ClienteContador,null,list.size());
+    }
+
+    @Override
+    public void CountOfflineData() {
+        int clientes  = (int) new Select().from(Customer.class).where(String.format("offline=1")).queryList().size();
+        int carteras  = (int) new Select().from(Cobro.class).where(String.format("offline=1")).queryList().size();
+        int encargos  = (int) new Select().from(Encargo.class).where(String.format("offline=1")).queryList().size();
+        int devoluciones  = (int) new Select().from(Devolucion.class).where(String.format("offline=1")).queryList().size();
+        int ventas  = (int) new Select().from(Venta.class).where(String.format("offline=1")).queryList().size();
+
+        ContadorModel contador = new ContadorModel();
+        contador.setCartera(carteras);
+        contador.setClientes(clientes);
+        contador.setDevoluciones(devoluciones);
+        contador.setEncargos(encargos);
+        contador.setVentas(ventas);
+        postEvent(Events.CargarContadores,null,contador);
+
+
     }
 
     private void postEvent(int type, String errorMessage) {

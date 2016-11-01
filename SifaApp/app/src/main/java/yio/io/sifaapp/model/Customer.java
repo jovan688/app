@@ -36,7 +36,7 @@ public class Customer extends BaseModel implements Serializable {
     @Column
     private String Direccion;
     @Column
-    private Integer objRutaID;
+    private Integer StbRutaID;
     /*
     @Column
     private Date FechaNacimiento;
@@ -67,12 +67,12 @@ public class Customer extends BaseModel implements Serializable {
     @Column
     private Boolean offline;
 
-    public Integer getObjRutaID() {
-        return objRutaID;
+    public Integer getStbRutaID() {
+        return StbRutaID;
     }
 
-    public void setObjRutaID(Integer objRutaID) {
-        this.objRutaID = objRutaID;
+    public void setStbRutaID(Integer stbRutaID) {
+        StbRutaID = stbRutaID;
     }
 
     public void setObjCiudadID(int objCiudadID) {

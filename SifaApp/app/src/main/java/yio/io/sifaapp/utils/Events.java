@@ -78,6 +78,29 @@ public class Events {
 
     public  final static int ClienteContador =50;
 
+    public  final static int CargarContadores =51;
+    public  final static int OnMessage =52;
+
+    public  final static int UpdateCarteraContador =53;
+    public  final static int onCarteraUpdateSucess =54;
+
+    public  final static int UpdateDevolucionesContador =55;
+    public  final static int onDevolucionesUpdateSucess =56;
+
+    public  final static int UpdateEncargosContador =57;
+    public  final static int onEncargoUpdateSucess = 58;
+
+    public  final static int UpdateVentasContador =59;
+    public  final static int onVentasUpdateSucess =60;
+
+    public  final static int UpdateCobroContador =61;
+    public  final static int onUpdateCobroSucess =62;
+    public  final static int onNetworkFails =63;
+
+    public  final static int onCarteraDetalleDataSucess =64;
+
+
+
     private  int eventype;
     private  String errorMessage;
 
