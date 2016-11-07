@@ -66,6 +66,16 @@ public class Customer extends BaseModel implements Serializable {
     private Integer ojbCobradorID;
     @Column
     private Boolean offline;
+    @Column
+    private String Referencia;
+
+    public String getReferencia() {
+        return Referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        Referencia = referencia;
+    }
 
     public Integer getStbRutaID() {
         return StbRutaID;

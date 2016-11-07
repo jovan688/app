@@ -135,6 +135,23 @@
                     android:textColor="@color/colorGrayDark"
                     />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp"
+                android:orientation="horizontal">
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:hint="Referencia"
+                    android:background="@drawable/mybotton2"
+                    android:id="@+id/txtreferencia" />
+
+
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -161,6 +178,20 @@
                 android:layout_gravity="bottom"
                 android:gravity="bottom"
                 android:weightSum="0">
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="GUARDAR REFERENCIA"
+                    android:id="@+id/btnreferencia"
+                    android:background="@color/colorPurple"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/colorwhite"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom|center_horizontal" />
+
 
                 <Button
                     android:layout_width="match_parent"

@@ -1,6 +1,8 @@
 package yio.io.sifaapp.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,14 +22,20 @@ import butterknife.OnClick;
 import yio.io.sifaapp.Actualizacion.IUpdatePresenter;
 import yio.io.sifaapp.Actualizacion.IUpdateView;
 import yio.io.sifaapp.Actualizacion.UpdatePresenterImpl;
+import yio.io.sifaapp.CarteraListActivity;
+import yio.io.sifaapp.Login.ILoginView;
+import yio.io.sifaapp.Login.LoginPresenter;
+import yio.io.sifaapp.Login.LoginPresenterImplement;
 import yio.io.sifaapp.R;
+import yio.io.sifaapp.Venta.AppDialog;
 import yio.io.sifaapp.model.ContadorModel;
+import yio.io.sifaapp.utils.CustomDialog;
 import yio.io.sifaapp.utils.TypeCounter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ActualizarFragment extends Fragment implements IUpdateView {
+public class ActualizarFragment extends Fragment implements IUpdateView , ILoginView {
 
 
     @Bind(R.id.progressBar)
@@ -51,7 +59,9 @@ public class ActualizarFragment extends Fragment implements IUpdateView {
     private int progressStatus = 0;
     private Handler handler = new Handler();
     private IUpdatePresenter presenter;
-
+    private LoginPresenter loginPresenter;
+    int NOTIFICATION_DIALOG=0;
+    private static CustomDialog dlg;
 
     ContadorModel contador = null;
 
@@ -68,6 +78,11 @@ public class ActualizarFragment extends Fragment implements IUpdateView {
         ButterKnife.bind(this, view);
         presenter = new UpdatePresenterImpl(this ,getActivity().getApplicationContext());
         presenter.onCreated();
+
+        loginPresenter = new LoginPresenterImplement(this , getActivity().getApplication());
+        loginPresenter.onCreated();
+
+
         return view;
     }
 
@@ -76,6 +91,8 @@ public class ActualizarFragment extends Fragment implements IUpdateView {
         super.onViewCreated(view, savedInstanceState);
         progressBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorPurple), PorterDuff.Mode.SRC_IN);
         presenter.CountOfflineData();
+
+        txtmessage.setText("");
     }
 
     @Override
@@ -86,7 +103,8 @@ public class ActualizarFragment extends Fragment implements IUpdateView {
 
     @OnClick(R.id.Server)
     public void download() {
-        setProgress("BAJANDO Lista del Sistema ", 100);
+        //setProgress("BAJANDO Lista del Sistema ", 100);
+        loginPresenter.DownloadServer();
     }
 
     @OnClick(R.id.Local)
@@ -138,12 +156,56 @@ public class ActualizarFragment extends Fragment implements IUpdateView {
     }
 
     @Override
+    public void enableInputs() {
+        Server.setEnabled(true);
+    }
+
+    @Override
+    public void disableInputs() {
+        Server.setEnabled(false);
+    }
+
+    @Override
     public void showProgress() {
 
     }
 
     @Override
     public void hideProgress() {
+
+    }
+
+    @Override
+    public void authenticate() {
+        showStatus("Se ha Descargado Exitosamente!",true);
+    }
+
+    @Override
+    public void handleSignIn() {
+
+    }
+
+    @Override
+    public void goToMainScreen() {
+        hide();
+        dlg = null;
+        loginPresenter.onDestroy();
+        Intent intent = new Intent(getActivity(), CarteraListActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void loginError(String message) {
+
+    }
+
+    @Override
+    public void Sync(String message) {
+        showStatus(message);
+    }
+
+    @Override
+    public void onSingOff() {
 
     }
 
@@ -217,6 +279,43 @@ public class ActualizarFragment extends Fragment implements IUpdateView {
         progressBar.setProgress(progressStatus);
         txtmessage.setText(label.concat(progressStatus + "/" + progressBar.getMax()));
 
+    }
+
+
+    public void showStatus(final String mensaje, boolean... confirmacion) {
+
+        if (confirmacion.length != 0 && confirmacion[0]) {
+           getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AppDialog.showMessage(getActivity(), "", mensaje,
+                            AppDialog.DialogType.DIALOGO_ALERTA,
+                            new AppDialog.OnButtonClickListener() {
+                                @Override
+                                public void onButtonClick(AlertDialog _dialog,
+                                                          int actionId) {
+
+                                    if (AppDialog.OK_BUTTOM == actionId) {
+                                        _dialog.dismiss();
+                                    }
+                                }
+                            });
+                }
+            });
+        } else {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    dlg = new CustomDialog(getActivity(), mensaje, false, NOTIFICATION_DIALOG);
+                    dlg.show();
+                }
+            });
+        }
+    }
+
+    public void hide(){
+        if (dlg != null && dlg.isShowing())
+            dlg.dismiss();
     }
 
 }

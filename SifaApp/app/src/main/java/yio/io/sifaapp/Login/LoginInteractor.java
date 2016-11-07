@@ -7,7 +7,8 @@ import android.content.Context;
 public interface LoginInteractor {
 
     void checkSession(Context context);
-
+    void onSingOff();
     void doSignIn(String username, String password);
+    void DownloadServer();
 
 }

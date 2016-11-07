@@ -18,7 +18,7 @@ public class AplFacturasProformas {
 
     public int objModalidadPagoID ;
 
-    public int objDescuentoID ;
+    public Integer objDescuentoID ;
 
     public String Fecha ;
 
@@ -97,11 +97,11 @@ public class AplFacturasProformas {
         this.objModalidadPagoID = objModalidadPagoID;
     }
 
-    public int getObjDescuentoID() {
+    public Integer getObjDescuentoID() {
         return objDescuentoID;
     }
 
-    public void setObjDescuentoID(int objDescuentoID) {
+    public void setObjDescuentoID(Integer objDescuentoID) {
         this.objDescuentoID = objDescuentoID;
     }
 

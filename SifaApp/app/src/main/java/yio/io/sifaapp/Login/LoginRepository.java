@@ -29,4 +29,5 @@ public interface LoginRepository {
 
     void GetRutasByCobradorId();
 
+    void DownloadServer();
 }

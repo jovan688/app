@@ -1,13 +1,14 @@
 package yio.io.sifaapp.fragment;
 
-
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -32,10 +33,12 @@ import yio.io.sifaapp.utils.DividerItemDecoration;
  */
 public class NavigationDrawerFragment extends Fragment implements OnItemClickListener {
 
-    @Bind(R.id.exit)
-    ImageButton exit;
+    //@Bind(R.id.exit)
+    AppCompatImageView exit;
+    //ImageButton exit;
     private ActionBarDrawerToggle mBarDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    View view ;
     static final String TAG = NavigationDrawerFragment.class.getSimpleName();
 
     public OnItemClickListener getListener() {
@@ -63,18 +66,32 @@ public class NavigationDrawerFragment extends Fragment implements OnItemClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        //ButterKnife.bind(this,view);
         setupRecyclerView(view);
         getFragment();
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(view);
+       /* exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+            }
+        });
+*/      //exit = (AppCompatImageView) view.findViewById(R.id.exit);
+        exit = (AppCompatImageView) view.findViewById(R.id.exit);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
             }
         });
-
-        return view;
     }
 
     public void setupRecyclerView(View view) {

@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/bgdialog2"
+    android:background="@color/Blue"
     android:orientation="vertical" >
 
     <!-- This is for the info image -->
@@ -46,7 +46,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/scroll_dialog"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        android:weightSum="2">
 
         <Button
             android:id="@+id/btnaceptar_dialog_alert"
@@ -57,7 +58,7 @@
             android:focusable="true"
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
-            android:text="Aceptar"
+            android:text="Aceptar SIIIII"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white" />
     </TableRow>

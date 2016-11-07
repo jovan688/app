@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -133,6 +134,8 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
     @Bind(R.id.EditText_observaciones)
     EditText EditTextObservaciones;
     Ruta r = null;
+    @Bind(R.id.chknewsale)
+    CheckBox chknewsale;
 
     public NuevoVentaFragment() {
         presenter = new VentaPresenterImplemt(this);
@@ -148,8 +151,8 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
         //setHasOptionsMenu(true);
         Init();
         Bundle bundle = this.getArguments();
-        if(bundle!= null){
-            if(bundle.containsKey("Customer")){
+        if (bundle != null) {
+            if (bundle.containsKey("Customer")) {
                 customer = (Customer) bundle.getSerializable("Customer");
                 SetCliente();
             }
@@ -193,8 +196,8 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
         txtDescuento.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!TextUtils.isEmpty(txtDescuento.getText().toString()))
-                    montocondescuento  = montosindescuento - Float.valueOf(txtDescuento.getText().toString());
+                if (!TextUtils.isEmpty(txtDescuento.getText().toString()))
+                    montocondescuento = montosindescuento - Float.valueOf(txtDescuento.getText().toString());
             }
         });
         SetDate();
@@ -255,7 +258,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             spinnerRuta.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                     r = rutas.get(position);
+                    r = rutas.get(position);
 
                 }
             });
@@ -282,7 +285,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             spinnerCuotas.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                     cuota = cuotas.get(position);
+                    cuota = cuotas.get(position);
                 }
             });
             spinnerCuotas.setSelectedIndex(0);
@@ -342,7 +345,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
 
     @OnClick(R.id.button_cliente)
     public void onClienteClick() {
-        dc = new CustomerDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, this,r.getStbRutaID());
+        dc = new CustomerDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, this, r.getStbRutaID());
         Window window = dc.getWindow();
         window.setGravity(Gravity.CENTER);
 
@@ -433,6 +436,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                     });
         }
     }
+
     public boolean save() {
         Descuento discount = null;
         txtbuscar.setError(null);
@@ -458,19 +462,15 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             txtcustomercuota.setError(getString(R.string.message_vacio_Error));
             focus = txtcustomercuota;
             cancel = true;
-        }
-        else if (radioSi.isChecked())
-        {
+        } else if (radioSi.isChecked()) {
 
             descuento = Float.valueOf(txtDescuento.getText().toString());
 
-            if (descuento == 0){
+            if (descuento == 0) {
                 txtDescuento.setError("Error!! Descuento no puede ser 0.");
                 focus = txtDescuento;
                 cancel = true;
-            }
-            else
-            {
+            } else {
                 for (Descuento item : this.descuentos) {
                     if (item.getPlazoPago().equals(Float.valueOf(plazo.getCodigo()))) {
                         discount = item;
@@ -478,17 +478,14 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                     }
                 }
 
-                if( discount == null ) {
+                if (discount == null) {
                     // ERROR NO SE ENCONTRO DESCUENTO
                     cancel = true;
-                }
-
-                else if( descuento < (montosindescuento * discount.getDescuentoMinimo())) {
+                } else if (descuento < (montosindescuento * discount.getDescuentoMinimo())) {
                     txtDescuento.setError(getString(R.string.message_descuento_minimo_Error));
                     focus = txtDescuento;
                     cancel = true;
-                }
-                else if (descuento > (montosindescuento * discount.getDescuentoMaximo())) {
+                } else if (descuento > (montosindescuento * discount.getDescuentoMaximo())) {
                     txtDescuento.setError(getString(R.string.message_descuento_maximo_Error));
                     focus = txtDescuento;
                     cancel = true;
@@ -497,12 +494,10 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
         }
         if (cancel) {
             focus.requestFocus();
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 Venta venta = new Venta();
+                venta.setNuevaventa(chknewsale.isChecked());
                 venta.setCedula(customer.getCedula());
                 String fech = new SimpleDateFormat("yyyy-MM-dd").format(fecha);
                 venta.setFecha(fech);
@@ -513,15 +508,17 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                 venta.setSaldo(montocondescuento);
                 venta.setTotal(montosindescuento);
                 venta.setObjTerminoPagoID(150); // plazo.getStbValorCatalogoID());
-                if(discount!=null)
+                if (discount != null)
                     venta.setObjDescuentoID(discount.getSccDescuentoID());
+                else
+                    venta.setObjDescuentoID(null);
                 venta.setObjEstadoID(502);
                 venta.setOffline(true);
-                if(cuota!=null)
-                    venta.setObjModalidadPagoID(505 ); //cuota.getStbValorCatalogoID());
+                if (cuota != null)
+                    venta.setObjModalidadPagoID(505); //cuota.getStbValorCatalogoID());
                 venta.save();
 
-                for (Producto producto: productos) {
+                for (Producto producto : productos) {
                     FacturaProformaDetalle detalle = new FacturaProformaDetalle();
                     detalle.setCedula(customer.getCedula());
                     detalle.setTotal(producto.getPrecio_Credito());
@@ -532,8 +529,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                     detalle.save();
                 }
                 Log.d("NuevoVentaFragment", venta.toString());
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 cancel = true;
                 Log.d("Exception", ex.getMessage());
             }
@@ -542,11 +538,11 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
     }
 
 
-    private void SetDate(){
+    private void SetDate() {
         fecha = Calendar.getInstance().getTime();
         String day = new SimpleDateFormat("dd").format(fecha);    // always 2 digits
         String month = new SimpleDateFormat("MM").format(fecha);  // always 2 digits
         String year = new SimpleDateFormat("yyyy").format(fecha); // 4 digit year
-        txtfecha.setText(getString(R.string.calendar_date_picker_result_values,year,month, day));
+        txtfecha.setText(getString(R.string.calendar_date_picker_result_values, year, month, day));
     }
 }

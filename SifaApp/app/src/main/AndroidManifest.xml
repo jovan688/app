@@ -54,7 +54,8 @@
         <activity android:name=".VentaListActivity" />
         <activity android:name=".DevolucionListActivity" />
         <activity android:name=".EncargoListActivity" />
-        <activity android:name=".ActualizarActivity"></activity>
+        <activity android:name=".ActualizarActivity" />
+        <activity android:name=".ConfiguracionActivity"></activity>
     </application>
 
 </manifest>

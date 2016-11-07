@@ -28,6 +28,16 @@
             android:id="@+id/CustomerRecyclerview" />
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/message.lista.total.cartera"
+            android:textColor="@color/bb_tabletRightBorderDark"
+            android:gravity="center_horizontal|center_vertical"
+            android:textStyle="bold"
+            android:background="@drawable/mybotton2"
+            android:id="@+id/txtviewTotal" />
 
         <FrameLayout
             android:id="@+id/fragmentContainer"

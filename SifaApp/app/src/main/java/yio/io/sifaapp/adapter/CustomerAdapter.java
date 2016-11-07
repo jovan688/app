@@ -74,7 +74,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
             holder.txtviewcustomername.setText(cartera.getNombreCompleto());
             holder.txtviewamount.setText(cartera.getMontoCuota().toString());
             holder.txtviewdatepay.setText(cartera.getFechaAbono().toString());
-            holder.txtviewcity.setText("");
+            holder.txtviewcity.setText(cartera.getDireccion());
             holder.txtviewNum.setText(String.valueOf(cartera.getOrdenCobro()));
 
             holder.setClickListener(cartera, listener);

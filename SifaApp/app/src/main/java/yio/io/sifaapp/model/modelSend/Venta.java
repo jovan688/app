@@ -29,7 +29,7 @@ public class Venta extends BaseModel {
     @Column
     public int  objTerminoPagoID;
     @Column
-    public int  objDescuentoID;
+    public Integer objDescuentoID;
     @Column
     public String Fecha;
     @Column
@@ -58,6 +58,18 @@ public class Venta extends BaseModel {
     public int  UsuarioCreacion;
     @Column
     private Boolean offline;
+
+    public Boolean getNuevaventa() {
+        return nuevaventa;
+    }
+
+    public void setNuevaventa(Boolean nuevaventa) {
+        this.nuevaventa = nuevaventa;
+    }
+
+    @Column
+
+    private Boolean nuevaventa;
 
     public int getObjModalidadPagoID() {
         return ObjModalidadPagoID;
@@ -129,11 +141,11 @@ public class Venta extends BaseModel {
         this.objTerminoPagoID = objTerminoPagoID;
     }
 
-    public int getObjDescuentoID() {
+    public Integer getObjDescuentoID() {
         return objDescuentoID;
     }
 
-    public void setObjDescuentoID(int objDescuentoID) {
+    public void setObjDescuentoID(Integer objDescuentoID) {
         this.objDescuentoID = objDescuentoID;
     }
 

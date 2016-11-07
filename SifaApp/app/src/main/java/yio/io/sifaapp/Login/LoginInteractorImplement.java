@@ -22,7 +22,17 @@ public class LoginInteractorImplement implements LoginInteractor {
     }
 
     @Override
+    public void onSingOff() {
+        loginRepository.signOut();
+    }
+
+    @Override
     public void doSignIn(String username, String password) {
         loginRepository.signIn(username,password);
+    }
+
+    @Override
+    public void DownloadServer() {
+        loginRepository.DownloadServer();
     }
 }

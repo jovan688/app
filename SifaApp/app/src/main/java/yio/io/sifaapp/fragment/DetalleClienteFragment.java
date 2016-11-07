@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
@@ -25,7 +28,6 @@ import yio.io.sifaapp.Cartera.IDetallaCartera;
 import yio.io.sifaapp.Cartera.productoPresenter;
 import yio.io.sifaapp.Cartera.productoPresenterImp;
 import yio.io.sifaapp.CarteraListActivity;
-import yio.io.sifaapp.EncargoListActivity;
 import yio.io.sifaapp.R;
 import yio.io.sifaapp.Venta.AppDialog;
 import yio.io.sifaapp.adapter.productAdapter;
@@ -70,6 +72,12 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
     Customer customer;
     @Bind(R.id.btnnoabonar)
     Button btnnoabonar;
+    @Bind(R.id.txtreferencia)
+    EditText txtreferencia;
+    @Bind(R.id.btnreferencia)
+    Button btnreferencia;
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
 
     public DetalleClienteFragment() {
         presenter = new productoPresenterImp(this);
@@ -127,7 +135,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         AppDialog.showMessage(getContext(), "", AppDialog.DialogType.DIALOGO_ABONO, new AppDialog.OnAbonoClickListener() {
             @Override
             public void onButtonClick(int actionId, Object o) {
-                if (!save((Float)o)) {
+                if (!save((Float) o)) {
                     Intent i = new Intent(getActivity(), CarteraListActivity.class);
                     startActivity(i);
                 }
@@ -208,11 +216,10 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
 
     }
 
-    public boolean save(Float amt){
-        boolean cancelar=false;
+    public boolean save(Float amt) {
+        boolean cancelar = false;
 
-        if (cartera.getCobrado() == false)
-        {
+        if (cartera.getCobrado() == false) {
             Cobro cobro = new Cobro();
             cobro.setAbono(true);
             if (amt == cartera.getSaldo())
@@ -235,11 +242,10 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
             cartera.setCobrado(true);
             cartera.save();
 
-        }
-        else {
+        } else {
             cancelar = true;
         }
-        return  cancelar;
+        return cancelar;
     }
 
     private void Init() {
@@ -285,6 +291,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         this.customer = customer;
         if (customer != null) {
             txtviewtelefono.setText(customer.getTelefonos());
+            txtreferencia.setText(customer.getReferencia());
         }
         clientePresenter.onDestroy();
     }
@@ -316,4 +323,45 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
             }
         });
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @OnClick(R.id.btnreferencia)
+    public void save_referencia(){
+        if (!savereferencia()) {
+            AppDialog.showMessage(getActivity(), "", "Se ha Guardado la referencia Correctamente!",
+                    AppDialog.DialogType.DIALOGO_ALERTA,
+                    new AppDialog.OnButtonClickListener() {
+                        @Override
+                        public void onButtonClick(AlertDialog _dialog, int actionId) {
+                            if (AppDialog.OK_BUTTOM == actionId) {
+                                _dialog.dismiss();
+                                Intent i = new Intent(getActivity(), CarteraListActivity.class);
+                                startActivity(i);
+                            }
+                        }
+                    });
+        }
+    }
+
+    private boolean savereferencia(){
+        boolean cancelar = false;
+        try
+        {
+            String referencia = String.valueOf(txtreferencia.getText());
+            customer.setReferencia(referencia);
+            customer.save();
+
+        }
+        catch (Exception ex ) {
+            cancelar = true;
+            Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
+        }
+        return cancelar;
+    }
+
 }

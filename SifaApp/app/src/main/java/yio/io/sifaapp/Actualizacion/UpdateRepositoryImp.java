@@ -149,14 +149,17 @@ public class UpdateRepositoryImp implements IUpdateRepository {
         }
         else
         {
-
+            postEvent(Events.OnMessage, null, "Sincronizando Clientes ...");
             // Datos a enviar
             List<Cliente> clientes = new ArrayList<Cliente>();
 
             List<Customer> list = new Select().from(Customer.class).where(String.format("offline=1")).queryList();
 
-            if(list.size() > 0 ) {
-
+            if(list.size() == 0 ) {
+                postEvent(Events.onClienteUpdateSucess, null);
+            }
+            else
+            {
                 for (Customer customer : list) {
                     Cliente c = new Cliente();
                     c.setApellido1(customer.getApellido1());
@@ -189,19 +192,15 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         public void onResponse(Call<Integer> call, Response<Integer> response) {
                             contador--;
                             if (response.body() != 0) {
-                                Log.d("UpdateRepository", String.valueOf(response.body()));
+                                // actualizar offline
                                 if (contador == 0) {
                                     postEvent(Events.onClienteUpdateSucess, null);
-                                } else {
-
+                                }
+                                else {
                                     postEvent(Events.UpdateClienteContador, null, contador);
                                 }
-
                             }
-                            if (response.isSuccessful()) {
-                                Log.d("UpdateRepository", String.valueOf(response.isSuccessful()));
-
-                            }
+                            Log.d("UpdateRepository", String.valueOf(response.body()));
                         }
 
                         @Override
@@ -209,14 +208,13 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                             contador--;
                             Log.d("UpdateRepository", String.valueOf(t.getCause()));
                             postEvent(Events.OnMessage, null, t.getMessage());
+                            if (contador == 0) {
+                                postEvent(Events.onClienteUpdateSucess, null);
+                            }
                         }
                     });
                 }
 
-            }
-            else
-            {
-               postEvent(Events.onClienteUpdateSucess, null);
             }
         }
     }

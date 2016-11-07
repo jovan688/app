@@ -82,7 +82,25 @@ public class LoginPresenterImplement implements LoginPresenter {
             case Events.onSyncClientesError:
                 onSyncError(event.getErrorMessage());
                 break;
+
+            case Events.onSingOff :
+                loginView.onSingOff();
+                break;
         }
+    }
+
+    @Override
+    public void onSingOff() {
+        loginInteractor.onSingOff();
+    }
+
+    @Override
+    public void DownloadServer() {
+        if(loginView!=null){
+            loginView.disableInputs();
+            loginView.showProgress();
+        }
+        loginInteractor.DownloadServer();
     }
 
 

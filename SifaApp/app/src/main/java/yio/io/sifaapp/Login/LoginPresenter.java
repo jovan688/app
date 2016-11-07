@@ -14,5 +14,7 @@ public interface LoginPresenter {
     void checkAuthenticatedUser(Context context);
     void validateLogin(String username, String password);
     void onEventMainThread(Events event);
+    void onSingOff();
+    void DownloadServer();
 
 }

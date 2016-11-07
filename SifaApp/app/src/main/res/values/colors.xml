@@ -21,8 +21,9 @@
     <color name="CarolinaBlue">#ff42a7</color>
     <color name="colorRed">#D50000</color>
     <color name="window_background">#FFF5F5F5</color>
-
+    <color name="Blue">#0000FF</color>
     <color name="primaryColor">#346D7D</color>
     <color name="primaryDarkColor">#1F515F</color>
     <color name="accentColor">#03A9F4</color>
+    <color name="LightSeaGreen">#20B2AA</color>
 </resources>

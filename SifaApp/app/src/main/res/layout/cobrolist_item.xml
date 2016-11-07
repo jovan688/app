@@ -85,6 +85,7 @@
                             android:gravity="center_vertical"
                             android:layout_gravity="left"
                             android:textIsSelectable="false"
+                            android:layout_marginRight="6dp"
                             android:textSize="12sp" />
 
                         <TextView
@@ -95,6 +96,7 @@
                             android:textColor="@color/moneyitem"
                             android:id="@+id/txtviewamount"
                             android:textSize="12sp"
+                            android:layout_marginRight="6dp"
                             android:gravity="center_vertical" />
 
                         <TextView

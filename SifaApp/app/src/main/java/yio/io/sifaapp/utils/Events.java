@@ -99,7 +99,7 @@ public class Events {
 
     public  final static int onCarteraDetalleDataSucess =64;
 
-
+    public  final static int onSingOff =65;
 
     private  int eventype;
     private  String errorMessage;

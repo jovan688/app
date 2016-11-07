@@ -139,6 +139,7 @@
                 android:paddingLeft="12dp"
                 android:paddingTop="12dp"
                 android:text="Productos"
+                android:layout_gravity="center_vertical"
                 android:textColor="@color/colorPurple"
                 android:background="@color/colorGrayLigth"
                 />
@@ -164,6 +165,7 @@
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/spinner_cuotas"
                 android:hint="cuotas"
+                android:background="@drawable/mybotton2"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -230,6 +232,7 @@
                 android:text="DESCUENTO"
                 android:id="@+id/textView5"
                 android:textColor="@color/colorPurple" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -287,49 +290,56 @@
     </LinearLayout>
 
             <LinearLayout
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <TextView
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingLeft="12dp"
-                android:paddingTop="12dp"
-                android:text="Monto total"
-                android:textColor="@color/colorPurple"
-                android:background="@color/colorGrayLigth"
-                />
+                android:layout_height="50dp">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="12dp"
+                    android:text="Monto total"
+                    android:textColor="@color/colorPurple"
+                    android:background="@color/colorGrayLigth"
+                    />
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="6dp"
-            android:orientation="horizontal"
-            android:gravity="bottom">
-        <TextView
-            android:id="@+id/txtcustomercuotatitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/ic_monetization_on_purple_24dp"
-            android:textColor="@color/colorGrayDark"
-            />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtcustomercuota"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="C$ 0"
-            android:textStyle="bold"
-            android:textColor="@color/colorGrayDark"
-            />
-    </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dp"
+                    android:orientation="horizontal"
+                    android:gravity="bottom">
+                <TextView
+                    android:id="@+id/txtcustomercuotatitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/ic_monetization_on_purple_24dp"
+                    android:textColor="@color/colorGrayDark" />
 
-    <LinearLayout
+                <TextView
+                    android:id="@+id/txtcustomercuota"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="C$ 0"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorGrayDark"
+                    android:layout_weight="1.5" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:text="Nueva Venta"
+                    android:id="@+id/chknewsale"
+                    android:layout_weight="0.5" />
+            </LinearLayout>
+
+            <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="6dp"
@@ -338,48 +348,54 @@
 
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:hint="Observaciones"
+            android:scrollbars="vertical"
+            android:layout_weight="1"
             android:inputType="textMultiLine"
-            android:ems="10"
+            android:background="@drawable/mybotton2"
             android:id="@+id/EditText_observaciones" />
+
+
+
     </LinearLayout>
 
             <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="vertical"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
-        android:weightSum="0"
-        android:layout_weight="4">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:orientation="vertical"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:weightSum="0"
+                android:layout_weight="4">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Aceptar"
-            android:id="@+id/btnaceptar"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/mybutton"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/colorPurple"
-            android:layout_gravity="bottom|center_horizontal" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Aceptar"
+                    android:id="@+id/btnaceptar"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/mybutton"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/colorPurple"
+                    android:layout_gravity="bottom|center_horizontal" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/cancelar"
-            android:id="@+id/btncancel"
-            android:background="@color/colorPurple"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:textColor="@color/colorwhite"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|center_horizontal" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancelar"
+                    android:id="@+id/btncancel"
+                    android:background="@color/colorPurple"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/colorwhite"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom|center_horizontal" />
 
-    </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

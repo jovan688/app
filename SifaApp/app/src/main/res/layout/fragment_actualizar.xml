@@ -2,10 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="yio.io.sifaapp.fragment.ActualizarFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
 
     <LinearLayout
         android:orientation="vertical"
@@ -17,183 +15,258 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Actualizar Cliente"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
                 android:layout_weight="4"
-                android:layout_marginTop="10dp"
-                android:textAlignment="gravity"
-                android:textColor="#212121"
-                android:gravity="center_vertical" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="10dp"
-                android:text="100"
-                android:id="@+id/clientenum"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.93"
-                android:background="@drawable/round_button"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:gravity="center_vertical"
-                android:layout_marginRight="10dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Actualizar Cliente"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="gravity"
+                    android:textColor="#212121"
+                    android:gravity="center_vertical" />
 
+            </LinearLayout>
 
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@android:color/black"
-            android:layout_marginTop="10dp" />
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Actualizar Cartera"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="4"
-                android:layout_marginTop="10dp"
-                android:textAlignment="gravity"
-                android:textColor="#212121"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:text="100"
-                android:id="@+id/cateranum"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.93"
-                android:background="@drawable/round_button"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:gravity="center_vertical"
-                android:layout_marginRight="10dp" />
-
-
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@android:color/black"
-            android:layout_marginTop="10dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Actualizar Registro de Ventas"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="4"
-                android:textColor="#212121"
-                android:layout_marginTop="10dp"
-                android:textAlignment="gravity"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:id="@+id/ventaenum"
-                android:layout_width="15dp"
-                android:text="100"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.60"
-                android:background="@drawable/round_button"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:gravity="center_vertical"
-                android:layout_marginRight="10dp" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/black" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Actualizar Devoluciones"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:textColor="#212121"
-                android:layout_weight="4"
-                android:layout_marginTop="10dp"
-                android:textAlignment="gravity"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:id="@+id/devolucionnum"
-                android:layout_width="10dp"
-                android:text="100"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.20"
-                android:background="@drawable/round_button"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:gravity="center_vertical"
-                android:layout_marginRight="10dp" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/black" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Actualizar Encargos"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:textColor="#212121"
-                android:layout_weight="4"
-                android:layout_marginTop="10dp"
-                android:textAlignment="gravity"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:id="@+id/encargonum"
-                android:layout_width="10dp"
-                android:text="100"
-                android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:gravity="center_vertical"
-                android:layout_marginRight="10dp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="100"
+                    android:id="@+id/clientenum"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_button"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/black"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Actualizar Cartera"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="gravity"
+                    android:textColor="#212121"
+                    android:gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="100"
+                    android:id="@+id/cateranum"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_button"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/black"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Actualizar Registro de Ventas"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="gravity"
+                    android:textColor="#212121"
+                    android:gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="100"
+                    android:id="@+id/ventaenum"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_button"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/black"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Actualizar Devoluciones"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="gravity"
+                    android:textColor="#212121"
+                    android:gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="100"
+                    android:id="@+id/devolucionnum"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_button"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/black"
+            android:layout_marginTop="10dp" />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Actualizar Encargos"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="gravity"
+                    android:textColor="#212121"
+                    android:gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="100"
+                    android:id="@+id/encargonum"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_button"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -208,15 +281,16 @@
 
         <LinearLayout
             android:orientation="horizontal"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginRight="10dp">
+
 
                 <ImageButton
                     android:layout_width="60dp"
@@ -226,6 +300,7 @@
                     android:src="@drawable/ic_backup_white_24dp"
                     android:id="@+id/Local"
                     android:background="@drawable/round_button" />
+
                 <TextView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -236,7 +311,6 @@
                     android:layout_gravity="center_horizontal" />
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -264,7 +338,6 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
         <LinearLayout
@@ -275,7 +348,7 @@
             <TextView
                 android:id="@+id/txtmessage"
                 android:layout_gravity="center"
-                android:text="Message"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

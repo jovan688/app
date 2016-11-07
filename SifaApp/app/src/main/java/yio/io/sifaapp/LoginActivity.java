@@ -132,6 +132,8 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
     @Override
     public void goToMainScreen() {
         hide();
+        dlg = null;
+        loginPresenter.onDestroy();
         Intent intent = new Intent(this, CarteraListActivity.class);
         startActivity(intent);
 
@@ -149,6 +151,11 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
         showStatus(message);
         //Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
         //toast.show();
+    }
+
+    @Override
+    public void onSingOff() {
+        finish();
     }
 
     private void SetInputs(boolean enabled) {
