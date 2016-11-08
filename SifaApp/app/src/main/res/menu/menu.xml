@@ -21,13 +21,16 @@
     </item>
     <item
         android:id="@+id/mnupdate"
-
         app:showAsAction="ifRoom"
         android:title="ACTUALIZACION DE DATOS">
     </item>
     <item
+        android:id="@+id/mnconfig"
+        app:showAsAction="ifRoom"
+        android:title="CONFIGURACION">
+    </item>
+    <item
         android:id="@+id/mnsession"
-
         app:showAsAction="ifRoom"
         android:title="CERRAR SESION">
     </item>

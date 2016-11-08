@@ -22,6 +22,7 @@ import yio.io.sifaapp.Login.LoginPresenter;
 import yio.io.sifaapp.Login.LoginPresenterImplement;
 import yio.io.sifaapp.fragment.NavigationDrawerFragment;
 import yio.io.sifaapp.fragment.VentaListFragment;
+import yio.io.sifaapp.model.Configuration;
 
 public class BaseActivity extends AppCompatActivity  implements NavigationDrawerFragment.OnItemClickListener   , ILoginView {
 
@@ -89,7 +90,11 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
                 intent = new Intent(this, ActualizarActivity.class);
                 startActivity(intent);
                 break;
-            case 5 :
+            case 5:
+                intent = new Intent(this, ConfiguracionActivity.class);
+                startActivity(intent);
+                break;
+            case 6 :
                 loginPresenter.onSingOff();
                 // Cerrar session
                 break;

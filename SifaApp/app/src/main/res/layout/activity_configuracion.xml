@@ -23,17 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -79,38 +68,14 @@
                             android:scrollHorizontally="true"
                             android:singleLine="true"
                             android:textSize="12dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/cfglbl_urlws2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/cfgtextv_detalleurlws"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Url Servidor2 :" />
-
-                        <EditText
-                            android:id="@+id/cfgtextv_detalleurlws2"
-                            android:layout_width="fill_parent"
-                            android:layout_height="28dp"
-                            android:layout_below="@+id/cfglbl_urlws2"
-                            android:layout_marginLeft="10dp"
-                            android:background="@drawable/style_textbox"
-                            android:nextFocusDown="@+id/cfgtextv_detallecodempresa"
-                            android:nextFocusRight="@+id/cfgtextv_detallecodempresa"
-                            android:paddingBottom="1dp"
-                            android:paddingTop="8dp"
-                            android:scrollHorizontally="true"
-                            android:singleLine="true"
-                            android:textSize="12dp"
+                            android:layout_marginRight="5dp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/ccategoria2"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/cfgtextv_detalleurlws2"
+                            android:layout_below="@+id/cfgtextv_detalleurlws"
                             android:layout_marginTop="20dp"
                             android:text="Aplicación"
                             android:textColor="@color/Blue" />
@@ -147,35 +112,10 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/cfglbl_bluetoothprinter"
-                            android:layout_width="85dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/cfglbl_deviceid"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="18dp"
-                            android:text="Impresora :" />
-
-                        <EditText
-                            android:id="@+id/cf_bluetoothprinter"
-                            android:layout_width="fill_parent"
-                            android:layout_height="25dp"
-                            android:layout_below="@+id/cfglbl_deviceid"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_toRightOf="@+id/cfglbl_bluetoothprinter"
-                            android:background="@drawable/style_textbox"
-                            android:enabled="false"
-                            android:lines="1"
-                            android:paddingBottom="1dp"
-                            android:paddingTop="8dp"
-                            android:textSize="12dp"
-                            android:textStyle="bold" />
-
-                        <TextView
                             android:id="@+id/ccategoria3"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/cfglbl_bluetoothprinter"
+                            android:layout_below="@+id/cfglbl_deviceid"
                             android:layout_marginTop="25dp"
                             android:text="Datos del Usuario"
                             android:textColor="@color/Blue" />
@@ -212,6 +152,7 @@
                             android:paddingTop="8dp"
                             android:singleLine="true"
                             android:textSize="12dp"
+                            android:layout_marginRight="5dp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -236,25 +177,30 @@
                             android:paddingTop="8dp"
                             android:singleLine="true"
                             android:textSize="12dp"
+                            android:layout_marginRight="5dp"
                             android:textStyle="bold" />
 
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:text="GUARDAR"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/white"
+                            android:background="@color/colorPurple"
+                            android:layout_below="@id/cfglbl_user"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/btnsaveconfg" />
+
+
                     </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:weightSum="0.5"
-                    android:layout_weight="10">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:id="@+id/imageButton" />
-                </LinearLayout>
-
-            </LinearLayout>
 
         </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button3" />
 
 </LinearLayout>
