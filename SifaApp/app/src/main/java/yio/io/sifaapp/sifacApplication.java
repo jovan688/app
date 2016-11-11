@@ -12,11 +12,15 @@ import yio.io.sifaapp.model.Configuration;
 
 public class sifacApplication extends Application {
 
+
+    public static Context ctx;
+
     @Override
     public void onCreate() {
         super.onCreate();
         FlowManager.init(this);
         Log.d("sifacApplication","InitApplication");
+        setContext(this);
     }
 
     @Override
@@ -25,8 +29,12 @@ public class sifacApplication extends Application {
         FlowManager.destroy();
     }
 
-    public  Context getContext(){
-        return getApplicationContext().getApplicationContext();
+    public static Context getContext() {
+        return ctx;
+    }
+
+    public static Context setContext(sifacApplication app) {
+        return ctx =app;
     }
 
     public int getUsuario (){
