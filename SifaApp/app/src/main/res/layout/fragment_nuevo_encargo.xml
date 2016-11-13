@@ -144,12 +144,13 @@
               />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="25dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Encargos"
                 android:paddingLeft="5dp"
                 android:textColor="@color/white"
                 android:background="@color/colorPurple"
+                android:layout_gravity="center_vertical"
                 android:textAlignment="center"
                 android:id="@+id/lblEncargos" />
 

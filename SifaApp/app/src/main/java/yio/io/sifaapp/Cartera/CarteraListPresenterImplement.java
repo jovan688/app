@@ -62,7 +62,15 @@ public class CarteraListPresenterImplement implements ICarteraListPresenter {
             case  Events.onSyncOrden:
                 getCarteraList(1);
                 break;
+            case Events.onUpdateAmount:
+                view.updateAmount((Float)event.getObject());
+                break;
         }
+    }
+
+    @Override
+    public void GetAmountCobrado(int rutaid) {
+        CarteraInteractor.GetAmountCobrado(rutaid);
     }
 
     private void setData(Events event){

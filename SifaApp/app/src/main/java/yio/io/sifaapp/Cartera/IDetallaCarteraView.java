@@ -15,7 +15,7 @@ public interface IDetallaCarteraView {
 
     void  carteraDeleted(Cartera cartera);
 
-
+    void updateAmount(Float amount);
 
 
 

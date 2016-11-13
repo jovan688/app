@@ -131,6 +131,8 @@ public class CustomerDialog extends Dialog implements IDialogView {
         adapter.setData(l);
         adapter.notifyDataSetChanged();
 
+        //presenter.onDestroy();
+
     }
 
     private void LoadRecycler() {

@@ -107,4 +107,6 @@ public class VentaListFragment extends Fragment implements OnItemClickListener, 
     public void onCustomer(Customer c) {
         adapter.setCustomer(c);
     }
+
+
 }

@@ -38,7 +38,7 @@ public class CarteraListActivity extends BaseActivity {
                 if (menuItemId == R.id.mnlist) {
                     Fragment fragment = new CarteraListFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                    manager.beginTransaction().add(R.id.fragment_container,fragment).commit();
                 }
                 if(menuItemId == R.id.mncontact){
                     Fragment fragment = new NuevoClienteFragment();
@@ -74,5 +74,15 @@ public class CarteraListActivity extends BaseActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

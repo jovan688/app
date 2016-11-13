@@ -23,7 +23,7 @@ public class EncargoRepositoryIMP implements  EncargoRepository {
     @Override
     public void GetCatergorias() {
         List<Categoria> lista = new Select().from(Categoria.class).queryList();
-        postEvent(Events.onCategoriaSucess,lista);
+        postEvent(Events.onCategoriaEncargoSucess,lista);
     }
 
     @Override

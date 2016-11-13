@@ -11,4 +11,5 @@ public interface ICarteraListInteractor {
     void FetchData(int rutaid);
     void executeUpdateOrden(int fromPosition, int toPosition, Cartera cartera);
     void executeDelete(Cartera cartera);
+    void GetAmountCobrado(int rutaid);
 }

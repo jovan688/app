@@ -371,4 +371,13 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
         }
         return cancel;
     }
+
+    @OnClick(R.id.btncancelar)
+    public void cancelar(){
+        getActivity().getFragmentManager().popBackStack();
+
+
+    }
+
+
 }

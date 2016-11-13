@@ -10,4 +10,6 @@ public interface ICarteraListRepository {
     void FetchData(int rutaid);
     void update(int fromPosition, int toPosition, Cartera cartera);
 
+    void GetAmountCobrado(int rutaid);
+
 }

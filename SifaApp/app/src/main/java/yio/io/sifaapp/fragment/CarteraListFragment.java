@@ -2,7 +2,6 @@ package yio.io.sifaapp.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
@@ -56,6 +55,8 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     List<Ruta> rutas;
     @Bind(R.id.spinner_ruta)
     MaterialSpinner spinnerRuta;
+    @Bind(R.id.txtviewTotal)
+    TextView txtviewTotal;
     private ItemTouchHelper mItemTouchHelper;
 
 
@@ -81,6 +82,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         presenter = new CarteraListPresenterImplement(this);
         presenter.onCreated();
 
+
         InitAdapter();
 
         CustomerRecyclerview.setHasFixedSize(true);
@@ -100,7 +102,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
     private void InitAdapter() {
         if (adapter == null) {
-            adapter = new CustomerAdapter(getActivity() , this, new ArrayList<Cartera>(), this, this);
+            adapter = new CustomerAdapter(getActivity(), this, new ArrayList<Cartera>(), this, this);
         }
     }
 
@@ -120,6 +122,11 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     @Override
     public void carteraDeleted(Cartera cartera) {
 
+    }
+
+    @Override
+    public void updateAmount(Float amount) {
+        txtviewTotal.setText(txtviewTotal.getText()+ " "+ String.valueOf(amount));
     }
 
     @Override
@@ -186,8 +193,8 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
         this.rutas = rutas;
 
-      //  ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_dropdown_item_1line, rutas);
-        if(spinnerRuta!=null){
+        //  ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_dropdown_item_1line, rutas);
+        if (spinnerRuta != null) {
             spinnerRuta.setItems(rutas);
             spinnerRuta.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
                 @Override
@@ -196,9 +203,10 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
                     presenter.getCarteraList(r.getStbRutaID());
                 }
             });
-            spinnerRuta.setTextColor(getResources().getColor( R.color.colorPurple));
+            spinnerRuta.setTextColor(getResources().getColor(R.color.colorPurple));
             Ruta r = rutas.get(0);
             presenter.getCarteraList(r.getStbRutaID());
+            presenter.GetAmountCobrado(r.getStbRutaID());
         }
 
     }

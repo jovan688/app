@@ -40,7 +40,7 @@ public class EncargoPresenterIMP implements EncargoPresenter {
     @Override
     public void onEventMainThread(Events event) {
         switch (event.getEventype()){
-            case Events.onCategoriaSucess:
+            case Events.onCategoriaEncargoSucess:
                 view.fetchCategorias((List<Categoria>) event.getObject());
                 break;
             case Events.onFetchDataSucess:

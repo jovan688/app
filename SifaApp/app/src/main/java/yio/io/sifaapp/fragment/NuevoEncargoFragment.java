@@ -120,6 +120,7 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_nuevo_encargo, container, false);
+
         presenter.onCreated();
         ButterKnife.bind(this, view);
 
@@ -182,17 +183,6 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
             }
         });
 
-        /*
-        txtproductoname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus == false) {
-                    ProductRecyclerview.setVisibility(View.GONE);
-                    productoname = txtproductoname.getText().toString();
-                }
-            }
-        });
-        */
         LoadRecycler();
     }
 
@@ -234,6 +224,7 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
             categoria = categorias.get(0);
             presenter.GetProductos(categoria.getCategoriaID());
         }
+        //presenter.onDestroy();
     }
 
     @Override
@@ -284,12 +275,12 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
 
         boolean cancel = false;
         EditText focus = null;
-
+        /*
         if (TextUtils.isEmpty(productoname)) {
             txtproductoname.setError(getString(R.string.message_vacio_Error));
             cancel = true;
             focus = txtproductoname;
-        }
+        }*/
         if (customer == null) {
             txtname.setError(getString(R.string.message_vacio_Error));
             cancel = true;

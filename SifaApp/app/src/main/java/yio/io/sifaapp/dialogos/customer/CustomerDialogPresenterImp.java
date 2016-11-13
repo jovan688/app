@@ -46,7 +46,7 @@ public class CustomerDialogPresenterImp implements CustomerDialogPresenter {
     @Override
     public void onEventMainThread(Events event) {
         switch (event.getEventype()){
-            case Events.onFetchDataSucess :
+            case Events.onFetchCustomerSucess :
                 devolucionView.onFetchData( (List<Object>)event.getObject());
                 break;
         }

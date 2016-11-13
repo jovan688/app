@@ -60,7 +60,7 @@ public class Events {
 
     public final static int onPaisesSucess=39;
 
-    public final static int onCategoriaSucess=40;
+    public final static int onCategoriaEncargoSucess=40;
 
     public final static int onCuotasSucess=41;
 
@@ -100,6 +100,9 @@ public class Events {
     public  final static int onCarteraDetalleDataSucess =64;
 
     public  final static int onSingOff =65;
+
+    public  final static int onUpdateAmount =66;
+    public  final static int onFetchCustomerSucess =67;
 
     private  int eventype;
     private  String errorMessage;

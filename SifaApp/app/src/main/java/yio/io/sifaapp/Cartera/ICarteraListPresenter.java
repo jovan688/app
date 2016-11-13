@@ -14,5 +14,5 @@ public interface ICarteraListPresenter {
     void  removeCartera(Cartera cartera);
     void  updatedCartera(int fromPosition, int toPosition, Cartera cartera);
     void  onEventMainThread(Events event);
-
+    void  GetAmountCobrado(int rutaid);
 }

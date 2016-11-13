@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yio.io.sifaapp.model.Cartera;
+import yio.io.sifaapp.model.Cobro;
 import yio.io.sifaapp.utils.EventBus;
 import yio.io.sifaapp.utils.Events;
 import yio.io.sifaapp.utils.GreenRobotEventBus;
@@ -54,6 +55,18 @@ public class CarteraListRepositoryImplement implements ICarteraListRepository {
         cartera.save();
         postEvent(Events.onSyncOrden,null);
     }
+
+    @Override
+    public void GetAmountCobrado(int rutaid) {
+
+        Float amount = new Float(0);
+        List<Cobro>  list = new Select().from(Cobro.class).where(String.format("objStbRutaID=%d",rutaid)).queryList();
+        for (Cobro item: list) {
+            amount += item.getMontoAbonado();
+        }
+        postEvent(Events.onUpdateAmount, amount);
+    }
+
 
     private void postEvent(int type, Object obj) {
         Events event = new Events();

@@ -28,4 +28,9 @@ public class CarteraListInteractorImplement implements  ICarteraListInteractor{
     public void executeDelete(Cartera cartera) {
 
     }
+
+    @Override
+    public void GetAmountCobrado(int rutaid) {
+        repository.GetAmountCobrado(rutaid);
+    }
 }
