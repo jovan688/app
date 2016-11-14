@@ -10,9 +10,9 @@ import yio.io.sifaapp.sifacApplication;
  */
 public class ConfiguracionServicio {
 
-    private static String URL = ModelConfiguracion.getURL_SERVER(sifacApplication.getContext()); // "http://sifacc.azurewebsites.net/SifaccService.svc/";
+    private static String URL =ModelConfiguracion.getURL_SERVER(sifacApplication.getContext()); // "http://sifacc.azurewebsites.net/SifaccService.svc/";
 
-    public static String getURL() {
+    public static String  getURL() {
         return URL;
     }
 

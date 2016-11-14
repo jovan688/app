@@ -17,7 +17,9 @@ public class ModelConfiguracion {
     public static String getURL_SERVER(Context cnt)
     {
         pref = cnt.getSharedPreferences("VConfiguracion", Context.MODE_PRIVATE);
-        return pref.getString("url_server", "http://sifacc.azurewebsites.net/SifaccService.svc/");
+        String url = pref.getString("url_server", "http://sifacc.azurewebsites.net/SifaccService.svc/");
+
+        return url;
     }
 
     public static vmConfiguracion getVMConfiguration(Context cnt)

@@ -450,91 +450,102 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
         boolean cancel = false;
         TextView focus = null;
 
-        if (TextUtils.isEmpty(name)) {
-            txtbuscar.setError(getString(R.string.message_vacio_Error));
-            focus = txtbuscar;
-            cancel = true;
-        } else if (fecha == null) {
-            txtfecha.setError(getString(R.string.message_vacio_Error));
-            focus = txtfecha;
-            cancel = true;
-        } else if (montosindescuento == 0) {
-            txtcustomercuota.setError(getString(R.string.message_vacio_Error));
-            focus = txtcustomercuota;
-            cancel = true;
-        } else if (radioSi.isChecked()) {
+        try
+        {
 
-            descuento = Float.valueOf(txtDescuento.getText().toString());
-
-            if (descuento == 0) {
-                txtDescuento.setError("Error!! Descuento no puede ser 0.");
-                focus = txtDescuento;
+            if (TextUtils.isEmpty(name)) {
+                txtbuscar.setError(getString(R.string.message_vacio_Error));
+                focus = txtbuscar;
                 cancel = true;
-            } else {
-                for (Descuento item : this.descuentos) {
-                    if (item.getPlazoPago().equals(Float.valueOf(plazo.getCodigo()))) {
-                        discount = item;
-                        break;
+            }
+            else if (fecha == null) {
+                txtfecha.setError(getString(R.string.message_vacio_Error));
+                focus = txtfecha;
+                cancel = true;
+            }
+            else if (montosindescuento == 0) {
+                txtcustomercuota.setError(getString(R.string.message_vacio_Error));
+                focus = txtcustomercuota;
+                cancel = true;
+            }
+            else if (radioSi.isChecked()) {
+
+                descuento = Float.valueOf(txtDescuento.getText().toString());
+
+                if (descuento == 0) {
+                    txtDescuento.setError("Error!! Descuento no puede ser 0.");
+                    focus = txtDescuento;
+                    cancel = true;
+                } else {
+                    for (Descuento item : this.descuentos) {
+                        if (item.getPlazoPago().equals(Float.valueOf(plazo.getCodigo()))) {
+                            discount = item;
+                            break;
+                        }
+                    }
+
+                    if (discount == null) {
+                        // ERROR NO SE ENCONTRO DESCUENTO
+                        cancel = true;
+                    } else if (descuento < (montosindescuento * discount.getDescuentoMinimo())) {
+                        txtDescuento.setError(getString(R.string.message_descuento_minimo_Error));
+                        focus = txtDescuento;
+                        cancel = true;
+                    } else if (descuento > (montosindescuento * discount.getDescuentoMaximo())) {
+                        txtDescuento.setError(getString(R.string.message_descuento_maximo_Error));
+                        focus = txtDescuento;
+                        cancel = true;
                     }
                 }
+            }
+            if (cancel) {
+                focus.requestFocus();
+            }
+            else
+            {
 
-                if (discount == null) {
-                    // ERROR NO SE ENCONTRO DESCUENTO
-                    cancel = true;
-                } else if (descuento < (montosindescuento * discount.getDescuentoMinimo())) {
-                    txtDescuento.setError(getString(R.string.message_descuento_minimo_Error));
-                    focus = txtDescuento;
-                    cancel = true;
-                } else if (descuento > (montosindescuento * discount.getDescuentoMaximo())) {
-                    txtDescuento.setError(getString(R.string.message_descuento_maximo_Error));
-                    focus = txtDescuento;
-                    cancel = true;
-                }
+                    Venta venta = new Venta();
+                    venta.setNuevaventa(chknewsale.isChecked());
+                    venta.setCedula(customer.getCedula());
+                    String fech = new SimpleDateFormat("yyyy-MM-dd").format(fecha);
+                    venta.setFecha(fech);
+                    venta.setDescuento(descuento);
+                    venta.setObjVendedorID(((sifacApplication) getActivity().getApplication()).getUsuario());
+                    venta.setObservaciones(EditTextObservaciones.getText().toString());
+                    venta.setPrima(0);
+                    venta.setSaldo(montocondescuento);
+                    venta.setTotal(montosindescuento);
+                    venta.setObjTerminoPagoID(150); // plazo.getStbValorCatalogoID());
+                    if (discount != null)
+                        venta.setObjDescuentoID(discount.getSccDescuentoID());
+                    else
+                        venta.setObjDescuentoID(null);
+                    venta.setObjEstadoID(502);
+                    venta.setOffline(true);
+                    if (cuota != null)
+                        venta.setObjModalidadPagoID(505); //cuota.getStbValorCatalogoID());
+                    venta.save();
+
+                    for (Producto producto : productos) {
+                        FacturaProformaDetalle detalle = new FacturaProformaDetalle();
+                        detalle.setCedula(customer.getCedula());
+                        detalle.setTotal(producto.getPrecio_Credito());
+                        detalle.setCantidad(1);
+                        detalle.setDescuento(0);
+                        detalle.setObjSivProductoID(producto.getSivProductoID());
+                        detalle.setSubtotal(producto.getPrecio_Credito());
+                        detalle.save();
+                    }
+                    Log.d("NuevoVentaFragment", venta.toString());
+
             }
         }
-        if (cancel) {
-            focus.requestFocus();
-        } else {
-            try {
-                Venta venta = new Venta();
-                venta.setNuevaventa(chknewsale.isChecked());
-                venta.setCedula(customer.getCedula());
-                String fech = new SimpleDateFormat("yyyy-MM-dd").format(fecha);
-                venta.setFecha(fech);
-                venta.setDescuento(descuento);
-                venta.setObjVendedorID(((sifacApplication) getActivity().getApplication()).getUsuario());
-                venta.setObservaciones(EditTextObservaciones.getText().toString());
-                venta.setPrima(0);
-                venta.setSaldo(montocondescuento);
-                venta.setTotal(montosindescuento);
-                venta.setObjTerminoPagoID(150); // plazo.getStbValorCatalogoID());
-                if (discount != null)
-                    venta.setObjDescuentoID(discount.getSccDescuentoID());
-                else
-                    venta.setObjDescuentoID(null);
-                venta.setObjEstadoID(502);
-                venta.setOffline(true);
-                if (cuota != null)
-                    venta.setObjModalidadPagoID(505); //cuota.getStbValorCatalogoID());
-                venta.save();
-
-                for (Producto producto : productos) {
-                    FacturaProformaDetalle detalle = new FacturaProformaDetalle();
-                    detalle.setCedula(customer.getCedula());
-                    detalle.setTotal(producto.getPrecio_Credito());
-                    detalle.setCantidad(1);
-                    detalle.setDescuento(0);
-                    detalle.setObjSivProductoID(producto.getSivProductoID());
-                    detalle.setSubtotal(producto.getPrecio_Credito());
-                    detalle.save();
-                }
-                Log.d("NuevoVentaFragment", venta.toString());
-            } catch (Exception ex) {
-                cancel = true;
-                Log.d("Exception", ex.getMessage());
-            }
+        catch (Exception ex) {
+            cancel = true;
+            Log.d("Exception", ex.getMessage());
         }
         return cancel;
+
     }
 
 

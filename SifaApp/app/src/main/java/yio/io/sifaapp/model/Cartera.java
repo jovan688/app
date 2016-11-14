@@ -57,6 +57,11 @@ public class Cartera  extends BaseModel implements Serializable {
     @Column
     private Boolean cobrado ;
 
+
+
+    @Column
+    private  Integer CuotasVencidas;
+
     public Boolean getOffline() {
         return offline;
     }
@@ -73,7 +78,13 @@ public class Cartera  extends BaseModel implements Serializable {
         this.cobrado = cobrado;
     }
 
+    public Integer getCuotasVencidas() {
+        return CuotasVencidas;
+    }
 
+    public void setCuotasVencidas(Integer cuotasVencidas) {
+        CuotasVencidas = cuotasVencidas;
+    }
 
 
 /*

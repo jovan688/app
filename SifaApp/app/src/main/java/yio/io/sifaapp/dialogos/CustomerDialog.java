@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import yio.io.sifaapp.utils.DividerItemDecoration2;
  */
 public class CustomerDialog extends Dialog implements IDialogView {
 
+    private static final String TAG = CustomerDialog.class.getSimpleName();
     ClienteAdapter adapter = null;
     @Bind(R.id.CustomerRecyclerview)
     RecyclerView CustomerRecyclerview;
@@ -61,7 +63,7 @@ public class CustomerDialog extends Dialog implements IDialogView {
         // pd = ProgressDialog.show(getContext(), "Espere por favor", "Trayendo Info...", true, false);
 
 
-        ButterKnife.bind(this, this);
+        ButterKnife.bind(this);
 
         presenter = new CustomerDialogPresenterImp(this);
         presenter.onCreated();
@@ -130,7 +132,7 @@ public class CustomerDialog extends Dialog implements IDialogView {
         List<Customer> l = (List) list;
         adapter.setData(l);
         adapter.notifyDataSetChanged();
-
+        Log.d(TAG, "onFetchData > CLIENTES");
         //presenter.onDestroy();
 
     }

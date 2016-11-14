@@ -65,25 +65,31 @@ public class LoginRepositoryImplement implements LoginRepository {
 
     public LoginRepositoryImplement( Context context) {
         this.context = context;
-        if (retrofit == null) {
-            Gson gson = new GsonBuilder()
-                    .setExclusionStrategies(new ExclusionStrategy() {
-                        @Override
-                        public boolean shouldSkipField(FieldAttributes f) {
-                            return f.getDeclaredClass().equals(ModelAdapter.class);
-                        }
+        try {
+            if (retrofit == null) {
+                Gson gson = new GsonBuilder()
+                        .setExclusionStrategies(new ExclusionStrategy() {
+                            @Override
+                            public boolean shouldSkipField(FieldAttributes f) {
+                                return f.getDeclaredClass().equals(ModelAdapter.class);
+                            }
 
-                        @Override
-                        public boolean shouldSkipClass(Class<?> clazz) {
-                            return false;
-                        }
-                    })
-                    .create();
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(ConfiguracionServicio.getURL())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
+                            @Override
+                            public boolean shouldSkipClass(Class<?> clazz) {
+                                return false;
+                            }
+                        })
+                        .create();
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(ConfiguracionServicio.getURL())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+            }
         }
+        catch (Exception ex){
+            postEvent(Events.onFailToRecoverySession, ex.getMessage());
+        }
+
     }
 
     @Override
@@ -148,7 +154,7 @@ public class LoginRepositoryImplement implements LoginRepository {
 
                     @Override
                     public void onFailure(Call<authenticationResponse> call, Throwable t) {
-                        postEvent(Events.onSigInError, "TIME OUT ");
+                        postEvent(Events.onSigInError, t.getMessage());
                     }
                 });
             }
@@ -185,13 +191,15 @@ public class LoginRepositoryImplement implements LoginRepository {
         {
             boolean islogin = false;
             // Getting all registered Our Application Accounts;
-            try {
+            try
+            {
                 Account[] accounts = AccountManager.get(context).getAccountsByType(context.getString(R.string.auth_type));
                 for (Account account : accounts) {
                     islogin = true;
                     break;
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 Log.i(TAG, "Exception:" + e);
                 postEvent(Events.onFailToRecoverySession, e.getMessage());
             }
@@ -444,6 +452,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                             c.setSccCuentaID(cartera.getSccCuentaID());
                             c.setOffline(true);
                             c.setCobrado(false);
+                            c.setCuotasVencidas(cartera.getCuotasVencidas() );
                             //c.setProductos(items);
                             c.save();
                             for (Productos p : cartera.getProductos()) {

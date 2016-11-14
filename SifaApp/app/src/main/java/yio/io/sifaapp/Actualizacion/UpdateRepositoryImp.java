@@ -56,6 +56,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
     public UpdateRepositoryImp(Context context) {
             this.context = context;
 
+        try {
             if (retrofit == null) {
                 Gson gson = new GsonBuilder()
                         .setExclusionStrategies(new ExclusionStrategy() {
@@ -75,6 +76,10 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
             }
+        }
+        catch (Exception ex){
+            postEvent(Events.onFailToRecoverySession, ex.getMessage());
+        }
     }
 
     @Override

@@ -19,7 +19,7 @@ import yio.io.sifaapp.utils.GreenRobotEventBus;
  */
 public class CarteraListRepositoryImplement implements ICarteraListRepository {
 
-
+    private final String TAG = this.getClass().getSimpleName();
     public CarteraListRepositoryImplement() {
 
     }
@@ -38,6 +38,7 @@ public class CarteraListRepositoryImplement implements ICarteraListRepository {
 
         List<Cartera>  list ;
         if(fromPosition > toPosition) {
+            Log.d(TAG,String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition));
             list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition)).queryList();
             for (Cartera i : list) {
                 i.setOrdenCobro(i.getOrdenCobro()+ 1 );
@@ -46,7 +47,9 @@ public class CarteraListRepositoryImplement implements ICarteraListRepository {
         }
         else {
             // fromposition < topposition
-            list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d", fromPosition , toPosition)).queryList();
+            Log.d(TAG,String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition));
+            //list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d", fromPosition , toPosition)).queryList();
+            list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d", fromPosition)).queryList();
             for (Cartera i : list) {
                 i.setOrdenCobro(i.getOrdenCobro()- 1 );
                 i.save();

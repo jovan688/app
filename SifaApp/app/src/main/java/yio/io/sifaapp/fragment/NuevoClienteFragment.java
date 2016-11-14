@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,8 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     Button btnsaveNuevaVenta;
     @Bind(R.id.male)
     RadioButton male;
-
+    private final String TAG = this.getClass().getSimpleName();
+    View view = null;
 
     public NuevoClienteFragment() {
         presenter = new ClientePresenterIMP(this);
@@ -93,12 +95,9 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_nuevo_cliente, container, false);
-
+        view = inflater.inflate(R.layout.fragment_nuevo_cliente, container, false);
         ButterKnife.bind(this, view);
-
         presenter.onCreated();
-
         return view;
     }
 
@@ -106,10 +105,12 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter.getCiudades();
-        presenter.getRutas();
-        presenter.getGenero();
-        presenter.getpais();
+        if(presenter != null) {
+            presenter.getCiudades();
+            presenter.getRutas();
+            presenter.getGenero();
+            presenter.getpais();
+        }
 
         ((BaseActivity) getActivity()).getBottomBar().hide();
 
@@ -139,29 +140,9 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     }
 
     @Override
-    public void enableInputs() {
-
-    }
-
-    @Override
-    public void disableInputs() {
-
-    }
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
     public void fetchPais(List<Pais> paises) {
+        Log.d(TAG,"fechCiudades ");
         this.listpaises = paises;
-        // ArrayAdapter<Pais> adapter = new ArrayAdapter<Pais>(getContext(), android.R.layout.simple_spinner_item, paises);
         spinnerCountry.setItems(paises);
         spinnerCountry.setTextColor(getResources().getColor(R.color.colorPurple));
         spinnerCountry.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
@@ -177,8 +158,8 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
     @Override
     public void fechCiudades(List<Ciudad> ciudades) {
+        Log.d(TAG,"fechCiudades ");
         this.listciudades = ciudades;
-        //ArrayAdapter<Ciudad> adapter = new ArrayAdapter<Ciudad>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         spinnerCity.setItems(ciudades);
         spinnerCity.setTextColor(getResources().getColor(R.color.colorPurple));
         spinnerCity.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
@@ -194,6 +175,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
     @Override
     public void fetchRutas(List<Ruta> rutas) {
+        Log.d(TAG,"fetchRutas ");
         this.listrutas = rutas;
 
         //ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_spinner_item, rutas);
@@ -212,6 +194,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
     @Override
     public void fetchGeneros(List<Catalog> generos) {
+        Log.d(TAG,"fetchGeneros ");
         this.generos = generos;
     }
 
@@ -376,6 +359,27 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     public void cancelar(){
         getActivity().getFragmentManager().popBackStack();
 
+
+    }
+
+
+    @Override
+    public void enableInputs() {
+
+    }
+
+    @Override
+    public void disableInputs() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
 
     }
 

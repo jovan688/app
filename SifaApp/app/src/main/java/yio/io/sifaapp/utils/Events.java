@@ -104,6 +104,7 @@ public class Events {
     public  final static int onUpdateAmount =66;
     public  final static int onFetchCustomerSucess =67;
 
+
     private  int eventype;
     private  String errorMessage;
 

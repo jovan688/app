@@ -51,7 +51,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     List<Cartera> list = null;
     ICarteraListPresenter presenter;
     CatalogoPresenter catalogoPresenter;
-
+    private final String TAG = this.getClass().getSimpleName();
     List<Ruta> rutas;
     @Bind(R.id.spinner_ruta)
     MaterialSpinner spinnerRuta;
@@ -133,7 +133,18 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        presenter.onDestroy();
+        Log.d(TAG,"onDestroyView : UnBind");
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ButterKnife.unbind(this);
+        presenter.onDestroy();
+        Log.d(TAG,"onDetach : UnBind");
+    }
+
 
 
     private void getFragment(Cartera cartera) {
@@ -162,15 +173,6 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
                 .commit();
 
     }
-    /*
-    public void OnClick_btnNewSale() {
-        Fragment fragment = new NuevoVentaFragment();
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        manager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
-    }
-    */
 
     @Override
     public void onSeleted(Object object) {
@@ -190,7 +192,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
     @Override
     public void fetchRutas(final List<Ruta> rutas) {
-
+        Log.d(TAG,"fetchRutas ");
         this.rutas = rutas;
 
         //  ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_dropdown_item_1line, rutas);

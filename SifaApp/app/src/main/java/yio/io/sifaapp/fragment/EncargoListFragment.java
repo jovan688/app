@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import yio.io.sifaapp.model.Producto;
  */
 public class EncargoListFragment extends Fragment implements IEncargoView {
 
+    private final String TAG = this.getClass().getSimpleName();
     View view = null;
     EncargoPresenter presenter;
     encargoAdapter encargoadapter;
@@ -56,9 +58,7 @@ public class EncargoListFragment extends Fragment implements IEncargoView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.bind(this, view);
-
-
+      //  ButterKnife.bind(this, view);
         presenter = new EncargoPresenterIMP(this);
         presenter.onCreated();
 
@@ -81,6 +81,16 @@ public class EncargoListFragment extends Fragment implements IEncargoView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        presenter.onDestroy();
+        Log.d(TAG,"onDestroyView : UnBind");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ButterKnife.unbind(this);
+        presenter.onDestroy();
+        Log.d(TAG,"onDetach : UnBind");
     }
 
     @Override

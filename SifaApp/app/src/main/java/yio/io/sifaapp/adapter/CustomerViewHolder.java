@@ -32,6 +32,10 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder  implements Item
     TextView txtviewamount;
     @Bind(R.id.txtviewdatepay)
     TextView txtviewdatepay;
+    @Bind(R.id.txtviewcuotas)
+    TextView txtviewcuotas;
+    @Bind(R.id.rowprincipal)
+    LinearLayout rowprincipal;
 
     private  View view;
 
@@ -52,7 +56,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder  implements Item
 
     @Override
     public void onItemSelected() {
-        itemView.setBackgroundColor(Color.YELLOW);
+        rowprincipal.setBackgroundDrawable(view.getResources().getDrawable(R.drawable.action_item_selected));
 
     }
 
@@ -60,16 +64,5 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder  implements Item
     public void onItemClear() {
         itemView.setBackgroundColor(0);
     }
-    /*
-    public  void  setClickListener(final Cartera cartera , final OnItemClickListener listener){
-    view.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            listener.onItemClick(cartera);
-        }
-    });
-    }
-    */
-
 
 }

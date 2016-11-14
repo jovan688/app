@@ -1,8 +1,6 @@
 package yio.io.sifaapp.adapter;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -28,13 +25,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
 
     IDetallaCarteraView view;
     List<Cartera> list = null;
-
     private OnItemClickListener listener;
     private final OnStartDragListener mDragStartListener;
     Activity activity;
 
 
-    public CustomerAdapter(Activity a , IDetallaCarteraView view, List<Cartera> dataset, OnStartDragListener mDragStartListener, OnItemClickListener listener) {
+    public CustomerAdapter(Activity a, IDetallaCarteraView view, List<Cartera> dataset, OnStartDragListener mDragStartListener, OnItemClickListener listener) {
         this.list = dataset;
         this.view = view;
         this.mDragStartListener = mDragStartListener;
@@ -61,7 +57,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
 
     @Override
     public void onBindViewHolder(final CustomerViewHolder holder, int position) {
-        if(list.get(position) instanceof Cartera) {
+        if (list.get(position) instanceof Cartera) {
 
             Cartera cartera = this.list.get(position);
 
@@ -76,11 +72,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
             holder.txtviewdatepay.setText(cartera.getFechaAbono().toString());
             holder.txtviewcity.setText(cartera.getDireccion());
             holder.txtviewNum.setText(String.valueOf(cartera.getOrdenCobro()));
+            holder.txtviewcuotas.setText(cartera.getCuotasVencidas().toString());
 
             holder.setClickListener(cartera, listener);
 
             // Start a drag whenever the handle view it touched
-            holder.txtviewNum.setOnTouchListener(new View.OnTouchListener() {
+            holder.txtviewcustomername.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
@@ -98,9 +95,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
         Log.d("Cambio de Position", String.valueOf(fromPosition).concat("->").concat(String.valueOf(toPosition)));
         Cartera cartera = this.list.get(fromPosition);
         cartera.setOrdenCobro(toPosition + 1);
+        //cartera.save();
         view.carteraupdated(fromPosition + 1, toPosition + 1, cartera);
         // Collections.swap(list, fromPosition, toPosition);
-        //notifyItemMoved(fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
         Log.d("onItemMove", "onItemMove");
         return true;
     }

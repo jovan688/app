@@ -4,6 +4,7 @@ package yio.io.sifaapp.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -120,14 +121,14 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_nuevo_encargo, container, false);
-
-        presenter.onCreated();
         ButterKnife.bind(this, view);
+        presenter.onCreated();
+
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             if (bundle.containsKey("Customer")) {
-                customer = (Customer) bundle.getSerializable("Customer");
+                customer = (Customer) bundle .getSerializable("Customer");
                 SetCliente();
             }
         }
@@ -186,6 +187,9 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
         LoadRecycler();
     }
 
+
+
+
     @Override
     public void enableInputs() {
 
@@ -243,7 +247,10 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        presenter.onDestroy();
         ButterKnife.unbind(this);
+
+        Log.d(TAG,"onDestroyView");
     }
 
 
@@ -286,7 +293,8 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
             cancel = true;
             focus = txtname;
         }
-        if(myproductos.size() == 0 && encargos.size() == 0  ){
+       // if(myproductos.size() == 0 && encargos.size() == 0  ){
+        if( encargos.size() == 0  ){
             cancel = true;
             txtproductoname.setError(getString(R.string.message_producto_vacio));
             focus = txtproductoname;

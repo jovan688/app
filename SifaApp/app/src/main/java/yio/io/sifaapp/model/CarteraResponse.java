@@ -46,6 +46,16 @@ public class CarteraResponse{
 
     private Integer ojbCobradorID;
 
+    public Integer getCuotasVencidas() {
+        return CuotasVencidas;
+    }
+
+    public void setCuotasVencidas(Integer cuotasVencidas) {
+        CuotasVencidas = cuotasVencidas;
+    }
+
+    private Integer CuotasVencidas;
+
     public void setProductos(List<Productos> productos) {
         this.Productos = productos;
     }

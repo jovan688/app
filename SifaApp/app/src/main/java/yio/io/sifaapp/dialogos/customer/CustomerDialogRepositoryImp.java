@@ -26,7 +26,7 @@ public class CustomerDialogRepositoryImp implements CustomerDialogRepository {
     @Override
     public void OnFetchData() {
         List<Customer> list = new Select().from(Customer.class).queryList();
-        postEvent(Events.onFetchDataSucess,list);
+        postEvent(Events.onFetchCustomerSucess,list);
 
     }
 

@@ -176,7 +176,7 @@ public class AppDialog extends DialogFragment implements OnDismissListener {
 
         }
         alert = mybuilder.create();
-        alert.setCancelable(false);
+        alert.setCancelable(true);
         int margen = -2;
         alert.setView(vDialog, margen, margen, margen, margen);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(0));
@@ -260,7 +260,7 @@ public class AppDialog extends DialogFragment implements OnDismissListener {
         }
         //mybuilder.setView(vDialog);
         alert = mybuilder.create();
-        alert.setCancelable(false);
+        alert.setCancelable(true);
         int margen = -2;
         alert.setView(vDialog, margen, margen, margen, margen);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(0));
