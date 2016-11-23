@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
     FrameLayout fragmentContainer;
     NavigationDrawerFragment drawerFragment =null;
 
-    LoginPresenter loginPresenter;
+
 
 
 
@@ -46,8 +46,7 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
         setupToolbar();
         setupdrawer();
 
-        loginPresenter = new LoginPresenterImplement(this , getApplicationContext());
-        loginPresenter.onCreated();
+
     }
 
 
@@ -95,7 +94,7 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
                 startActivity(intent);
                 break;
             case 6 :
-                loginPresenter.onSingOff();
+                //loginPresenter.onSingOff();
                 // Cerrar session
                 break;
         }

@@ -34,6 +34,7 @@ public class LoginPresenterImplement implements LoginPresenter {
     public void onDestroy() {
         loginView = null;
         eventbus.unregister(this);
+        loginInteractor = null;
     }
 
     @Override

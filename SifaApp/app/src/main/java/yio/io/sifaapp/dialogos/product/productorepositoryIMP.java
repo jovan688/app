@@ -28,7 +28,7 @@ public class productorepositoryIMP implements  productorepository {
     }
 
     @Override
-    public void getProductsByCustomerId(int customerId) {
+    public void getProductsByCustomerId(long customerId) {
        List<CarteraDetalle> detalle = new Select().from(CarteraDetalle.class).where(String.format("ClienteID=%d",customerId)).queryList();
         for (CarteraDetalle fila: detalle) {
             Producto producto= new Select().from(Producto.class).where(String.format("")).querySingle();
@@ -39,7 +39,7 @@ public class productorepositoryIMP implements  productorepository {
     }
 
     @Override
-    public void getCarteraDetalleByCustomerId(int customerId) {
+    public void getCarteraDetalleByCustomerId(long customerId) {
         List<CarteraDetalle> detalle = new Select().from(CarteraDetalle.class).where(String.format("ClienteID=%d", customerId)).queryList();
         postEvent(Events.onCarteraDetalleDataSucess, detalle);
     }

@@ -36,6 +36,8 @@ public class AplFacturasProformas {
 
     public String UsuarioCreacion ;
 
+    public String ParamVerificacion;
+
     public AplFacturasProformas() {
     }
 
@@ -159,5 +161,13 @@ public class AplFacturasProformas {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public String getParamVerificacion() {
+        return ParamVerificacion;
+    }
+
+    public void setParamVerificacion(String paramVerificacion) {
+        ParamVerificacion = paramVerificacion;
     }
 }

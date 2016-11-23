@@ -16,6 +16,17 @@ public class devolucion {
     private Float TotalDevolucion ;
     private String UsuarioCreacion ;
 
+    public String getParamVerificacion() {
+        return ParamVerificacion;
+    }
+
+    public void setParamVerificacion(String paramVerificacion) {
+        ParamVerificacion = paramVerificacion;
+    }
+
+    public String ParamVerificacion;
+
+
     public devolucion() {
     }
 

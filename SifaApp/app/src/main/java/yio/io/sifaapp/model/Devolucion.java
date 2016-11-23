@@ -24,17 +24,18 @@ public class Devolucion extends BaseModel implements Serializable {
         Cedula = cedula;
     }
 
-    public String getId() {
+
+    public int getId() {
         return Id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         Id = id;
     }
 
     @Column
-    @PrimaryKey
-    private String Id;
+    @PrimaryKey(autoincrement = true)
+    private int Id;
 
     @Column
     private String Cedula;

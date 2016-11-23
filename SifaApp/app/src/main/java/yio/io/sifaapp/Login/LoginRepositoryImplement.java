@@ -10,7 +10,6 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.CallAdapter;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -34,13 +32,13 @@ import yio.io.sifaapp.model.Ciudad;
 import yio.io.sifaapp.model.Configuration;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Descuento;
+import yio.io.sifaapp.model.ModelConfiguracion;
 import yio.io.sifaapp.model.Pais;
 import yio.io.sifaapp.model.Producto;
 import yio.io.sifaapp.model.Productos;
 import yio.io.sifaapp.model.Ruta;
 import yio.io.sifaapp.model.authenticationRequest;
 import yio.io.sifaapp.model.authenticationResponse;
-import yio.io.sifaapp.utils.ConfiguracionServicio;
 import yio.io.sifaapp.utils.EventBus;
 import yio.io.sifaapp.utils.Events;
 import yio.io.sifaapp.utils.GreenRobotEventBus;
@@ -61,12 +59,14 @@ public class LoginRepositoryImplement implements LoginRepository {
     IServicioRemoto service;
     Context context;
     boolean server = false;
-
+    boolean session = false;
 
     public LoginRepositoryImplement( Context context) {
         this.context = context;
-        try {
-            if (retrofit == null) {
+        try
+        {
+            if (retrofit == null)
+            {
                 Gson gson = new GsonBuilder()
                         .setExclusionStrategies(new ExclusionStrategy() {
                             @Override
@@ -81,7 +81,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                         })
                         .create();
                 retrofit = new Retrofit.Builder()
-                        .baseUrl(ConfiguracionServicio.getURL())
+                        .baseUrl(ModelConfiguracion.getURL_SERVER(context))
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
             }
@@ -89,7 +89,6 @@ public class LoginRepositoryImplement implements LoginRepository {
         catch (Exception ex){
             postEvent(Events.onFailToRecoverySession, ex.getMessage());
         }
-
     }
 
     @Override
@@ -98,9 +97,11 @@ public class LoginRepositoryImplement implements LoginRepository {
         Configuration configuration = new Select().from(Configuration.class).where(String.format("Login='%s' and Clave = '%s'", username,password )).querySingle();
         if(configuration!=null){
             if(configuration.getSession()==false) {
+                session = true;
                 configuration.setSession(true);
                 configuration.save();
-                postEvent(Events.onSyncCarteraSucess);
+                GetCarteraByCobradorId();
+                //postEvent(Events.onSyncCarteraSucess);
             }
             else {
                 postEvent(Events.onSyncCarteraSucess);
@@ -414,14 +415,21 @@ public class LoginRepositoryImplement implements LoginRepository {
     }
 
     @Override
-    public void GetCarteraByCobradorId() {
+    public void GetCarteraByCobradorId()
+    {
         ResponseMessage message = Network.isPhoneConnected(context);
-        if (message != null && message.isHasError()) {
+        if (message != null && message.isHasError() && session == false) {
             postEvent(Events.onSigInError, message.getCause() + message.getMessage());
-        } else {
+        }
+        if (message != null && message.isHasError() && session == true) {
+            postEvent(Events.onSyncCarteraSucess ,  message.getCause() + message.getMessage());
+        }
+        else
+        {
             Configuration configuration = new Select().from(Configuration.class).querySingle();
 
             Call<List<CarteraResponse>> carteraResponseCall = service.GetCarteraByCobradorId(configuration.getObjEmpleadoID());
+
             carteraResponseCall.enqueue(new Callback<List<CarteraResponse>>() {
 
                 @Override

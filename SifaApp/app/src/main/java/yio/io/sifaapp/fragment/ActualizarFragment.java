@@ -196,7 +196,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     @Override
     public void loginError(String message) {
-
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
 
     @Override

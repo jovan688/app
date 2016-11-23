@@ -59,20 +59,20 @@ public interface IServicioRemoto {
 
 
     @POST("CreateCliente")
-    Call<Integer> CreateCliente( @Body Object entity);
+    Call<String> CreateCliente( @Body Object entity);
 
 
     @POST("CreateVentas")
-    Call<Integer> CreateVentas( @Body Object entity);
+    Call<String> CreateVentas( @Body Object entity);
 
     @POST("CreateEncargo")
-    Call<Integer> CreateEncargo( @Body Object entity);
+    Call<String> CreateEncargo( @Body Object entity);
 
 
     @POST("CreateDevoluciones")
-    Call<Integer> CreateDevoluciones( @Body Object entity);
+    Call<String> CreateDevoluciones( @Body Object entity);
 
 
     @POST("CreateCobro")
-    Call<Integer> CreateCobro( @Body Object entity);
+    Call<String> CreateCobro( @Body Object entity);
 }

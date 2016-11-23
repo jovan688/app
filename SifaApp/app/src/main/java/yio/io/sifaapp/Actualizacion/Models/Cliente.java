@@ -51,6 +51,16 @@ public class Cliente {
 
     private Integer objTipoEntradaID;
 
+    public String getParamVerificacion() {
+        return ParamVerificacion;
+    }
+
+    public void setParamVerificacion(String paramVerificacion) {
+        ParamVerificacion = paramVerificacion;
+    }
+
+    private String ParamVerificacion;
+
     public Cliente() {
 
     }

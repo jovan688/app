@@ -23,7 +23,7 @@ public class Customer extends BaseModel implements Serializable {
 
     @Column
     @PrimaryKey
-    private Integer ClienteID;
+    private int ClienteID;
     @Column
     private String Apellido2;
     @Column
@@ -135,7 +135,7 @@ public class Customer extends BaseModel implements Serializable {
         this.Ciudad = Ciudad;
     }
 
-    public Integer getClienteID() {
+    public int getClienteID() {
         return ClienteID;
     }
 

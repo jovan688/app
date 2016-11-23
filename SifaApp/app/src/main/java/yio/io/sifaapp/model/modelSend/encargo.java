@@ -11,8 +11,17 @@ public class encargo {
     private String objSrhEmpleadoID;
     private String UsuarioCreacion;
     private List<encargodetalle> EncargoDetalle ;
+    private  String ParamVerificacion;
 
     public encargo() {
+    }
+
+    public String getParamVerificacion() {
+        return ParamVerificacion;
+    }
+
+    public void setParamVerificacion(String paramVerificacion) {
+        ParamVerificacion = paramVerificacion;
     }
 
     public String getCedula() {

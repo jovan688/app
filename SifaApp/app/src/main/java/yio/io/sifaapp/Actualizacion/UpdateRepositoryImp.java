@@ -1,6 +1,7 @@
 package yio.io.sifaapp.Actualizacion;
 
 import android.content.Context;
+import android.content.SearchRecentSuggestionsProvider;
 import android.util.Log;
 
 import com.google.gson.ExclusionStrategy;
@@ -11,7 +12,6 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,13 +20,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import yio.io.sifaapp.Actualizacion.Models.Cliente;
-import yio.io.sifaapp.model.Cartera;
 import yio.io.sifaapp.model.Cobro;
 import yio.io.sifaapp.model.ContadorModel;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Devolucion;
 import yio.io.sifaapp.model.Encargo;
 import yio.io.sifaapp.model.EncargoDetalle;
+import yio.io.sifaapp.model.ModelConfiguracion;
 import yio.io.sifaapp.model.modelSend.AplFacturasProformaDetalles;
 import yio.io.sifaapp.model.modelSend.AplFacturasProformas;
 import yio.io.sifaapp.model.modelSend.FacturaProformaDetalle;
@@ -35,7 +35,6 @@ import yio.io.sifaapp.model.modelSend.cobro;
 import yio.io.sifaapp.model.modelSend.devolucion;
 import yio.io.sifaapp.model.modelSend.encargo;
 import yio.io.sifaapp.model.modelSend.encargodetalle;
-import yio.io.sifaapp.utils.ConfiguracionServicio;
 import yio.io.sifaapp.utils.EventBus;
 import yio.io.sifaapp.utils.Events;
 import yio.io.sifaapp.utils.GreenRobotEventBus;
@@ -72,7 +71,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         })
                         .create();
                 retrofit = new Retrofit.Builder()
-                        .baseUrl(ConfiguracionServicio.getURL())
+                        .baseUrl(ModelConfiguracion.getURL_SERVER(context))
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
             }
@@ -114,13 +113,14 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     c.setObjCobradorID(item.getObjCobradorID());
                     c.setObjSccCuentaID(String.valueOf(item.getObjSccCuentaID()));
 
-                    Call<Integer> call = service.CreateCobro(c);
+                    Call<String> call = service.CreateCobro(c);
 
-                    call.enqueue(new Callback<Integer>() {
+                    call.enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            int id =Integer.parseInt(response.body().split("|")[0]);
                             contador--;
-                            if (response.body() != 0) {
+                            if (id != 0) {
                                 if (contador == 0) {
                                     postEvent(Events.onUpdateCobroSucess, null);
                                 } else {
@@ -131,7 +131,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         }
 
                         @Override
-                        public void onFailure(Call<Integer> call, Throwable t) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             contador--;
                             Log.d("UpdateRepository", String.valueOf(t.getCause()));
                             postEvent(Events.OnMessage, null, t.getMessage());
@@ -182,6 +182,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     c.setTelefonos(customer.getTelefonos());
                     c.setObjTipoEntradaID(2);
                     c.setUsuarioCreacion("ADMIN");
+                    c.setParamVerificacion(customer.getCedula());
                     clientes.add(c);
                 }
 
@@ -191,17 +192,23 @@ public class UpdateRepositoryImp implements IUpdateRepository {
 
                 for (Cliente cliente : clientes) {
 
-                    Call<Integer> call = service.CreateCliente(cliente);
-                    call.enqueue(new Callback<Integer>() {
+                    Call<String> call = service.CreateCliente(cliente);
+                    call.enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        public void onResponse(Call<String> call, Response<String> response) {
                             contador--;
-                            if (response.body() != 0) {
-                                // actualizar offline
+                            if(!response.body().equals("-1")) {
+                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                if (id != 0) {
+                                    // actualizar offline
+                                    String ParamVerificacion = response.body().split("|")[1];
+                                    Customer customer = new Select().from(Customer.class).where(String.format("Cedula = '%s'", ParamVerificacion)).querySingle();
+                                    customer.setOffline(false);
+                                    customer.save();
+                                }
                                 if (contador == 0) {
                                     postEvent(Events.onClienteUpdateSucess, null);
-                                }
-                                else {
+                                } else {
                                     postEvent(Events.UpdateClienteContador, null, contador);
                                 }
                             }
@@ -209,7 +216,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         }
 
                         @Override
-                        public void onFailure(Call<Integer> call, Throwable t) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             contador--;
                             Log.d("UpdateRepository", String.valueOf(t.getCause()));
                             postEvent(Events.OnMessage, null, t.getMessage());
@@ -257,6 +264,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     venta.setSaldo(item.getSaldo());
                     venta.setObservaciones(item.getObservaciones());
                     venta.setUsuarioCreacion(String.valueOf(item.getUsuarioCreacion()));
+                    venta.setParamVerificacion(String.valueOf(item.getVentaID()));
 
                     List<AplFacturasProformaDetalles> listdetalle = new ArrayList<AplFacturasProformaDetalles>();
 
@@ -272,23 +280,29 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     }
                     venta.setFacturaProformaDetalle(listdetalle);
 
-                    Call<Integer> call = service.CreateVentas(venta);
-                    call.enqueue(new Callback<Integer>() {
+                    Call<String> call = service.CreateVentas(venta);
+                    call.enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            int id =Integer.parseInt(response.body().split("|")[0]);
                             contador--;
-                            if (response.body() != 0) {
-                                if (contador == 0) {
-                                    postEvent(Events.onVentasUpdateSucess, null);
-                                } else {
+                            if (id != 0) {
+                                // actualizamos offline
+                                int ventaid = Integer.parseInt(response.body().split("|")[1]);
+                                Venta venta1 = new Select().from(Venta.class).where(String.format("VentaID=%d",ventaid)).querySingle();
+                                venta1.setOffline(false);
+                                venta1.save();
+                            }
+                            if (contador == 0) {
+                                postEvent(Events.onVentasUpdateSucess, null);
+                            } else {
 
-                                    postEvent(Events.UpdateVentasContador, null, contador);
-                                }
+                                postEvent(Events.UpdateVentasContador, null, contador);
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Integer> call, Throwable t) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             contador--;
                             Log.d("UpdateRepository", String.valueOf(t.getCause()));
                             postEvent(Events.OnMessage, null, t.getMessage());
@@ -327,22 +341,32 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     dev.setObjVendedorID(item.getObjVendedorID());
                     dev.setRazonDevolucion(item.getRazonDevolucion());
                     dev.setTotalDevolucion(item.getTotalDevolucion());
-                    Call<Integer> call = service.CreateDevoluciones(dev);
-                    call.enqueue(new Callback<Integer>() {
+                    // nuestro parametro
+                    dev.setParamVerificacion(String.valueOf(item.getId()));
+
+                    Call<String> call = service.CreateDevoluciones(dev);
+                    call.enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            int id =Integer.parseInt(response.body().split("|")[0]);
                             contador--;
-                            if (response.body() != 0) {
-                                if (contador == 0) {
-                                    postEvent(Events.onDescuentosSucess, null);
-                                } else {
-                                    postEvent(Events.UpdateDevolucionesContador, null, contador);
-                                }
+                            if (id != 0) {
+                                // offline
+                                int devid = Integer.parseInt(response.body().split("|")[1]);
+                                Devolucion row = new Select().from(Devolucion.class).where(String.format("Id=%d"),devid).querySingle();
+                                row.setOffline(false);
+                                row.save();
                             }
+                            if (contador == 0) {
+                                postEvent(Events.onDescuentosSucess, null);
+                            } else {
+                                postEvent(Events.UpdateDevolucionesContador, null, contador);
+                            }
+
                         }
 
                         @Override
-                        public void onFailure(Call<Integer> call, Throwable t) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             Log.d("UpdateRepository", String.valueOf(t.getCause()));
                             contador--;
                             postEvent(Events.OnMessage, null, t.getMessage());
@@ -378,6 +402,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     _encargo.setCedula(item.getCedula());
                     _encargo.setObjSrhEmpleadoID(item.getObjSrhEmpleadoID().toString());
                     _encargo.setUsuarioCreacion(item.getUsuarioCreacion().toString());
+                    _encargo.setParamVerificacion(String.valueOf(item.getId()));
 
                     List<encargodetalle> detail = new ArrayList<encargodetalle>();
 
@@ -393,22 +418,27 @@ public class UpdateRepositoryImp implements IUpdateRepository {
 
                     _encargo.setEncargoDetalle(detail);
 
-                    Call<Integer> call = service.CreateEncargo(_encargo);
-                    call.enqueue(new Callback<Integer>() {
+                    Call<String> call = service.CreateEncargo(_encargo);
+                    call.enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            int id =Integer.parseInt(response.body().split("|")[0]);
                             contador--;
-                            if (response.body() != 0) {
-                                if (contador == 0) {
-                                    postEvent(Events.onEncargoUpdateSucess, null);
-                                } else {
-                                    postEvent(Events.UpdateEncargosContador, null, contador);
-                                }
+                            if (id != 0) {
+                                int encargoID = Integer.parseInt(response.body().split("|")[1]);
+                                Encargo encargo = new Select().from(Encargo.class).where(String.format("id=%d"),encargoID).querySingle();
+                                encargo.setOffline(false);
+                                encargo.save();
+                            }
+                            if (contador == 0) {
+                                postEvent(Events.onEncargoUpdateSucess, null);
+                            } else {
+                                postEvent(Events.UpdateEncargosContador, null, contador);
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Integer> call, Throwable t) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             Log.d("UpdateRepository", String.valueOf(t.getCause()));
                             postEvent(Events.OnMessage, null, t.getMessage());
                             contador--;

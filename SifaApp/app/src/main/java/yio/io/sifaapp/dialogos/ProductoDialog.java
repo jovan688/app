@@ -37,10 +37,10 @@ public class ProductoDialog extends Dialog  implements IDialogView{
     RecyclerView ProductRecyclerview;
     productopresenter presenter ;
     private setOnLongClickListener mButtonClickListener;
-    private int customerId;
+    private long customerId;
     Context context;
 
-    public ProductoDialog(Context context, int themeResId , int customerId,setOnLongClickListener listener) {
+    public ProductoDialog(Context context, int themeResId , long customerId,setOnLongClickListener listener) {
         super(context, themeResId);
         this.customerId =customerId;
         this.context = context;

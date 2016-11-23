@@ -20,7 +20,9 @@ import yio.io.sifaapp.utils.SifacDataBase;
 public class Venta extends BaseModel {
 
     @Column
-    @PrimaryKey
+    @PrimaryKey(autoincrement = true)
+    private long VentaID;
+    @Column
     public String  cedula;
     @Column
     public int  objVendedorID;
@@ -38,17 +40,7 @@ public class Venta extends BaseModel {
     public float  Descuento;
     @Column
     public float  Total;
-
-    public String getFecha() {
-        return Fecha;
-    }
-
-    public void setFecha(String fecha) {
-        Fecha = fecha;
-    }
-
     @Column
-
     public float  Prima;
     @Column
     public float  Saldo;
@@ -58,6 +50,19 @@ public class Venta extends BaseModel {
     public int  UsuarioCreacion;
     @Column
     private Boolean offline;
+    @Column
+    private Boolean nuevaventa;
+    @Column
+    private int ObjModalidadPagoID;
+
+
+    public String getFecha() {
+        return Fecha;
+    }
+
+    public void setFecha(String fecha) {
+        Fecha = fecha;
+    }
 
     public Boolean getNuevaventa() {
         return nuevaventa;
@@ -67,9 +72,6 @@ public class Venta extends BaseModel {
         this.nuevaventa = nuevaventa;
     }
 
-    @Column
-
-    private Boolean nuevaventa;
 
     public int getObjModalidadPagoID() {
         return ObjModalidadPagoID;
@@ -79,8 +81,6 @@ public class Venta extends BaseModel {
         ObjModalidadPagoID = objModalidadPagoID;
     }
 
-    @Column
-    private int ObjModalidadPagoID;
 
     public Boolean getOffline() {
         return offline;
@@ -89,6 +89,15 @@ public class Venta extends BaseModel {
     public void setOffline(Boolean offline) {
         this.offline = offline;
     }
+
+    public long getVentaID() {
+        return VentaID;
+    }
+
+    public void setVentaID(long ventaID) {
+        VentaID = ventaID;
+    }
+
 
     private  List<FacturaProformaDetalle> FacturaProformaDetalle ;
 
