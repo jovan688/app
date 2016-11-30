@@ -51,7 +51,9 @@
                     android:layout_marginBottom="5dp"
                     android:hint="@string/customer.form.CID"
                     android:background="@drawable/mybotton2"
-                    android:id="@+id/editcid" />
+                    android:id="@+id/editcid"
+                    tools:phoneNumber="false"
+                    android:phoneNumber="false" />
 
                 <TextView
                     android:layout_width="wrap_content"

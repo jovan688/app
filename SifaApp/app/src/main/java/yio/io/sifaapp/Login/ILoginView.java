@@ -15,4 +15,5 @@ public interface ILoginView {
     void loginError(String message);
     void Sync(String message);
     void onSingOff();
+    void onSystemSuccess();
 }

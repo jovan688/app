@@ -21,6 +21,7 @@ public class sifacApplication extends Application {
         FlowManager.init(this);
         Log.d("sifacApplication","InitApplication");
         setContext(this);
+        crear_usuario();
     }
 
     @Override
@@ -45,9 +46,26 @@ public class sifacApplication extends Application {
     }
 
     public String getSsgCuentaID (){
-        Configuration configuration = new Select().from(Configuration.class).querySingle();
+        Configuration configuration = new Select().from(Configuration.class).where(String.format("System='0'")).querySingle();
         if(configuration!=null)
             return configuration.getSsgCuentaID();
         return null;
     }
+
+    private void crear_usuario(){
+
+        Configuration configuration = new Configuration();
+        configuration.setClave("System");
+        configuration.setLogin("System");
+        configuration.setHasAccess(false);
+        configuration.setSsgCuentaID("");
+        configuration.setObjEmpleadoID(1);
+        configuration.setSession(false);
+        configuration.setSystem(true);
+        configuration.save();
+
+    }
+
+
+
 }

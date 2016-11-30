@@ -38,6 +38,17 @@ public class Configuration extends BaseModel {
     @Column
     private Boolean Session;
 
+    public Boolean getSystem() {
+        return System;
+    }
+
+    public void setSystem(Boolean system) {
+        System = system;
+    }
+
+    @Column
+    private Boolean System;
+
     public Configuration() {}
 
     public Boolean getHasAccess() {

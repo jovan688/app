@@ -6,6 +6,9 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -22,6 +25,7 @@
                 android:text="Actualizar Cliente"
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
+                android:textSize="18dp"
                 android:layout_weight="4"
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
@@ -29,12 +33,11 @@
                 android:gravity="center_vertical" />
 
             <TextView
-                android:layout_width="10dp"
+                android:layout_width="100dp"
                 android:text="100"
                 android:id="@+id/clientenum"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.93"
+                android:layout_height="100dp"
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -62,18 +65,19 @@
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
                 android:layout_weight="4"
+                android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
                 android:textColor="#212121"
                 android:gravity="center_vertical" />
 
             <TextView
-                android:layout_width="10dp"
+                android:layout_width="100dp"
                 android:text="100"
                 android:id="@+id/cateranum"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.93"
+                android:layout_height="100dp"
+
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -100,6 +104,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
                 android:layout_weight="4"
+                android:textSize="18dp"
                 android:textColor="#212121"
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
@@ -107,11 +112,11 @@
 
             <TextView
                 android:id="@+id/ventaenum"
-                android:layout_width="15dp"
+                android:layout_width="100dp"
                 android:text="100"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.60"
+                android:layout_height="100dp"
+
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -139,17 +144,19 @@
                 android:layout_height="50dp"
                 android:textColor="#212121"
                 android:layout_weight="4"
+                android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:id="@+id/textView9" />
 
             <TextView
                 android:id="@+id/devolucionnum"
-                android:layout_width="10dp"
+                android:layout_width="100dp"
                 android:text="100"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.20"
+                android:layout_height="100dp"
+
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -177,17 +184,17 @@
                 android:layout_height="50dp"
                 android:textColor="#212121"
                 android:layout_weight="4"
+                android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
                 android:gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/encargonum"
-                android:layout_width="10dp"
+                android:layout_width="100dp"
                 android:text="100"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
+                android:layout_height="100dp"
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -219,16 +226,16 @@
                 android:layout_marginRight="10dp">
 
                 <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/ic_backup_white_24dp"
                     android:id="@+id/Local"
                     android:background="@drawable/round_button" />
                 <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:text="Subir"
                     android:gravity="center"
                     android:background="#00000000"
@@ -245,8 +252,8 @@
                 android:layout_marginRight="10dp">
 
                 <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/round_button"
@@ -254,8 +261,8 @@
                     android:id="@+id/Server" />
 
                 <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:text="Bajar"
                     android:gravity="center"
                     android:background="#00000000"
@@ -296,5 +303,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

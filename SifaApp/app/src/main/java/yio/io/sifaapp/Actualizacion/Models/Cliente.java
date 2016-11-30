@@ -25,16 +25,6 @@ public class Cliente {
     private String Apellido1;
     private Integer objGeneroID;
     private String Cedula;
-
-    public String getFechaNacimiento() {
-        return FechaNacimiento;
-    }
-
-    public void setFechaNacimiento(String fechaNacimiento) {
-        FechaNacimiento = fechaNacimiento;
-    }
-
-    private String FechaNacimiento;
     private String Direccion;
     private String Telefonos;
     private Integer objPaisID;

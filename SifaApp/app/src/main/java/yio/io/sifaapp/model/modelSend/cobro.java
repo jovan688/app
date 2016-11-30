@@ -42,6 +42,16 @@ public class cobro {
 
     private String UsuarioCreacion;
 
+    public String getParamVerificacion() {
+        return ParamVerificacion;
+    }
+
+    public void setParamVerificacion(String paramVerificacion) {
+        ParamVerificacion = paramVerificacion;
+    }
+
+    private String ParamVerificacion;
+
     public cobro() {
     }
 

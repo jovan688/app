@@ -94,22 +94,36 @@ public class LoginRepositoryImplement implements LoginRepository {
     @Override
     public void signIn(String username, final String password) {
 
-        Configuration configuration = new Select().from(Configuration.class).where(String.format("Login='%s' and Clave = '%s'", username,password )).querySingle();
-        if(configuration!=null){
-            if(configuration.getSession()==false) {
-                session = true;
+        Configuration configuration = new Select()
+                                        .from(Configuration.class)
+                                        .where(String.format("Login='%s' and Clave = '%s'", username,password ))
+                                        .querySingle();
+
+        if(configuration!=null)
+        {
+            if(configuration.getLogin().equals("System") && configuration.getSession()==false){
                 configuration.setSession(true);
                 configuration.save();
-                GetCarteraByCobradorId();
-                //postEvent(Events.onSyncCarteraSucess);
+                postEvent(Events.onSystemSuccess);
             }
-            else {
-                postEvent(Events.onSyncCarteraSucess);
+            else
+            {
+
+                if (configuration.getSession() == false) {
+                    session = true;
+                    configuration.setSession(true);
+                    configuration.save();
+                    //GetCarteraByCobradorId();
+                    postEvent(Events.goToMainScreen);
+                } else {
+                    postEvent(Events.goToMainScreen);
+                }
             }
         }
-        else if (new Select().from(Configuration.class).querySingle()!= null){
+       /* else if (new Select().from(Configuration.class).querySingle()!= null){
             postEvent(Events.onSigInError, "Usuario Invalido");
         }
+        */
         else
         {
             ResponseMessage message = Network.isPhoneConnected(context);
@@ -129,7 +143,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                             if (_response.getTieneAcceso()) {
                                 try {
                                     //Limpiamos todos los datos
-                                    FlowManager.getDatabase(SifacDataBase.NAME).reset(context);
+                                   // FlowManager.getDatabase(SifacDataBase.NAME).reset(context);
                                     // LLenamos nuestra Tabla
                                     Configuration configuration = new Configuration();
                                     configuration.setClave(password);
@@ -138,8 +152,9 @@ public class LoginRepositoryImplement implements LoginRepository {
                                     configuration.setSsgCuentaID(response.body().getSsgCuentaID().toString());
                                     configuration.setObjEmpleadoID(response.body().getObjEmpleadoID());
                                     configuration.setSession(true);
+                                    configuration.setSystem(false);
                                     configuration.save();
-
+                                    List<Configuration> l = new  Select().from(Configuration.class).queryList();
                                     postEvent(Events.onSuccess, null, "Sincronizando Paises...");
                                     GetPaisByCodigo();
 
@@ -184,8 +199,11 @@ public class LoginRepositoryImplement implements LoginRepository {
     @Override
     public void checkSession(Context context) {
 
-        Configuration configuration = new Select().from(Configuration.class).querySingle();
-        if(configuration!=null && configuration.getSession()){
+        Configuration configuration = new Select()
+                                        .from(Configuration.class)
+                                         .where(String.format("System='0'"))
+                                        .querySingle();
+        if(configuration!=null && configuration.getSession() && configuration.getSystem()==false){
             postEvent(Events.onSuccessToRecoverySession);
         }
         else
@@ -295,7 +313,10 @@ public class LoginRepositoryImplement implements LoginRepository {
             postEvent(Events.onSigInError, message.getCause() + message.getMessage());
         } else {
 
-            Configuration configuration = new Select().from(Configuration.class).querySingle();
+            Configuration configuration =  new Select()
+                                                .from(Configuration.class)
+                                                .where(String.format("System=0"))
+                                                .querySingle();
 
             Call<List<Customer>> customerResponseCall = service.GetClientesByCobradorId(configuration.getObjEmpleadoID());
             customerResponseCall.enqueue(new Callback<List<Customer>>() {
@@ -426,7 +447,12 @@ public class LoginRepositoryImplement implements LoginRepository {
         }
         else
         {
-            Configuration configuration = new Select().from(Configuration.class).querySingle();
+            Configuration configuration =  new Select()
+                                            .from(Configuration.class)
+                                            .where(String.format("System='0'"))
+                                            .querySingle();
+            if(service ==null)
+                service = retrofit.create(IServicioRemoto.class);
 
             Call<List<CarteraResponse>> carteraResponseCall = service.GetCarteraByCobradorId(configuration.getObjEmpleadoID());
 
@@ -489,7 +515,13 @@ public class LoginRepositoryImplement implements LoginRepository {
         } else
         {
 
-            Configuration configuration = new Select().from(Configuration.class).querySingle();
+            Configuration configuration = new Select()
+                                            .from(Configuration.class)
+                                            .where(String.format("System=0"))
+                                            .querySingle();
+            if(service ==null) {
+                service = retrofit.create(IServicioRemoto.class);
+            }
             Call<List<Ruta>> rutaResponseCall = service.GetRutasByCobradorId(configuration.getObjEmpleadoID());
             rutaResponseCall.enqueue(new Callback<List<Ruta>>() {
 
@@ -517,6 +549,7 @@ public class LoginRepositoryImplement implements LoginRepository {
 
     @Override
     public void DownloadServer() {
+        server = true;
         GetPaisByCodigo();
     }
 
@@ -524,8 +557,6 @@ public class LoginRepositoryImplement implements LoginRepository {
 
         if(service ==null) {
             service = retrofit.create(IServicioRemoto.class);
-            server = true;
-
         }
         ResponseMessage message = Network.isPhoneConnected(context);
         if (message != null && message.isHasError()) {

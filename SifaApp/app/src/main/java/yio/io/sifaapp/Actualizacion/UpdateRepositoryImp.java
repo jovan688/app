@@ -112,21 +112,29 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     c.setUsuarioCreacion(String.valueOf(item.getUsuarioCreacion()));
                     c.setObjCobradorID(item.getObjCobradorID());
                     c.setObjSccCuentaID(String.valueOf(item.getObjSccCuentaID()));
+                    c.setParamVerificacion(item.getCedula());
 
                     Call<String> call = service.CreateCobro(c);
 
                     call.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            int id =Integer.parseInt(response.body().split("|")[0]);
                             contador--;
-                            if (id != 0) {
-                                if (contador == 0) {
-                                    postEvent(Events.onUpdateCobroSucess, null);
-                                } else {
-
-                                    postEvent(Events.UpdateCobroContador, null, contador);
+                            if(!response.body().equals("-1")) {
+                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                if (id != 0) {
+                                    Cobro cobro = new Select().from(Cobro.class).where(String.format("Cedula='%s'",response.body().split("|")[1])).querySingle();
+                                    if(cobro!=  null) {
+                                        cobro.setOffline(false);
+                                        cobro.save();
+                                    }
                                 }
+                            }
+                            if (contador == 0) {
+                                postEvent(Events.onUpdateCobroSucess, null);
+                            } else {
+
+                                postEvent(Events.UpdateCobroContador, null, contador);
                             }
                         }
 
@@ -171,7 +179,6 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     c.setApellido2(customer.getApellido2());
                     c.setCedula(customer.getCedula());
                     c.setDireccion(customer.getDireccion());
-                    c.setFechaNacimiento("1987-10-30");
                     c.setNombre1(customer.getNombre1());
                     c.setNombre2(customer.getNombre2());
                     c.setObjCiudadID(customer.getObjCiudadID());
@@ -206,12 +213,13 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                     customer.setOffline(false);
                                     customer.save();
                                 }
+                            }
                                 if (contador == 0) {
                                     postEvent(Events.onClienteUpdateSucess, null);
                                 } else {
                                     postEvent(Events.UpdateClienteContador, null, contador);
                                 }
-                            }
+
                             Log.d("UpdateRepository", String.valueOf(response.body()));
                         }
 
@@ -284,14 +292,16 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     call.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            int id =Integer.parseInt(response.body().split("|")[0]);
                             contador--;
-                            if (id != 0) {
-                                // actualizamos offline
-                                int ventaid = Integer.parseInt(response.body().split("|")[1]);
-                                Venta venta1 = new Select().from(Venta.class).where(String.format("VentaID=%d",ventaid)).querySingle();
-                                venta1.setOffline(false);
-                                venta1.save();
+                            if(!response.body().equals("-1")) {
+                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                if (id != 0) {
+                                    // actualizamos offline
+                                    int ventaid = Integer.parseInt(response.body().split("|")[1]);
+                                    Venta venta1 = new Select().from(Venta.class).where(String.format("VentaID=%d", ventaid)).querySingle();
+                                    venta1.setOffline(false);
+                                    venta1.save();
+                                }
                             }
                             if (contador == 0) {
                                 postEvent(Events.onVentasUpdateSucess, null);
@@ -348,14 +358,16 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     call.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            int id =Integer.parseInt(response.body().split("|")[0]);
                             contador--;
-                            if (id != 0) {
-                                // offline
-                                int devid = Integer.parseInt(response.body().split("|")[1]);
-                                Devolucion row = new Select().from(Devolucion.class).where(String.format("Id=%d"),devid).querySingle();
-                                row.setOffline(false);
-                                row.save();
+                            if(!response.body().equals("-1")) {
+                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                if (id != 0) {
+                                    // offline
+                                    int devid = Integer.parseInt(response.body().split("|")[1]);
+                                    Devolucion row = new Select().from(Devolucion.class).where(String.format("Id=%d"), devid).querySingle();
+                                    row.setOffline(false);
+                                    row.save();
+                                }
                             }
                             if (contador == 0) {
                                 postEvent(Events.onDescuentosSucess, null);
@@ -422,13 +434,15 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     call.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            int id =Integer.parseInt(response.body().split("|")[0]);
                             contador--;
-                            if (id != 0) {
-                                int encargoID = Integer.parseInt(response.body().split("|")[1]);
-                                Encargo encargo = new Select().from(Encargo.class).where(String.format("id=%d"),encargoID).querySingle();
-                                encargo.setOffline(false);
-                                encargo.save();
+                            if(!response.body().equals("-1")) {
+                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                if (id != 0) {
+                                    int encargoID = Integer.parseInt(response.body().split("|")[1]);
+                                    Encargo encargo = new Select().from(Encargo.class).where(String.format("id=%d"), encargoID).querySingle();
+                                    encargo.setOffline(false);
+                                    encargo.save();
+                                }
                             }
                             if (contador == 0) {
                                 postEvent(Events.onEncargoUpdateSucess, null);

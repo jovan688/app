@@ -68,7 +68,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_cartera_list, container, false);
-        ButterKnife.bind(this, view);
+        //ButterKnife.bind(this, view);
         //setHasOptionsMenu(true);
         return view; //new RecyclerView(container.getContext());
     }
@@ -126,6 +126,8 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
     @Override
     public void updateAmount(Float amount) {
+        txtviewTotal.setText("");
+        txtviewTotal.setText(getResources().getText(R.string.message_lista_total_cartera));
         txtviewTotal.setText(txtviewTotal.getText()+ " "+ String.valueOf(amount));
     }
 

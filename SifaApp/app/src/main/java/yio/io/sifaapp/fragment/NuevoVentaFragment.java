@@ -530,6 +530,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                         FacturaProformaDetalle detalle = new FacturaProformaDetalle();
                         detalle.setCedula(customer.getCedula());
                         detalle.setTotal(producto.getPrecio_Credito());
+                        detalle.setPrecio(producto.getPrecio_Credito());
                         detalle.setCantidad(1);
                         detalle.setDescuento(0);
                         detalle.setObjSivProductoID(producto.getSivProductoID());

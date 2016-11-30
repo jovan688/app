@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.roughike.bottombar.BottomBar;
 
 import butterknife.Bind;
@@ -96,6 +97,14 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
             case 6 :
                 //loginPresenter.onSingOff();
                 // Cerrar session
+                Configuration configuration = new Select().from(Configuration.class)
+                                                .where(String.format("System='0'"))
+                                                .querySingle();
+                if(configuration!=null) {
+                    configuration.setSession(false);
+                    configuration.save();
+                }
+                finish();
                 break;
         }
         //ButterKnife.unbind(this);
@@ -162,5 +171,10 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
     @Override
     public void onSingOff() {
         finish();
+    }
+
+    @Override
+    public void onSystemSuccess() {
+
     }
 }

@@ -62,6 +62,8 @@ public class CarteraListActivity extends BaseActivity {
             }
         });
         bottomBar.selectTabAtPosition(0,true);
+        // Disable the left bar on tablets and behave exactly the same on mobile and tablets instead.
+        bottomBar.noTabletGoodness();
     }
     @Override
     public BottomBar getBottomBar(){

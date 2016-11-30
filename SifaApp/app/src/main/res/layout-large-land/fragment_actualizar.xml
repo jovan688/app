@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     tools:context="yio.io.sifaapp.fragment.ActualizarFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-
-    <LinearLayout
+        <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,15 +27,16 @@
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
                 android:textColor="#212121"
+                android:textSize="24dp"
                 android:gravity="center_vertical" />
 
             <TextView
-                android:layout_width="10dp"
+                android:layout_width="80dp"
                 android:text="100"
                 android:id="@+id/clientenum"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.93"
+                android:layout_height="80dp"
+
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -60,6 +62,7 @@
                 android:layout_width="wrap_content"
                 android:text="Actualizar Cartera"
                 android:layout_marginLeft="15dp"
+                android:textSize="24dp"
                 android:layout_height="50dp"
                 android:layout_weight="4"
                 android:layout_marginTop="10dp"
@@ -68,12 +71,12 @@
                 android:gravity="center_vertical" />
 
             <TextView
-                android:layout_width="10dp"
+                android:layout_width="80dp"
                 android:text="100"
                 android:id="@+id/cateranum"
+
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.93"
+                android:layout_height="80dp"
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -97,6 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:text="Actualizar Registro de Ventas"
+                android:textSize="24dp"
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
                 android:layout_weight="4"
@@ -107,11 +111,11 @@
 
             <TextView
                 android:id="@+id/ventaenum"
-                android:layout_width="15dp"
+                android:layout_width="80dp"
                 android:text="100"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.60"
+                android:layout_height="80dp"
+
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -138,6 +142,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
                 android:textColor="#212121"
+                android:textSize="24dp"
                 android:layout_weight="4"
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
@@ -145,11 +150,11 @@
 
             <TextView
                 android:id="@+id/devolucionnum"
-                android:layout_width="10dp"
+                android:layout_width="80dp"
                 android:text="100"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.20"
+                android:layout_height="80dp"
+
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -177,17 +182,18 @@
                 android:layout_height="50dp"
                 android:textColor="#212121"
                 android:layout_weight="4"
+                android:textSize="24dp"
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
                 android:gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/encargonum"
-                android:layout_width="10dp"
+                android:layout_width="80dp"
                 android:text="100"
                 android:layout_marginLeft="15dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
+                android:layout_height="80dp"
+
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -296,5 +302,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

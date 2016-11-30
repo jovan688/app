@@ -77,6 +77,12 @@ public class LoginPresenterImplement implements LoginPresenter {
             case Events.onSyncCarteraSucess:
                 onSyncCarteraSucess();
                 break;
+            case Events.onSystemSuccess:
+                    loginView.onSystemSuccess();
+                break;
+            case Events.goToMainScreen:
+                loginView.goToMainScreen();
+                break;
             case Events.onSyncDescuentosError:
             case Events.onSyncCarteraError :
             case Events.onSyncCatalogoError:
@@ -100,6 +106,7 @@ public class LoginPresenterImplement implements LoginPresenter {
         if(loginView!=null){
             loginView.disableInputs();
             loginView.showProgress();
+            loginView.Sync("Conectando con el Servidor .....");
         }
         loginInteractor.DownloadServer();
     }

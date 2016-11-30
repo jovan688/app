@@ -158,6 +158,15 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
         finish();
     }
 
+    @Override
+    public void onSystemSuccess() {
+        dlg = null;
+
+        loginPresenter.onDestroy();
+        Intent intent = new Intent(this, ConfiguracionActivity.class);
+        startActivity(intent);
+    }
+
     private void SetInputs(boolean enabled) {
         btnSignIn.setEnabled(enabled);
         txtpassword.setEnabled(enabled);

@@ -252,7 +252,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
                 devolucion.setObjSivProductoID(productos.get(0).getSivProductoID());
                 devolucion.setTotalDevolucion(productos.get(0).getPrecio_Credito());
 
-                if(detalles!=null)
+                if(detalles.size()> 0)
                     devolucion.setObjSfaFacturaID(detalles.get(0).getObjSfaFacturaID());
 
                 if (!TextUtils.isEmpty(btnobservaciones.getText())) {

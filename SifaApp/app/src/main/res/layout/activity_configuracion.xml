@@ -98,7 +98,7 @@
 
                         <EditText
                             android:id="@+id/cfgtextv_detalledeviceid"
-                            android:layout_width="50dp"
+                            android:layout_width="130dp"
                             android:layout_height="25dp"
                             android:layout_below="@+id/separator2"
                             android:layout_marginLeft="10dp"
@@ -108,7 +108,7 @@
                             android:lines="1"
                             android:paddingBottom="1dp"
                             android:paddingTop="8dp"
-                            android:textSize="12dp"
+                            android:textSize="14dp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -191,6 +191,19 @@
                             android:layout_below="@id/cfglbl_user"
                             android:layout_marginLeft="10dp"
                             android:id="@+id/btnsaveconfg" />
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="CERRAR SESION"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/white"
+                            android:background="@color/colorPurple"
+                            android:layout_below="@id/btnsaveconfg"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/btnsignoff" />
+
 
 
                     </RelativeLayout>

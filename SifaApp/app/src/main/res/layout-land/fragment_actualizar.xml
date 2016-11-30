@@ -8,7 +8,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView4" >
+        android:id="@+id/scrollView4"
+        android:fillViewport="false">
+
 
         <LinearLayout
             android:orientation="vertical"
@@ -47,10 +49,10 @@
 
                     <TextView
                         android:id="@+id/clientenum"
-                        android:layout_width="match_parent"
+                        android:layout_width="60dp"
                         android:text="100"
                         android:layout_marginLeft="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/round_button"
                         android:layout_marginTop="10dp"
                         android:textAlignment="center"
@@ -100,10 +102,10 @@
 
                     <TextView
                         android:id="@+id/cateranum"
-                        android:layout_width="match_parent"
+                        android:layout_width="60dp"
                         android:text="100"
                         android:layout_marginLeft="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/round_button"
                         android:layout_marginTop="10dp"
                         android:textAlignment="center"
@@ -153,10 +155,10 @@
 
                     <TextView
                         android:id="@+id/ventaenum"
-                        android:layout_width="match_parent"
+                        android:layout_width="60dp"
                         android:text="100"
                         android:layout_marginLeft="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/round_button"
                         android:layout_marginTop="10dp"
                         android:textAlignment="center"
@@ -206,10 +208,10 @@
 
                     <TextView
                         android:id="@+id/devolucionnum"
-                        android:layout_width="match_parent"
+                        android:layout_width="60dp"
                         android:text="100"
                         android:layout_marginLeft="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/round_button"
                         android:layout_marginTop="10dp"
                         android:textAlignment="center"
@@ -260,10 +262,10 @@
 
                     <TextView
                         android:id="@+id/encargonum"
-                        android:layout_width="match_parent"
+                        android:layout_width="60dp"
                         android:text="100"
                         android:layout_marginLeft="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/round_button"
                         android:layout_marginTop="10dp"
                         android:textAlignment="center"
@@ -375,5 +377,7 @@
 
         </LinearLayout>
     </ScrollView>
+
+
 
 </FrameLayout>

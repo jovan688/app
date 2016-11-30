@@ -104,6 +104,10 @@ public class Events {
     public  final static int onUpdateAmount =66;
     public  final static int onFetchCustomerSucess =67;
 
+    public  final static int onSystemSuccess =68;
+
+    public  final static int goToMainScreen =69;
+
 
     private  int eventype;
     private  String errorMessage;

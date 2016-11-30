@@ -210,6 +210,11 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     }
 
     @Override
+    public void onSystemSuccess() {
+
+    }
+
+    @Override
     public void UpdateCounter(TypeCounter type, int count) {
         if(type == TypeCounter.CLIENTE)
             clientenum.setText(String.valueOf(count));

@@ -29,12 +29,11 @@
                 android:gravity="center_vertical" />
 
             <TextView
-                android:layout_width="10dp"
+                android:layout_width="50dp"
                 android:text="100"
                 android:id="@+id/clientenum"
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
-                android:layout_weight="0.93"
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -65,15 +64,16 @@
                 android:layout_marginTop="10dp"
                 android:textAlignment="gravity"
                 android:textColor="#212121"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:id="@+id/textView8" />
 
             <TextView
-                android:layout_width="10dp"
+                android:layout_width="50dp"
                 android:text="100"
                 android:id="@+id/cateranum"
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
-                android:layout_weight="0.93"
+
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -107,11 +107,9 @@
 
             <TextView
                 android:id="@+id/ventaenum"
-                android:layout_width="15dp"
-                android:text="100"
-                android:layout_marginLeft="15dp"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_weight="1.60"
+                android:text="100"
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -145,11 +143,10 @@
 
             <TextView
                 android:id="@+id/devolucionnum"
-                android:layout_width="10dp"
+                android:layout_width="50dp"
                 android:text="100"
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
-                android:layout_weight="1.20"
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
@@ -183,11 +180,10 @@
 
             <TextView
                 android:id="@+id/encargonum"
-                android:layout_width="10dp"
+                android:layout_width="50dp"
                 android:text="100"
                 android:layout_marginLeft="15dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
                 android:background="@drawable/round_button"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
