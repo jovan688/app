@@ -6,7 +6,6 @@
         <item>DEVOLUCIONES</item>
         <item>ENCARGOS</item>
         <item>ACTUALIZACION DE DATOS</item>
-        <item>CONFIGURACION</item>
         <item>CERRAR SESION</item>
     </string-array>
 </resources>

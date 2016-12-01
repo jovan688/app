@@ -41,6 +41,7 @@ import yio.io.sifaapp.BaseActivity;
 import yio.io.sifaapp.Catalogos.CatalogoPresenter;
 import yio.io.sifaapp.Catalogos.CatalogoPresenterIMP;
 import yio.io.sifaapp.Catalogos.ICatalogoView;
+import yio.io.sifaapp.EncargoListActivity;
 import yio.io.sifaapp.R;
 import yio.io.sifaapp.Venta.AppDialog;
 import yio.io.sifaapp.Venta.IVenta;
@@ -556,5 +557,14 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
         String month = new SimpleDateFormat("MM").format(fecha);  // always 2 digits
         String year = new SimpleDateFormat("yyyy").format(fecha); // 4 digit year
         txtfecha.setText(getString(R.string.calendar_date_picker_result_values, year, month, day));
+    }
+
+    @OnClick(R.id.btncancel)
+    public void cancel(){
+        Intent intent = new Intent(getActivity(),VentaListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+//end Bundle
+        startActivity(intent);
     }
 }

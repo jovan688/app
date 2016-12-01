@@ -28,20 +28,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import yio.io.sifaapp.BaseActivity;
+import yio.io.sifaapp.CarteraListActivity;
 import yio.io.sifaapp.Devolucion.IDevolucionListPresenter;
 import yio.io.sifaapp.Devolucion.IDevolucionListPresenterImpl;
 import yio.io.sifaapp.Devolucion.IDevolucionView;
-import yio.io.sifaapp.Devolucion.NewDevolucionPresenter;
 import yio.io.sifaapp.DevolucionListActivity;
+import yio.io.sifaapp.EncargoListActivity;
 import yio.io.sifaapp.R;
 import yio.io.sifaapp.Venta.AppDialog;
-import yio.io.sifaapp.VentaListActivity;
 import yio.io.sifaapp.adapter.TypeLongClick;
 import yio.io.sifaapp.adapter.productAdapter;
 import yio.io.sifaapp.adapter.setOnLongClickListener;
@@ -83,13 +82,13 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
     RecyclerView FacturaRecyclerview;
     @Bind(R.id.btnsave)
     Button btnsave;
-    @Bind(R.id.btncancel)
-    Button btncancel;
     @Bind(R.id.btnobservaciones)
     EditText btnobservaciones;
     IDevolucionListPresenter presenter;
+    @Bind(R.id.btncancel)
+    Button btncancel;
     private Display display;
-    List<DevolucionProductos>  detalles = new ArrayList<DevolucionProductos>();
+    List<DevolucionProductos> detalles = new ArrayList<DevolucionProductos>();
 
     public NuevoDevolucionFragment() {
         // Required empty public constructor
@@ -151,7 +150,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
             return;
         }
 
-        dp = new ProductoDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen,customer.getClienteID() ,this);
+        dp = new ProductoDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, customer.getClienteID(), this);
         Window window = dp.getWindow();
         window.setGravity(Gravity.CENTER);
 
@@ -224,7 +223,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
         }
     }
 
-    private boolean savedate(){
+    private boolean savedate() {
 
         boolean cancel = false;
         TextView focus = null;
@@ -237,11 +236,9 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
             showmessage("Seleccione al menos un Producto.");
             cancel = true;
         }
-        if(cancel){
+        if (cancel) {
 
-        }
-        else
-        {
+        } else {
 
 
             try {
@@ -252,7 +249,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
                 devolucion.setObjSivProductoID(productos.get(0).getSivProductoID());
                 devolucion.setTotalDevolucion(productos.get(0).getPrecio_Credito());
 
-                if(detalles.size()> 0)
+                if (detalles.size() > 0)
                     devolucion.setObjSfaFacturaID(detalles.get(0).getObjSfaFacturaID());
 
                 if (!TextUtils.isEmpty(btnobservaciones.getText())) {
@@ -328,5 +325,14 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
     @Override
     public void obtenerDetalle(List<DevolucionProductos> detalle) {
         detalles = detalle;
+    }
+
+    @OnClick(R.id.btncancel)
+    public void cancel(){
+        Intent intent = new Intent(getActivity(),DevolucionListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+//end Bundle
+        startActivity(intent);
     }
 }

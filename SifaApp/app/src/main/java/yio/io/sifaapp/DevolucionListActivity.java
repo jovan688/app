@@ -34,7 +34,7 @@ public class DevolucionListActivity extends  BaseActivity {
 
 
         bottomBar = BottomBar.attach(this, savedInstanceState);
-
+        bottomBar.noTabletGoodness();
         bottomBar.setItems(R.menu.devolucionlist_menu);
         bottomBar.setOnMenuTabClickListener(new OnMenuTabClickListener() {
             @Override

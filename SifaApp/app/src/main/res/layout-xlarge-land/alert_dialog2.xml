@@ -1,12 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@drawable/bgdialog2"
-    android:orientation="vertical" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:nestedScrollingEnabled="false"
+    android:background="@color/bp_disabled_day"
+    android:focusable="true"
+    android:weightSum="3"
+    >
 
-    <!-- This is for the info image -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="end"
+        android:layout_weight="1">
 
     <ImageView
         android:id="@+id/icon_dialog_alert"
@@ -14,17 +20,39 @@
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="false"
-        android:baselineAlignBottom="true"
-        android:padding="0dp"
         android:src="@android:drawable/ic_menu_info_details" />
+    </LinearLayout>
 
-    <!-- The message -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    <Button
+        android:id="@+id/btnaceptar_dialog_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn"
+        android:focusable="true"
+        android:text="Aceptar"
+        android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:focusable="false"
+        android:clickable="false"
+        android:showDividers="end"
+        android:layout_weight="1">
 
     <ScrollView
         android:id="@+id/scroll_dialog"
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_toRightOf="@+id/icon_dialog_alert"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical">
 
 
@@ -38,28 +66,11 @@
             android:maxLines="10"
             android:textColor="@color/white"
             android:textSize="12dip"
+            android:visibility="gone"
             android:scrollbars="vertical"/>
 
     </ScrollView>
+    </LinearLayout>
 
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scroll_dialog"
-        android:layout_centerHorizontal="true" >
 
-        <Button
-            android:id="@+id/btnaceptar_dialog_alert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/btn"
-            android:focusable="true"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp"
-            android:text="Aceptar"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white" />
-    </TableRow>
-
-</RelativeLayout>
+</LinearLayout>

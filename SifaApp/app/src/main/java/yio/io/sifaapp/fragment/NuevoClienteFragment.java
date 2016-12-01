@@ -2,6 +2,7 @@ package yio.io.sifaapp.fragment;
 
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import yio.io.sifaapp.BaseActivity;
+import yio.io.sifaapp.CarteraListActivity;
 import yio.io.sifaapp.ClienteNuevo.ClientePresenter;
 import yio.io.sifaapp.ClienteNuevo.ClientePresenterIMP;
 import yio.io.sifaapp.ClienteNuevo.IClienteView;
@@ -357,7 +359,11 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
     @OnClick(R.id.btncancelar)
     public void cancelar(){
-        getActivity().getFragmentManager().popBackStack();
+        Intent intent = new Intent(getActivity(),CarteraListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+//end Bundle
+        startActivity(intent);
 
 
     }

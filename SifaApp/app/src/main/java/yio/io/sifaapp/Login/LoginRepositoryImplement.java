@@ -130,7 +130,8 @@ public class LoginRepositoryImplement implements LoginRepository {
             if (message != null && message.isHasError()) {
                 postEvent(Events.onSigInError, message.getCause() + message.getMessage());
             } else {
-                authenticationRequest request = new authenticationRequest(username, password, "123");
+                // Pin del telefono
+                authenticationRequest request = new authenticationRequest(username, password, String.valueOf(ModelConfiguracion.getDeviceID(context)));
                 service = retrofit.create(IServicioRemoto.class);
                 Call<authenticationResponse> authenticationResponseCall = service.AutenticarUsuario(request);
                 authenticationResponseCall.enqueue(new Callback<authenticationResponse>() {
@@ -622,7 +623,7 @@ public class LoginRepositoryImplement implements LoginRepository {
 
     private Boolean  getsession () {
         Boolean session = false;
-        Configuration configuration = new Select().from(Configuration.class).querySingle();
+        Configuration configuration = new Select().from(Configuration.class).where(String.format("System='0'")).querySingle();
         if(configuration!=null)
             session = configuration.getSession();
 

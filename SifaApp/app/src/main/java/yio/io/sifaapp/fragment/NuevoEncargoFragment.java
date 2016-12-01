@@ -405,4 +405,13 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
         ProductRecyclerview.addItemDecoration(new DividerItemDecoration2(getContext(), DividerItemDecoration2.VERTICAL_LIST));
     }
 
+    @OnClick(R.id.btncancel)
+    public void cancel(){
+        Intent intent = new Intent(getActivity(),EncargoListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+//end Bundle
+        startActivity(intent);
+    }
+
 }

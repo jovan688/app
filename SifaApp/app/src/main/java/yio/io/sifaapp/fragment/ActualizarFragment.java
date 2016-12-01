@@ -177,7 +177,8 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     @Override
     public void authenticate() {
-        showStatus("Se ha Descargado Exitosamente!",true);
+        if (dlg != null && dlg.isShowing())
+            dlg.dismiss();
     }
 
     @Override
@@ -293,6 +294,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    hide();
                     AppDialog.showMessage(getActivity(), "", mensaje,
                             AppDialog.DialogType.DIALOGO_ALERTA,
                             new AppDialog.OnButtonClickListener() {
@@ -319,8 +321,14 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     }
 
     public void hide(){
-        if (dlg != null && dlg.isShowing())
-            dlg.dismiss();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (dlg != null && dlg.isShowing())
+                    dlg.dismiss();
+            }
+        });
+
     }
 
 }

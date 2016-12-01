@@ -90,11 +90,11 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
                 intent = new Intent(this, ActualizarActivity.class);
                 startActivity(intent);
                 break;
-            case 5:
+            case 6:
                 intent = new Intent(this, ConfiguracionActivity.class);
                 startActivity(intent);
                 break;
-            case 6 :
+            case 5 :
                 //loginPresenter.onSingOff();
                 // Cerrar session
                 Configuration configuration = new Select().from(Configuration.class)
@@ -103,8 +103,11 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
                 if(configuration!=null) {
                     configuration.setSession(false);
                     configuration.save();
+                    intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
-                finish();
+
                 break;
         }
         //ButterKnife.unbind(this);

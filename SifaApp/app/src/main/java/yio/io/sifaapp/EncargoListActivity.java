@@ -28,6 +28,7 @@ public class EncargoListActivity extends  BaseActivity {
 
     private  void SetBottomOptions(Bundle savedInstanceState) {
         bottomBar = BottomBar.attach(this, savedInstanceState);
+        bottomBar.noTabletGoodness();
         bottomBar.setItems(R.menu.encargolist_menu);
         bottomBar.setOnMenuTabClickListener(new OnMenuTabClickListener() {
             @Override
