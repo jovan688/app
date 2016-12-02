@@ -197,6 +197,17 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/abonar"
+                    android:id="@+id/btnabonar"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/mybutton"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/colorPurple"
+                    android:layout_gravity="bottom|center_horizontal" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/Noabonar"
                     android:id="@+id/btnnoabonar"
                     android:background="@color/colorPurple"

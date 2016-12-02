@@ -3,6 +3,7 @@ package yio.io.sifaapp.Login;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.google.gson.ExclusionStrategy;
@@ -140,6 +141,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                     public void onResponse(Call<authenticationResponse> call, Response<authenticationResponse> response) {
                         if (response.body() != null) {
                             Log.d("onResponse", "onResponse...");
+                            Log.d("onResponse",response.body().toString());
                             authenticationResponse _response = response.body();
                             if (_response.getTieneAcceso()) {
                                 try {
@@ -163,6 +165,10 @@ public class LoginRepositoryImplement implements LoginRepository {
                                     postEvent(Events.onSigInError, e.getMessage());
                                     Log.d("authenticationResponse", "onSigInSuccess");
                                 }
+                            }
+                            else {
+                                postEvent(Events.onSigInError,"EL usuario no tiene permiso! Consulte al administrador si ha agregado su ssd del dispositiv0");
+                                Log.d("authenticationResponse", "no permiso");
                             }
                         } else {
                             postEvent(Events.onSigInError, "Usuario Invalido");
@@ -455,56 +461,62 @@ public class LoginRepositoryImplement implements LoginRepository {
             if(service ==null)
                 service = retrofit.create(IServicioRemoto.class);
 
-            Call<List<CarteraResponse>> carteraResponseCall = service.GetCarteraByCobradorId(configuration.getObjEmpleadoID());
+            try
+            {
+                Call<List<CarteraResponse>> carteraResponseCall = service.GetCarteraByCobradorId(configuration.getObjEmpleadoID());
 
-            carteraResponseCall.enqueue(new Callback<List<CarteraResponse>>() {
+                carteraResponseCall.enqueue(new Callback<List<CarteraResponse>>() {
 
-                @Override
-                public void onResponse(Call<List<CarteraResponse>> call, Response<List<CarteraResponse>> response) {
-                    if (response.body() != null) {
-                        new Delete().from(Cartera.class).where("1=1").query();
-                        new Delete().from(CarteraDetalle.class).where("1=1").query();
-                        //Clear all data if exist
+                    @Override
+                    public void onResponse(Call<List<CarteraResponse>> call, Response<List<CarteraResponse>> response) {
+                        if (response.body() != null) {
+                            new Delete().from(Cartera.class).where("1=1").query();
+                            new Delete().from(CarteraDetalle.class).where("1=1").query();
+                            //Clear all data if exist
 
-                        List<CarteraResponse> list = (List<CarteraResponse>) response.body();
-                        for (CarteraResponse cartera : list) {
-                            Cartera c = new Cartera();
-                            c.setCedula(cartera.getCedula());
-                            c.setCiudad(cartera.getCiudad());
-                            c.setClienteID(cartera.getClienteID());
-                            c.setDireccion(cartera.getDireccion());
-                            c.setFechaAbono(cartera.getFechaAbono());
-                            c.setMontoCuota(cartera.getMontoCuota());
-                            c.setNombreCompleto(cartera.getNombreCompleto());
-                            c.setOjbCobradorID(cartera.getOjbCobradorID());
-                            c.setOrdenCobro(Integer.valueOf(cartera.getOrdenCobro()));
-                            c.setOjbCobradorID(cartera.getOjbCobradorID());
-                            c.setPais(cartera.getPais());
-                            c.setRutaAsignada(cartera.getRutaAsignada());
-                            c.setSaldo(cartera.getSaldo());
-                            c.setStbRutaID(cartera.getStbRutaID());
-                            List<Producto> items = new ArrayList<Producto>();
-                            c.setSccCuentaID(cartera.getSccCuentaID());
-                            c.setOffline(true);
-                            c.setCobrado(false);
-                            c.setCuotasVencidas(cartera.getCuotasVencidas() );
-                            //c.setProductos(items);
-                            c.save();
-                            for (Productos p : cartera.getProductos()) {
-                                CarteraDetalle detalle = new CarteraDetalle(p.getSivProductoID(), p.getObjSfaFacturaID(), c.getClienteID(), p.getPrecio().floatValue());
-                                detalle.save();
+                            List<CarteraResponse> list = (List<CarteraResponse>) response.body();
+                            for (CarteraResponse cartera : list) {
+                                Cartera c = new Cartera();
+                                c.setCedula(cartera.getCedula());
+                                c.setCiudad(cartera.getCiudad());
+                                c.setClienteID(cartera.getClienteID());
+                                c.setDireccion(cartera.getDireccion());
+                                c.setFechaAbono(cartera.getFechaAbono());
+                                c.setMontoCuota(cartera.getMontoCuota());
+                                c.setNombreCompleto(cartera.getNombreCompleto());
+                                c.setOjbCobradorID(cartera.getOjbCobradorID());
+                                c.setOrdenCobro(Integer.valueOf(cartera.getOrdenCobro()));
+                                c.setOjbCobradorID(cartera.getOjbCobradorID());
+                                c.setPais(cartera.getPais());
+                                c.setRutaAsignada(cartera.getRutaAsignada());
+                                c.setSaldo(cartera.getSaldo());
+                                c.setStbRutaID(cartera.getStbRutaID());
+                                List<Producto> items = new ArrayList<Producto>();
+                                c.setSccCuentaID(cartera.getSccCuentaID());
+                                c.setOffline(true);
+                                c.setCobrado(false);
+                                c.setCuotasVencidas(cartera.getCuotasVencidas() );
+                                //c.setProductos(items);
+                                c.save();
+                                for (Productos p : cartera.getProductos()) {
+                                    CarteraDetalle detalle = new CarteraDetalle(p.getSivProductoID(), p.getObjSfaFacturaID(), c.getClienteID(), p.getPrecio().floatValue());
+                                    detalle.save();
+                                }
                             }
+                            postEvent(Events.onSyncCarteraSucess);
                         }
-                        postEvent(Events.onSyncCarteraSucess);
+
                     }
 
-                }
-
-                @Override
-                public void onFailure(Call<List<CarteraResponse>> call, Throwable t) {
-                    postEvent(Events.onSyncCarteraError, "Error Sincronizando Cartera");
-                }
-            });
+                    @Override
+                    public void onFailure(Call<List<CarteraResponse>> call, Throwable t) {
+                        postEvent(Events.onSyncCarteraError, "Error Sincronizando Cartera");
+                    }
+                });
+            }
+            catch (Exception ex){
+                postEvent(Events.onSyncCarteraError, ex.getMessage());
+            }
         }
     }
 

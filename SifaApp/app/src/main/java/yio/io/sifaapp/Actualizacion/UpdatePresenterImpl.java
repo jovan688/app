@@ -92,20 +92,21 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
                 view.notify((String)event.getObject());
                 break;
             case Events.onClienteUpdateSucess :
-                view.UpdateVentas();
+                view.UpdateVentas(); // Ahora que sincronize las ventas
                 break;
             case Events.onVentasUpdateSucess:
-                view.UpdateEncargos();
+                view.UpdateEncargos(); // ahora que sincronize los encargos
                 break;
             case Events.onEncargoUpdateSucess:
                 view.UpdateDevoluciones();
                 break;
-            case Events.onDescuentosSucess:
+            case Events.onDevolucionesUpdateSucess:
                 view.UpdateCartera();
                 break;
             case Events.onUpdateCobroSucess:
                 view.enableButtons();
                 view.notify("Sincronizacion Completa.");
+                CountOfflineData();
                 break;
             case Events.onNetworkFails:
                 view.enableButtons();

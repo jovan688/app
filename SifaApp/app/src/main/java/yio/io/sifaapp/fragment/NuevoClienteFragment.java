@@ -218,6 +218,8 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
                             if (AppDialog.OK_BUTTOM == actionId) {
                                 _dialog.dismiss();
+                                Intent i = new Intent(getActivity() , CarteraListActivity.class);
+                                startActivity(i);
                             }
                         }
                     });

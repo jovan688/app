@@ -63,6 +63,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     public CarteraListFragment() {
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -156,7 +157,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         Bundle bundle = new Bundle();
         bundle.putSerializable("Cartera", cartera);
         detalle.setArguments(bundle);
-        manager.beginTransaction().replace(R.id.fragment_container, detalle).commit();
+        manager.beginTransaction().replace(R.id.fragment_container, detalle , "Detalle").commit();
 
 
     }

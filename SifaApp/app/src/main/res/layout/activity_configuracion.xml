@@ -96,7 +96,7 @@
                             android:layout_marginTop="10dp"
                             android:text="Devise Id :" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/cfgtextv_detalledeviceid"
                             android:layout_width="130dp"
                             android:layout_height="25dp"

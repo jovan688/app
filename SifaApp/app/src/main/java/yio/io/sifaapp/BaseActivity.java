@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
 
     private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.main);
+        //stoolbar.inflateMenu(R.menu.main);
         setSupportActionBar(toolbar);
 
     }
@@ -116,14 +116,6 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
     }
 
     public BottomBar getBottomBar(){return  null;}
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
 
     @Override
     public void enableInputs() {

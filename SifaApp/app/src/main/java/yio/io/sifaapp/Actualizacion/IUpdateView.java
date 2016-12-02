@@ -20,5 +20,6 @@ public interface IUpdateView {
     void UpdateEncargos();
     void UpdateDevoluciones();
     void UpdateCartera();
+    void UpdateCliente();
     void ShowError(String message);
 }

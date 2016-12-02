@@ -121,7 +121,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         public void onResponse(Call<String> call, Response<String> response) {
                             contador--;
                             if(!response.body().equals("-1")) {
-                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                int id = Integer.parseInt(response.body().split("\\|")[0]);
                                 if (id != 0) {
                                     Cobro cobro = new Select().from(Cobro.class).where(String.format("Cedula='%s'",response.body().split("|")[1])).querySingle();
                                     if(cobro!=  null) {
@@ -205,10 +205,10 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         public void onResponse(Call<String> call, Response<String> response) {
                             contador--;
                             if(!response.body().equals("-1")) {
-                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                int id = Integer.parseInt(response.body().split("\\|")[0]);
                                 if (id != 0) {
                                     // actualizar offline
-                                    String ParamVerificacion = response.body().split("|")[1];
+                                    String ParamVerificacion = response.body().split("\\|")[1];
                                     Customer customer = new Select().from(Customer.class).where(String.format("Cedula = '%s'", ParamVerificacion)).querySingle();
                                     customer.setOffline(false);
                                     customer.save();
@@ -249,8 +249,9 @@ public class UpdateRepositoryImp implements IUpdateRepository {
 
             List<Venta> list = new Select().from(Venta.class).where(String.format("offline=1")).queryList();
             contador = list.size();
+            if(service== null)
+                service = retrofit.create(IServicioRemoto.class);
 
-            service = retrofit.create(IServicioRemoto.class);
             if (contador == 0) {
                 postEvent(Events.onVentasUpdateSucess, null);
             }
@@ -335,7 +336,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
             List<Devolucion> list = new Select().from(Devolucion.class).where(String.format("offline=1")).queryList();
             contador = list.size();
             if (contador == 0) {
-                postEvent(Events.onDescuentosSucess, null);
+                postEvent(Events.onDevolucionesUpdateSucess, null);
             }
             else
             {
@@ -370,7 +371,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                 }
                             }
                             if (contador == 0) {
-                                postEvent(Events.onDescuentosSucess, null);
+                                postEvent(Events.onDevolucionesUpdateSucess, null);
                             } else {
                                 postEvent(Events.UpdateDevolucionesContador, null, contador);
                             }
@@ -413,7 +414,8 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     encargo _encargo = new encargo();
                     _encargo.setCedula(item.getCedula());
                     _encargo.setObjSrhEmpleadoID(item.getObjSrhEmpleadoID().toString());
-                    _encargo.setUsuarioCreacion(item.getUsuarioCreacion().toString());
+                    //_encargo.setUsuarioCreacion(item.getUsuarioCreacion().toString());
+                    _encargo.setUsuarioCreacion("ADMIN");
                     _encargo.setParamVerificacion(String.valueOf(item.getId()));
 
                     List<encargodetalle> detail = new ArrayList<encargodetalle>();
@@ -436,10 +438,10 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         public void onResponse(Call<String> call, Response<String> response) {
                             contador--;
                             if(!response.body().equals("-1")) {
-                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                int id = Integer.parseInt(response.body().split("\\|")[0]);
                                 if (id != 0) {
-                                    int encargoID = Integer.parseInt(response.body().split("|")[1]);
-                                    Encargo encargo = new Select().from(Encargo.class).where(String.format("id=%d"), encargoID).querySingle();
+                                    int encargoID = Integer.parseInt(response.body().split("\\|")[1]);
+                                    Encargo encargo = new Select().from(Encargo.class).where(String.format("id=%d", encargoID)).querySingle();
                                     encargo.setOffline(false);
                                     encargo.save();
                                 }

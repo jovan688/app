@@ -29,6 +29,7 @@ public class ClientePresenterIMP implements  ClientePresenter {
 
     @Override
     public void onCreated() {
+        eventbus.unregister(this);
         eventbus.register(this);
     }
 

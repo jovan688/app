@@ -147,22 +147,39 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     @Override
     public void enableButtons() {
-        Local.setEnabled(true);
+        /*getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Local.setEnabled(true);
+                Server.setEnabled(true);
+            }
+        });*/
+        //Local.setEnabled(true);
+        // Server.setEnabled(false);
+        //Server.setEnabled(true);
     }
 
     @Override
     public void disableButtons() {
-        Local.setEnabled(false);
+        //Local.setEnabled(false);
+        //Server.setEnabled(false);
+        /*getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Local.setEnabled(false);
+                Server.setEnabled(false);
+            }
+        });*/
     }
 
     @Override
     public void enableInputs() {
-        Server.setEnabled(true);
+        //Server.setEnabled(true);
     }
 
     @Override
     public void disableInputs() {
-        Server.setEnabled(false);
+       // Server.setEnabled(false);
     }
 
     @Override
@@ -172,13 +189,14 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     @Override
     public void hideProgress() {
+        hide();
+
 
     }
 
     @Override
     public void authenticate() {
-        if (dlg != null && dlg.isShowing())
-            dlg.dismiss();
+        showStatus("Descarga Completa", true);
     }
 
     @Override
@@ -189,7 +207,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     @Override
     public void goToMainScreen() {
         hide();
-        dlg = null;
+        //dlg = null;
         loginPresenter.onDestroy();
         Intent intent = new Intent(getActivity(), CarteraListActivity.class);
         startActivity(intent);
@@ -260,6 +278,11 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     }
 
     @Override
+    public void UpdateCliente() {
+        //presenter.UpdateCliente();
+    }
+
+    @Override
     public void ShowError(String message) {
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
@@ -291,10 +314,10 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     public void showStatus(final String mensaje, boolean... confirmacion) {
 
         if (confirmacion.length != 0 && confirmacion[0]) {
+
            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    hide();
                     AppDialog.showMessage(getActivity(), "", mensaje,
                             AppDialog.DialogType.DIALOGO_ALERTA,
                             new AppDialog.OnButtonClickListener() {
@@ -307,16 +330,22 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
                                     }
                                 }
                             });
+
                 }
             });
+
+
         } else {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    dlg = new CustomDialog(getActivity(), mensaje, false, NOTIFICATION_DIALOG);
-                    dlg.show();
+
+                      if (dlg != null )dlg.dismiss();
+                        dlg = new CustomDialog(getActivity(), mensaje, false, NOTIFICATION_DIALOG);
+                        dlg.show();
                 }
             });
+
         }
     }
 
@@ -324,6 +353,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                dlg.cancel();
                 if (dlg != null && dlg.isShowing())
                     dlg.dismiss();
             }

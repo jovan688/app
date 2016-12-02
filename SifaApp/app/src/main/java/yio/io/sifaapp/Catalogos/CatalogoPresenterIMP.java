@@ -29,6 +29,7 @@ public class CatalogoPresenterIMP implements  CatalogoPresenter {
 
     @Override
     public void onCreated() {
+        eventbus.unregister(this);
         eventbus.register(this);
     }
 

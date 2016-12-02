@@ -49,7 +49,7 @@ public class ConfiguracionActivity extends AppCompatActivity {
     static Context c ;
     String device;
     @Bind(R.id.cfgtextv_detalledeviceid)
-    EditText cfgtextvDetalledeviceid;
+    TextView cfgtextvDetalledeviceid;
     final int  MY_PERMISSIONS_REQUEST_READ_PHONE_STATE=1;
 
     @Override

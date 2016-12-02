@@ -38,8 +38,16 @@ public class sifacApplication extends Application {
         return ctx =app;
     }
 
+    public String getUsuarioName (){
+        Configuration configuration = new Select().from(Configuration.class).where(String.format("System='0'")).querySingle();
+        if(configuration!=null)
+            return configuration.getLogin();
+        return "";
+    }
+
+
     public int getUsuario (){
-        Configuration configuration = new Select().from(Configuration.class).querySingle();
+        Configuration configuration = new Select().from(Configuration.class).where(String.format("System='0'")).querySingle();
         if(configuration!=null)
             return configuration.getObjEmpleadoID();
         return 0;
