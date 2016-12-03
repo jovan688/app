@@ -123,7 +123,8 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                             if(!response.body().equals("-1")) {
                                 int id = Integer.parseInt(response.body().split("\\|")[0]);
                                 if (id != 0) {
-                                    Cobro cobro = new Select().from(Cobro.class).where(String.format("Cedula='%s'",response.body().split("|")[1])).querySingle();
+                                    String ced = response.body().split("\\|")[1];
+                                    Cobro cobro = new Select().from(Cobro.class).where(String.format("Cedula='%s'",ced)).querySingle();
                                     if(cobro!=  null) {
                                         cobro.setOffline(false);
                                         cobro.save();
@@ -295,10 +296,10 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         public void onResponse(Call<String> call, Response<String> response) {
                             contador--;
                             if(!response.body().equals("-1")) {
-                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                int id = Integer.parseInt(response.body().split("\\|")[0]);
                                 if (id != 0) {
                                     // actualizamos offline
-                                    int ventaid = Integer.parseInt(response.body().split("|")[1]);
+                                    int ventaid = Integer.parseInt(response.body().split("\\|")[1]);
                                     Venta venta1 = new Select().from(Venta.class).where(String.format("VentaID=%d", ventaid)).querySingle();
                                     venta1.setOffline(false);
                                     venta1.save();
@@ -361,11 +362,11 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         public void onResponse(Call<String> call, Response<String> response) {
                             contador--;
                             if(!response.body().equals("-1")) {
-                                int id = Integer.parseInt(response.body().split("|")[0]);
+                                int id = Integer.parseInt(response.body().split("\\|")[0]);
                                 if (id != 0) {
                                     // offline
-                                    int devid = Integer.parseInt(response.body().split("|")[1]);
-                                    Devolucion row = new Select().from(Devolucion.class).where(String.format("Id=%d"), devid).querySingle();
+                                    int devid =  Integer.parseInt(response.body().split("\\|")[1]);
+                                    Devolucion row = new Select().from(Devolucion.class).where(String.format("Id=%d", devid)).querySingle();
                                     row.setOffline(false);
                                     row.save();
                                 }

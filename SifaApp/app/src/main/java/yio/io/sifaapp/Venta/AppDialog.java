@@ -263,7 +263,7 @@ public class AppDialog extends DialogFragment implements OnDismissListener {
         alert.setCancelable(true);
         int margen = -2;
         alert.setView(vDialog, margen, margen, margen, margen);
-        alert.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(2));
         alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
         alert.show();
     }
@@ -298,8 +298,8 @@ public class AppDialog extends DialogFragment implements OnDismissListener {
             tvmessage = (TextView) vDialog.findViewById(R.id.bodymessage_dialog_alert);
             tvmessage.setText(Message.toString());
             btn_aceptar = (Button) vDialog.findViewById(R.id.btnaceptar_dialog_alert);
-            btn_aceptar.setVisibility(View.INVISIBLE);
-            ((Builder) mybuilder).setNeutralButton("Aceptar", new DialogInterface.OnClickListener() { // define the 'Cancel' button
+           // btn_aceptar.setVisibility(View.INVISIBLE);
+            /* ((Builder) mybuilder).setNeutralButton("NOOOO", new DialogInterface.OnClickListener() { // define the 'Cancel' button
                 public void onClick(DialogInterface dialog, int which) {
                     //Either of the following two lines should work.
                     if (mylistener != null) {
@@ -308,8 +308,8 @@ public class AppDialog extends DialogFragment implements OnDismissListener {
                     dialog.cancel();
                     //dialog.dismiss();
                 }
-            });
-            /*btn_aceptar.setOnClickListener(new Button.OnClickListener()
+            }); */
+            btn_aceptar.setOnClickListener(new Button.OnClickListener()
 	    	{
 				@Override
 				public void onClick(View v) {
@@ -319,7 +319,7 @@ public class AppDialog extends DialogFragment implements OnDismissListener {
 					if(alert != null && alert.isShowing())
 						alert.dismiss();
 				}
-	    	});*/
+	    	});
 			/*mybuilder.setView(vDialog);
 			alert = mybuilder.create();*/
 

@@ -33,11 +33,11 @@ public class ModelConfiguracion {
         return config;
     }
 
-    public static int getDeviceID(Context cnt) {
+    public static String getDeviceID(Context cnt) {
         pref = cnt.getSharedPreferences("VConfiguracion", Context.MODE_PRIVATE);
         if (pref == null)
-            return 0;
-        return Integer.parseInt(pref.getString("device_id", "0"));
+            return "0";
+        return pref.getString("device_id", "0");
     }
 
     public static void saveConfiguration(Context view, vmConfiguracion setting)throws Exception

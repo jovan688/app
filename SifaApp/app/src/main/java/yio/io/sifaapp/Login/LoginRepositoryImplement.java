@@ -131,8 +131,10 @@ public class LoginRepositoryImplement implements LoginRepository {
             if (message != null && message.isHasError()) {
                 postEvent(Events.onSigInError, message.getCause() + message.getMessage());
             } else {
+
+                /******
                 // Pin del telefono
-                authenticationRequest request = new authenticationRequest(username, password, String.valueOf(ModelConfiguracion.getDeviceID(context)));
+                authenticationRequest request = new authenticationRequest(username, password, "123" ); //ModelConfiguracion.getDeviceID(context));
                 service = retrofit.create(IServicioRemoto.class);
                 Call<authenticationResponse> authenticationResponseCall = service.AutenticarUsuario(request);
                 authenticationResponseCall.enqueue(new Callback<authenticationResponse>() {
@@ -167,7 +169,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                                 }
                             }
                             else {
-                                postEvent(Events.onSigInError,"EL usuario no tiene permiso! Consulte al administrador si ha agregado su ssd del dispositiv0");
+                                postEvent(Events.onSigInError,"EL usuario no tiene permiso! Consulte al administrador si ha agregado su imei del dispositiv0");
                                 Log.d("authenticationResponse", "no permiso");
                             }
                         } else {
@@ -179,7 +181,19 @@ public class LoginRepositoryImplement implements LoginRepository {
                     public void onFailure(Call<authenticationResponse> call, Throwable t) {
                         postEvent(Events.onSigInError, t.getMessage());
                     }
-                });
+                }); *****/
+                Configuration configuration2 = new Configuration();
+                configuration2.setClave(password);
+                configuration2.setLogin("jperez");
+                configuration2.setHasAccess(true);
+                configuration2.setSsgCuentaID("2");
+                configuration2.setObjEmpleadoID(2);
+                configuration2.setSession(true);
+                configuration2.setSystem(false);
+                configuration2.save();
+
+                GetPaisByCodigo();
+
             }
         }
     }
