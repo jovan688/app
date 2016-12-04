@@ -155,7 +155,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         FragmentManager manager = getActivity().getSupportFragmentManager();
         DetalleClienteFragment detalle = new DetalleClienteFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Cartera", cartera);
+        bundle.putSerializable("CarteraID", cartera.getId());
         detalle.setArguments(bundle);
         manager.beginTransaction().replace(R.id.fragment_container, detalle , "Detalle").commit();
 
@@ -199,7 +199,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         this.rutas = rutas;
 
         //  ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_dropdown_item_1line, rutas);
-        if (spinnerRuta != null) {
+        if (spinnerRuta != null && rutas.size() > 0) {
             spinnerRuta.setItems(rutas);
             spinnerRuta.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
                 @Override
@@ -209,9 +209,11 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
                 }
             });
             spinnerRuta.setTextColor(getResources().getColor(R.color.colorPurple));
-            Ruta r = rutas.get(0);
-            presenter.getCarteraList(r.getStbRutaID());
-            presenter.GetAmountCobrado(r.getStbRutaID());
+            if(rutas.size() > 0) {
+                Ruta r = rutas.get(0);
+                presenter.getCarteraList(r.getStbRutaID());
+                presenter.GetAmountCobrado(r.getStbRutaID());
+            }
         }
 
     }

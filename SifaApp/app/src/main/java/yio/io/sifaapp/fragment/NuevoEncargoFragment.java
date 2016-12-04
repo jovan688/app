@@ -56,6 +56,7 @@ import yio.io.sifaapp.model.Categoria;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Encargo;
 import yio.io.sifaapp.model.EncargoDetalle;
+import yio.io.sifaapp.model.EncargoMatcher;
 import yio.io.sifaapp.model.Producto;
 import yio.io.sifaapp.sifacApplication;
 import yio.io.sifaapp.utils.DividerItemDecoration2;
@@ -80,6 +81,9 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
     private ProductoDialog dp = null;
     private View view = null;
     private String productoname;
+    List<EncargoMatcher> encargoMatcherLis = new ArrayList<EncargoMatcher>();
+    Boolean added = false;
+    private Integer productoID;
     private productAdapter adapter = null;
     boolean setted;
     ArrayList<String> encargos = new ArrayList<String>();
@@ -314,12 +318,13 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
                 encargo.setOffline(true);
                 encargo.save();
 
-                for (String item: encargos ) {
+                for (EncargoMatcher item: encargoMatcherLis ) {
                     EncargoDetalle detalle = new EncargoDetalle();
                     detalle.setObservaciones(txtObservaciones.getText().toString());
                     detalle.setObjCategoriaID(categoria.getCategoriaID());
+                    detalle.setProductoID(item.getProductoID());
                     detalle.setEncargoid(encargo.id);
-                    detalle.setNombre_Producto(item);
+                    detalle.setNombre_Producto(item.getProductoName());
                     detalle.save();
                 }
             }
@@ -347,6 +352,13 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
             ProductRecyclerview.setVisibility(View.GONE);
             setted = true;
             txtproductoname.setText(productoname);
+            // Nuevo Matcher
+            EncargoMatcher matcher = new EncargoMatcher();
+            matcher.setProductoID(((Producto) row).getSivProductoID());
+            matcher.setProductoName(productoname);
+            encargoMatcherLis.add(matcher);
+            added = true;
+
         }
     }
 
@@ -362,6 +374,14 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
         if (cancel) {
             txtproductoname.requestFocus();
         } else {
+
+            if(added == false) {
+                // Nuevo Encargo
+                EncargoMatcher matcher = new EncargoMatcher();
+                matcher.setProductoName(txtproductoname.getText().toString());
+                encargoMatcherLis.add(matcher);
+                added = false;
+            }
             encargos.add(txtproductoname.getText().toString());
             Toast.makeText(getContext(), txtproductoname.getText().toString(), Toast.LENGTH_SHORT).show();
             txtproductoname.setText("");

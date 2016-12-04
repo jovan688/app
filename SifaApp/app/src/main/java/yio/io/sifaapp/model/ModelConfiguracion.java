@@ -18,6 +18,7 @@ public class ModelConfiguracion {
     {
         pref = cnt.getSharedPreferences("VConfiguracion", Context.MODE_PRIVATE);
         String url = pref.getString("url_server", "http://sifacc.azurewebsites.net/SifaccService.svc/");
+        //String url = pref.getString("url_server", "http://192.168.1.11/SIFACServices/SifaccService.svc/");
 
         return url;
     }
@@ -27,6 +28,7 @@ public class ModelConfiguracion {
         pref = cnt.getSharedPreferences("VConfiguracion", Context.MODE_PRIVATE);
         vmConfiguracion config=vmConfiguracion.setConfiguration(
                     pref.getString("url_server", "http://sifacc.azurewebsites.net/SifaccService.svc/"),
+                    //pref.getString("url_server", "http://192.168.1.11/SIFACServices/SifaccService.svc/"),
                     pref.getString("device_id",String.valueOf(getDeviceID(cnt))),
                     pref.getString("enterprise", "Distribuidora Mesa")
         );

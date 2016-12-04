@@ -162,6 +162,7 @@
                             android:layout_below="@+id/cfglbl_codempresa"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="18dp"
+                            android:visibility="gone"
                             android:text="Usuario :" />
 
                         <EditText
@@ -177,6 +178,7 @@
                             android:paddingTop="8dp"
                             android:singleLine="true"
                             android:textSize="12dp"
+                            android:visibility="gone"
                             android:layout_marginRight="5dp"
                             android:textStyle="bold" />
 

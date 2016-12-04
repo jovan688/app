@@ -199,6 +199,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!TextUtils.isEmpty(txtDescuento.getText().toString()))
                     montocondescuento = montosindescuento - Float.valueOf(txtDescuento.getText().toString());
+                    txtcustomercuota.setText(String.valueOf(montocondescuento));
             }
         });
         SetDate();
@@ -401,7 +402,11 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             dp.hide();
             setdata(productos);
             montosindescuento += ((Producto) row).getPrecio_Credito();
-            txtcustomercuota.setText(String.valueOf(montosindescuento));
+            if (!TextUtils.isEmpty(txtDescuento.getText())) {
+                txtcustomercuota.setText(String.valueOf(montosindescuento - Float.parseFloat(txtDescuento.getText().toString())));
+            }
+            else  txtcustomercuota.setText(String.valueOf(montosindescuento ));
+
         }
     }
 
@@ -464,7 +469,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                 focus = txtfecha;
                 cancel = true;
             }
-            else if (montosindescuento == 0) {
+            else if (montosindescuento <= 0) {
                 txtcustomercuota.setError(getString(R.string.message_vacio_Error));
                 focus = txtcustomercuota;
                 cancel = true;
@@ -487,8 +492,11 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
 
                     if (discount == null) {
                         // ERROR NO SE ENCONTRO DESCUENTO
+                        txtDescuento.setError("No se encontró descuento asociado a el plazo seleccionado!");
+                        focus = txtDescuento;
                         cancel = true;
-                    } else if (descuento < (montosindescuento * discount.getDescuentoMinimo())) {
+                    }
+                    /*else if (descuento < (montosindescuento * discount.getDescuentoMinimo())) {
                         txtDescuento.setError(getString(R.string.message_descuento_minimo_Error));
                         focus = txtDescuento;
                         cancel = true;
@@ -496,7 +504,13 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                         txtDescuento.setError(getString(R.string.message_descuento_maximo_Error));
                         focus = txtDescuento;
                         cancel = true;
+                    }*/
+                    else if (descuento > (montosindescuento * discount.getDescuentoMaximo())) {
+                        txtDescuento.setError(getString(R.string.message_descuento_maximo_Error));
+                        focus = txtDescuento;
+                        cancel = true;
                     }
+
                 }
             }
             if (cancel) {
@@ -515,8 +529,9 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                     venta.setObservaciones(EditTextObservaciones.getText().toString());
                     venta.setPrima(0);
                     venta.setSaldo(montocondescuento);
-                    venta.setTotal(montosindescuento);
-                    venta.setObjTerminoPagoID(150); // plazo.getStbValorCatalogoID());
+                    venta.setSubtotal(montosindescuento);
+                    venta.setTotal(montocondescuento);
+                    venta.setObjTerminoPagoID(plazo.getStbValorCatalogoID());
                     if (discount != null)
                         venta.setObjDescuentoID(discount.getSccDescuentoID());
                     else
@@ -524,7 +539,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                     venta.setObjEstadoID(502);
                     venta.setOffline(true);
                     if (cuota != null)
-                        venta.setObjModalidadPagoID(505); //cuota.getStbValorCatalogoID());
+                        venta.setObjModalidadPagoID(cuota.getStbValorCatalogoID());
                     venta.save();
 
                     for (Producto producto : productos) {
@@ -566,5 +581,6 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
 
 //end Bundle
         startActivity(intent);
+        getActivity().finish();
     }
 }

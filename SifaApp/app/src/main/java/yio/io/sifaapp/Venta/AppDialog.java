@@ -333,7 +333,7 @@ public class AppDialog extends DialogFragment implements OnDismissListener {
         vDialog = inflater.inflate(R.layout.abonodialog, null, false);
         txttitle = (TextView) vDialog.findViewById(R.id.txttitle);
         label = (TextView) vDialog.findViewById(R.id.label);
-        motivo = (EditText) vDialog.findViewById(R.id.motivo);
+        //motivo = (EditText) vDialog.findViewById(R.id.motivo);
         txtmontovariado = (EditText) vDialog.findViewById(R.id.txtmontovariado);
         radiocuota =  (RadioButton)vDialog.findViewById(R.id.radiocuota);
         radiocuotavariada =  (RadioButton)vDialog.findViewById(R.id.radiocuotavariada);

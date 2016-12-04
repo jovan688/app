@@ -19,16 +19,27 @@ public class EncargoDetalle  extends BaseModel implements Serializable {
     @PrimaryKey(autoincrement = true)
     @Column
     public  int detalle_id;
-
     @Column
     private Integer objCategoriaID ;
     @Column
     private String Nombre_Producto ;
     @Column
     private String Observaciones ;
-
     @Column
     private int encargoid;
+
+    public Integer getProductoID() {
+        return productoID;
+    }
+
+    public void setProductoID(Integer productoID) {
+        this.productoID = productoID;
+    }
+
+    @Column
+    private Integer productoID;
+
+
 
     public int getEncargoid() {
         return encargoid;

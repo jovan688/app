@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import yio.io.sifaapp.model.modelSend.cobro;
 import yio.io.sifaapp.model.modelSend.devolucion;
 import yio.io.sifaapp.model.modelSend.encargo;
 import yio.io.sifaapp.model.modelSend.encargodetalle;
+import yio.io.sifaapp.sifacApplication;
 import yio.io.sifaapp.utils.EventBus;
 import yio.io.sifaapp.utils.Events;
 import yio.io.sifaapp.utils.GreenRobotEventBus;
@@ -104,7 +106,8 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     c.setObjStbRutaID(item.getObjStbRutaID());
                     c.setAbono(item.getAbono());
                     c.setCancelo(item.getCancelo());
-                    c.setFechaAbono("1987-10-30");
+                    String fech = new SimpleDateFormat("yyyy-MM-dd").format(item.getFechaAbono());
+                    c.setFechaAbono(fech);
                     c.setMontoAbonado(item.getMontoAbonado());
                     c.setMotivoNoAbono(item.getMotivoNoAbono());
                     c.setCedula(item.getCedula());
@@ -189,7 +192,8 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     c.setObjRutaID(customer.getStbRutaID());
                     c.setTelefonos(customer.getTelefonos());
                     c.setObjTipoEntradaID(2);
-                    c.setUsuarioCreacion("ADMIN");
+                    // Nuevo CAMBIO
+                    c.setUsuarioCreacion(((sifacApplication) context.getApplicationContext()).getUsuarioName());
                     c.setParamVerificacion(customer.getCedula());
                     clientes.add(c);
                 }
@@ -416,7 +420,8 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     _encargo.setCedula(item.getCedula());
                     _encargo.setObjSrhEmpleadoID(item.getObjSrhEmpleadoID().toString());
                     //_encargo.setUsuarioCreacion(item.getUsuarioCreacion().toString());
-                    _encargo.setUsuarioCreacion("ADMIN");
+                    // NUEVO CAMBIO
+                    _encargo.setUsuarioCreacion(((sifacApplication) context.getApplicationContext()).getUsuarioName());
                     _encargo.setParamVerificacion(String.valueOf(item.getId()));
 
                     List<encargodetalle> detail = new ArrayList<encargodetalle>();
@@ -426,6 +431,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         encargodetalle detalle = new encargodetalle();
                         detalle.setNombre_Producto(det.getNombre_Producto());
                         detalle.setObjCategoriaID(det.getObjCategoriaID());
+                        detalle.setObjProductoID(det.getProductoID());
                         detalle.setObservaciones(det.getObservaciones());
                         detail.add(detalle);
                         //_encargo.getEncargoDetalle().add(detalle);

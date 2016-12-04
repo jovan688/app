@@ -132,9 +132,9 @@ public class LoginRepositoryImplement implements LoginRepository {
                 postEvent(Events.onSigInError, message.getCause() + message.getMessage());
             } else {
 
-                /******
+
                 // Pin del telefono
-                authenticationRequest request = new authenticationRequest(username, password, "123" ); //ModelConfiguracion.getDeviceID(context));
+                authenticationRequest request = new authenticationRequest(username, password, ModelConfiguracion.getDeviceID(context));
                 service = retrofit.create(IServicioRemoto.class);
                 Call<authenticationResponse> authenticationResponseCall = service.AutenticarUsuario(request);
                 authenticationResponseCall.enqueue(new Callback<authenticationResponse>() {
@@ -181,7 +181,10 @@ public class LoginRepositoryImplement implements LoginRepository {
                     public void onFailure(Call<authenticationResponse> call, Throwable t) {
                         postEvent(Events.onSigInError, t.getMessage());
                     }
-                }); *****/
+                });
+
+                /* TEMPORAL
+
                 Configuration configuration2 = new Configuration();
                 configuration2.setClave(password);
                 configuration2.setLogin("jperez");
@@ -193,6 +196,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                 configuration2.save();
 
                 GetPaisByCodigo();
+                */
 
             }
         }
@@ -484,37 +488,40 @@ public class LoginRepositoryImplement implements LoginRepository {
                     @Override
                     public void onResponse(Call<List<CarteraResponse>> call, Response<List<CarteraResponse>> response) {
                         if (response.body() != null) {
+
                             new Delete().from(Cartera.class).where("1=1").query();
                             new Delete().from(CarteraDetalle.class).where("1=1").query();
                             //Clear all data if exist
 
                             List<CarteraResponse> list = (List<CarteraResponse>) response.body();
                             for (CarteraResponse cartera : list) {
-                                Cartera c = new Cartera();
-                                c.setCedula(cartera.getCedula());
-                                c.setCiudad(cartera.getCiudad());
-                                c.setClienteID(cartera.getClienteID());
-                                c.setDireccion(cartera.getDireccion());
-                                c.setFechaAbono(cartera.getFechaAbono());
-                                c.setMontoCuota(cartera.getMontoCuota());
-                                c.setNombreCompleto(cartera.getNombreCompleto());
-                                c.setOjbCobradorID(cartera.getOjbCobradorID());
-                                c.setOrdenCobro(Integer.valueOf(cartera.getOrdenCobro()));
-                                c.setOjbCobradorID(cartera.getOjbCobradorID());
-                                c.setPais(cartera.getPais());
-                                c.setRutaAsignada(cartera.getRutaAsignada());
-                                c.setSaldo(cartera.getSaldo());
-                                c.setStbRutaID(cartera.getStbRutaID());
-                                List<Producto> items = new ArrayList<Producto>();
-                                c.setSccCuentaID(cartera.getSccCuentaID());
-                                c.setOffline(true);
-                                c.setCobrado(false);
-                                c.setCuotasVencidas(cartera.getCuotasVencidas() );
-                                //c.setProductos(items);
-                                c.save();
-                                for (Productos p : cartera.getProductos()) {
-                                    CarteraDetalle detalle = new CarteraDetalle(p.getSivProductoID(), p.getObjSfaFacturaID(), c.getClienteID(), p.getPrecio().floatValue());
-                                    detalle.save();
+                                if(!cartera.getSccCuentaID().equals("0")) {
+                                    Cartera c = new Cartera();
+                                    c.setCedula(cartera.getCedula());
+                                    c.setCiudad(cartera.getCiudad());
+                                    c.setClienteID(cartera.getClienteID());
+                                    c.setDireccion(cartera.getDireccion());
+                                    c.setFechaAbono(cartera.getFechaAbono());
+                                    c.setMontoCuota(cartera.getMontoCuota());
+                                    c.setNombreCompleto(cartera.getNombreCompleto());
+                                    c.setOjbCobradorID(cartera.getOjbCobradorID());
+                                    c.setOrdenCobro(Integer.valueOf(cartera.getOrdenCobro()));
+                                    c.setOjbCobradorID(cartera.getOjbCobradorID());
+                                    c.setPais(cartera.getPais());
+                                    c.setRutaAsignada(cartera.getRutaAsignada());
+                                    c.setSaldo(cartera.getSaldo());
+                                    c.setStbRutaID(cartera.getStbRutaID());
+                                    List<Producto> items = new ArrayList<Producto>();
+                                    c.setSccCuentaID(cartera.getSccCuentaID());
+                                    c.setOffline(true);
+                                    c.setCobrado(false);
+                                    c.setCuotasVencidas(cartera.getCuotasVencidas());
+                                    //c.setProductos(items);
+                                    c.save();
+                                    for (Productos p : cartera.getProductos()) {
+                                        CarteraDetalle detalle = new CarteraDetalle(p.getSivProductoID(), p.getObjSfaFacturaID(), c.getClienteID(), p.getPrecio().floatValue());
+                                        detalle.save();
+                                    }
                                 }
                             }
                             postEvent(Events.onSyncCarteraSucess);

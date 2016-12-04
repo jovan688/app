@@ -9,8 +9,20 @@ public class encargodetalle {
     private String Nombre_Producto;
     private String Observaciones;
 
+    public Integer getObjProductoID() {
+        return objProductoID;
+    }
+
+    public void setObjProductoID(Integer objProductoID) {
+        this.objProductoID = objProductoID;
+    }
+
+    private Integer objProductoID;
+
     public encargodetalle() {
     }
+
+
 
     public int getObjCategoriaID() {
         return objCategoriaID;

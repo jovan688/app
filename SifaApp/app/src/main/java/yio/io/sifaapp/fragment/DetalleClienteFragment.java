@@ -17,6 +17,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -79,6 +81,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
     Button btnreferencia;
     @Bind(R.id.scrollView)
     ScrollView scrollView;
+    Long CarteraID ;
 
     public DetalleClienteFragment() {
         presenter = new productoPresenterImp(this);
@@ -91,7 +94,8 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             Bundle bundle = getArguments();
-            cartera = (Cartera) bundle.getSerializable("Cartera");
+            CarteraID = (Long) bundle.getSerializable("CarteraID");
+            cartera = new Select().from(Cartera.class).where(String.format("id=%d",CarteraID)).querySingle();
         }
 
     }
@@ -264,7 +268,9 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
 
         if (cartera.getCobrado() == true) {
             btnabonar.setEnabled(false);
+            btnabonar.setAlpha((float) 0.5);
             btnnoabonar.setEnabled(false);
+            btnabonar.setAlpha((float) 0.5);
         }
     }
 
