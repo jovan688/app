@@ -27,6 +27,7 @@ public class LoginPresenterImplement implements LoginPresenter {
 
     @Override
     public void onCreated() {
+        eventbus.unregister(this);
         eventbus.register(this);
     }
 

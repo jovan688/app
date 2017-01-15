@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_mc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context="yio.io.sifaapp.ConfiguracionActivity"
+        >
+
+        <!-- Included header.xml here -->
+
+        <ViewStub
+            android:id="@+id/vsHeader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inflatedId="@+id/header"
+            android:layout="@layout/header" />
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="@color/white"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/ccategoria1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Conexión"
+                            android:textColor="@color/Blue" />
+
+                        <View
+                            android:id="@+id/separator1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/ccategoria1"
+                            android:background="@color/LightSeaGreen" />
+
+                        <TextView
+                            android:id="@+id/cfglbl_urlws"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/separator1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Url Servidor :" />
+
+                        <EditText
+                            android:id="@+id/cfgtextv_detalleurlws"
+                            android:layout_width="fill_parent"
+                            android:layout_height="28dp"
+                            android:layout_below="@+id/cfglbl_urlws"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/style_textbox"
+                            android:nextFocusDown="@+id/cfglbl_urlws2"
+                            android:nextFocusRight="@+id/cfglbl_urlws2"
+                            android:paddingBottom="1dp"
+                            android:paddingTop="8dp"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:textSize="12dp"
+                            android:layout_marginRight="5dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/ccategoria2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/cfgtextv_detalleurlws"
+                            android:layout_marginTop="20dp"
+                            android:text="Aplicación"
+                            android:textColor="@color/Blue" />
+
+                        <View
+                            android:id="@+id/separator2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/ccategoria2"
+                            android:background="@color/LightSeaGreen" />
+
+                        <TextView
+                            android:id="@+id/cfglbl_deviceid"
+                            android:layout_width="85dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/separator2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Devise Id :" />
+
+                        <TextView
+                            android:id="@+id/cfgtextv_detalledeviceid"
+                            android:layout_width="130dp"
+                            android:layout_height="25dp"
+                            android:layout_below="@+id/separator2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/cfglbl_deviceid"
+                            android:background="@drawable/style_textbox"
+                            android:enabled="false"
+                            android:lines="1"
+                            android:paddingBottom="1dp"
+                            android:paddingTop="8dp"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/ccategoria3"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/cfglbl_deviceid"
+                            android:layout_marginTop="25dp"
+                            android:text="Datos del Usuario"
+                            android:textColor="@color/Blue" />
+
+                        <View
+                            android:id="@+id/separator3"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/ccategoria3"
+                            android:background="@color/LightSeaGreen" />
+
+                        <TextView
+                            android:id="@+id/cfglbl_codempresa"
+                            android:layout_width="85dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/separator3"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="18dp"
+                            android:text="Empresa :" />
+
+                        <EditText
+                            android:id="@+id/cfgtextv_detallecodempresa"
+                            android:layout_width="fill_parent"
+                            android:layout_height="28dp"
+                            android:layout_below="@+id/separator3"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/cfglbl_codempresa"
+                            android:background="@drawable/style_textbox"
+                            android:nextFocusDown="@+id/cfgtextv_detalleuser"
+                            android:nextFocusRight="@+id/cfgtextv_detalleuser"
+                            android:nextFocusUp="@+id/cfgtextv_detalleurlws"
+                            android:paddingBottom="1dp"
+                            android:paddingTop="8dp"
+                            android:singleLine="true"
+                            android:textSize="12dp"
+                            android:layout_marginRight="5dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/cfglbl_user"
+                            android:layout_width="85dp"
+                            android:layout_height="28dp"
+                            android:layout_below="@+id/cfglbl_codempresa"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="18dp"
+                            android:visibility="gone"
+                            android:text="Usuario :" />
+
+                        <EditText
+                            android:id="@+id/cfgtextv_detalleuser"
+                            android:layout_width="fill_parent"
+                            android:layout_height="28dp"
+                            android:layout_below="@+id/cfgtextv_detallecodempresa"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_toRightOf="@+id/cfglbl_codempresa"
+                            android:background="@drawable/style_textbox"
+                            android:paddingBottom="1dp"
+                            android:paddingTop="8dp"
+                            android:singleLine="true"
+                            android:textSize="12dp"
+                            android:visibility="gone"
+                            android:layout_marginRight="5dp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:text="GUARDAR"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/white"
+                            android:background="@color/colorPurple"
+                            android:layout_below="@id/cfglbl_user"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/btnsaveconfg" />
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="CERRAR SESION"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/white"
+                            android:background="@color/colorPurple"
+                            android:layout_below="@id/btnsaveconfg"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/btnsignoff" />
+
+
+
+                    </RelativeLayout>
+
+        </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button3" />
+
+</LinearLayout>

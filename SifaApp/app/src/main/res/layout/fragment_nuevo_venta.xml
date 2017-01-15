@@ -140,8 +140,9 @@
                 android:paddingTop="12dp"
                 android:text="Productos"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/colorPurple"
-                android:background="@color/colorGrayLigth"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@color/colorAccent"
                 />
 
         </LinearLayout>

@@ -33,6 +33,7 @@ public class IDevolucionListPresenterImpl implements  IDevolucionListPresenter{
 
     @Override
     public void onCreated() {
+        eventbus.unregister(this);
         eventbus.register(this);
     }
 

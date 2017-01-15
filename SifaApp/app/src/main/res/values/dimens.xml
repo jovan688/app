@@ -5,4 +5,5 @@
     <dimen name="divider">1dp</dimen>
     <dimen name="divider_size">0.5dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="ic_clear_margin">16dp</dimen>
 </resources>

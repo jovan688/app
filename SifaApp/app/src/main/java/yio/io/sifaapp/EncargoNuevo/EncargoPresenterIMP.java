@@ -28,6 +28,7 @@ public class EncargoPresenterIMP implements EncargoPresenter {
 
     @Override
     public void onCreated() {
+        eventbus.unregister(this);
         eventbus.register(this);
     }
 

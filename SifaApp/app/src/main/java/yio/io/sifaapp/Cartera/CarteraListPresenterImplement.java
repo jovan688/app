@@ -28,6 +28,7 @@ public class CarteraListPresenterImplement implements ICarteraListPresenter {
 
     @Override
     public void onCreated() {
+        eventbus.unregister(this);
         eventbus.register(this);
     }
 
