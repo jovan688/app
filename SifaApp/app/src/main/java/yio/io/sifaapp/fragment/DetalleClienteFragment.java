@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,10 +83,12 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
     @Bind(R.id.scrollView)
     ScrollView scrollView;
     Long CarteraID ;
+    private static final String TAG = DetalleClienteFragment.class.getSimpleName();
 
     public DetalleClienteFragment() {
         presenter = new productoPresenterImp(this);
         clientePresenter = new ClientePresenteImpl(this);
+        cartera = null;
 
     }
 
@@ -120,6 +123,13 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         return view;
     }
 
+    @Override
+    public void onStop() {
+        presenter.onDestroy();
+        clientePresenter.onDestroy();
+        super.onStop();
+        Log.d(TAG,"onStop");
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -225,6 +235,9 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         boolean cancelar = false;
 
         if (cartera.getCobrado() == false) {
+
+
+
             Cobro cobro = new Cobro();
             cobro.setAbono(true);
             if (amt == cartera.getSaldo())
@@ -234,7 +247,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
 
             cobro.setFechaAbono(Calendar.getInstance().getTime());
             cobro.setMontoAbonado(amt);
-            cobro.setMotivoNoAbono("");
+            cobro.setMotivoNoAbono("ESte es mi registro");
             cobro.setObjCobradorID(cartera.getOjbCobradorID());
             cobro.setCedula(cartera.getCedula());
             cobro.setObjSccCuentaID(Integer.parseInt(cartera.getSccCuentaID()));
@@ -246,6 +259,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
 
             cartera.setCobrado(true);
             cartera.save();
+            Log.d(TAG,"Se ha Guardado el Cobro");
 
         } else {
             cancelar = true;

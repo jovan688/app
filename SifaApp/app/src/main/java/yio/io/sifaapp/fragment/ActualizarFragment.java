@@ -4,10 +4,12 @@ package yio.io.sifaapp.fragment;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ import yio.io.sifaapp.utils.TypeCounter;
  */
 public class ActualizarFragment extends Fragment implements IUpdateView , ILoginView {
 
+    private static final String TAG = ActualizarFragment.class.getSimpleName();
 
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
@@ -67,8 +70,52 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     public ActualizarFragment() {
         // Required empty public constructor
+
+    }
+    /*
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(this.presenter !=null) {
+            this.presenter.onDestroy();
+            this.presenter =null;
+        }
+        if(this.loginPresenter != null) {
+            this.loginPresenter.onDestroy();
+            this.loginPresenter = null;
+        }
+        Log.d(TAG,"onDestroy");
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if(this.presenter !=null) {
+            this.presenter.onDestroy();
+            this.presenter =null;
+        }
+        if(this.loginPresenter != null) {
+            this.loginPresenter.onDestroy();
+            this.loginPresenter = null;
+        }
+        Log.d(TAG,"onDestroy");
+    }
+    */
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+
+    @Override
+    public void onStop() {
+        presenter.onDestroy();
+        loginPresenter.onDestroy();
+        super.onStop();
+        Log.d(TAG,"onStop");
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,13 +123,15 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_actualizar, container, false);
         ButterKnife.bind(this, view);
-        presenter = new UpdatePresenterImpl(this ,getActivity().getApplicationContext());
-        presenter.onCreated();
 
-        loginPresenter = new LoginPresenterImplement(this , getActivity().getApplication());
-        loginPresenter.onCreated();
-
-
+        if(this.presenter == null) {
+            presenter = new UpdatePresenterImpl(this, getActivity().getApplicationContext());
+            presenter.onCreated();
+        }
+        if(this.loginPresenter == null) {
+            loginPresenter = new LoginPresenterImplement(this, getActivity().getApplication());
+            loginPresenter.onCreated();
+        }
         return view;
     }
 
@@ -99,6 +148,17 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+/*
+        if(this.presenter !=null) {
+            this.presenter.onDestroy();
+            this.presenter =null;
+        }
+        if(this.loginPresenter != null) {
+            this.loginPresenter.onDestroy();
+            this.loginPresenter = null;
+        }
+*/
+        Log.d(TAG,"onDestroy");
     }
 
     @OnClick(R.id.Server)
@@ -113,6 +173,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
        // if(contador.getCartera()!= 0  contador.getClientes()!=0 && contador.getDevoluciones()!= 0 && contador.getVentas()!= 0  && contador.getEncargos() != 0 ) {
         progressBar.setProgress(progressStatus);
         presenter.UpdateCliente();
+        Log.d(TAG,"upload");
     }
 
 

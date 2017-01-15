@@ -53,14 +53,11 @@ public class Cartera  extends BaseModel implements Serializable {
     private Integer ojbCobradorID;
     @Column
     private Boolean offline ;
-
     @Column
     private Boolean cobrado ;
-
-
-
     @Column
     private  Integer CuotasVencidas;
+
 
     public Boolean getOffline() {
         return offline;

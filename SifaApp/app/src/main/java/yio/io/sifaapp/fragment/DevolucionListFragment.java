@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import yio.io.sifaapp.model.modelSend.Venta;
  * A simple {@link Fragment} subclass.
  */
 public class DevolucionListFragment extends Fragment implements IDevolucionView {
+
+    private static final String TAG = DevolucionListFragment.class.getSimpleName();
 
     View view = null;
     @Bind(R.id.DevolucionRecyclerview)
@@ -81,6 +84,13 @@ public class DevolucionListFragment extends Fragment implements IDevolucionView 
         }
     }
 
+    @Override
+    public void onStop() {
+        presenter.onDestroy();
+        super.onStop();
+        Log.d(TAG,"onStop");
+
+    }
 
     @Override
     public void onDestroyView() {

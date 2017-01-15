@@ -21,7 +21,9 @@ public class LoginPresenterImplement implements LoginPresenter {
 
     public LoginPresenterImplement(ILoginView loginView , Context context) {
         this.loginView = loginView;
-        this.loginInteractor = new LoginInteractorImplement(context);
+        if(this.loginInteractor == null)
+            this.loginInteractor = new LoginInteractorImplement(context);
+
         this.eventbus = GreenRobotEventBus.getInstance();
     }
 

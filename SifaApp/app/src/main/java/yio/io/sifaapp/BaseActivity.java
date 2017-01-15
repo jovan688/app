@@ -25,7 +25,7 @@ import yio.io.sifaapp.fragment.NavigationDrawerFragment;
 import yio.io.sifaapp.fragment.VentaListFragment;
 import yio.io.sifaapp.model.Configuration;
 
-public class BaseActivity extends AppCompatActivity  implements NavigationDrawerFragment.OnItemClickListener   , ILoginView {
+public class BaseActivity extends AppCompatActivity  implements NavigationDrawerFragment.OnItemClickListener  {
 
     //public BottomBar bottomBar;
     Toolbar toolbar;
@@ -117,6 +117,8 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
 
     public BottomBar getBottomBar(){return  null;}
 
+
+    /*
     @Override
     public void enableInputs() {
 
@@ -172,4 +174,6 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
     public void onSystemSuccess() {
 
     }
+
+    */
 }

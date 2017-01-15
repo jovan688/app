@@ -77,6 +77,7 @@ public class EncargoListFragment extends Fragment implements IEncargoView {
         }
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -86,12 +87,20 @@ public class EncargoListFragment extends Fragment implements IEncargoView {
     }
 
     @Override
+    public void onStop() {
+        presenter.onDestroy();
+        super.onStop();
+        Log.d(TAG,"onStop");
+
+    }
+
+    /* @Override
     public void onDetach() {
         super.onDetach();
         ButterKnife.unbind(this);
         presenter.onDestroy();
         Log.d(TAG,"onDetach : UnBind");
-    }
+    }*/
 
     @Override
     public void enableInputs() {

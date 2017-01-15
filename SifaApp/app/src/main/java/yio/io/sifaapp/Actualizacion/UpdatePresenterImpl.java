@@ -21,14 +21,18 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
     public UpdatePresenterImpl(IUpdateView view ,Context context) {
         this.view = view;
         this.eventbus = GreenRobotEventBus.getInstance();
-        this.interactor = new UpdateInteractorImpl(context);
+
+        if(this.interactor == null)
+            this.interactor = new UpdateInteractorImpl(context);
     }
 
 
 
     @Override
     public void onCreated() {
+        eventbus.unregister(this);
         eventbus.register(this);
+
     }
 
     @Override

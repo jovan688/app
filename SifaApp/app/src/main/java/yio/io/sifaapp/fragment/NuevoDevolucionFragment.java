@@ -126,6 +126,14 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void onStop() {
+        presenter.onDestroy();
+        super.onStop();
+        Log.d(TAG,"onStop");
+
+    }
+
     @OnClick(R.id.button)
     public void onClienteClick() {
         dc = new CustomerDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, this);

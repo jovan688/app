@@ -1,7 +1,6 @@
 package yio.io.sifaapp.Actualizacion;
 
 import android.content.Context;
-import android.content.SearchRecentSuggestionsProvider;
 import android.util.Log;
 
 import com.google.gson.ExclusionStrategy;
@@ -55,7 +54,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
     int contador = 0;
     Context context;
     public UpdateRepositoryImp(Context context) {
-            this.context = context;
+        this.context = context;
 
         try {
             if (retrofit == null) {
@@ -85,6 +84,9 @@ public class UpdateRepositoryImp implements IUpdateRepository {
 
     @Override
     public void UpdateCartera() {
+
+        Log.d("LLAMANDO A UPDATEACARTERA ","d");
+
         ResponseMessage message = Network.isPhoneConnected(context);
         if(message!=null && message.isHasError()){
             postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
@@ -94,6 +96,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
 
             List<Cobro> list = new Select().from(Cobro.class).where(String.format("offline=1")).queryList();
             contador = list.size();
+            Log.d("UpdateRepositoryImp " , String.valueOf(contador));
             if (contador == 0) {
                 postEvent(Events.onUpdateCobroSucess, null);
             }
@@ -115,7 +118,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     c.setUsuarioCreacion(String.valueOf(item.getUsuarioCreacion()));
                     c.setObjCobradorID(item.getObjCobradorID());
                     c.setObjSccCuentaID(String.valueOf(item.getObjSccCuentaID()));
-                    c.setParamVerificacion(item.getCedula());
+                    c.setParamVerificacion(String.valueOf(item.getId()));
 
                     Call<String> call = service.CreateCobro(c);
 
@@ -127,10 +130,11 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                 int id = Integer.parseInt(response.body().split("\\|")[0]);
                                 if (id != 0) {
                                     String ced = response.body().split("\\|")[1];
-                                    Cobro cobro = new Select().from(Cobro.class).where(String.format("Cedula='%s'",ced)).querySingle();
-                                    if(cobro!=  null) {
-                                        cobro.setOffline(false);
-                                        cobro.save();
+                                    Cobro cobro1 = new Select().from(Cobro.class).where(String.format("id=%s",ced)).querySingle();
+                                    if(cobro1!=  null) {
+                                        cobro1.setOffline(false);
+                                        cobro1.save();
+                                        Log.d("REGRESO DE UPDATEACARTERA id =>",ced);
                                     }
                                 }
                             }
@@ -265,7 +269,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
 
                     AplFacturasProformas venta = new AplFacturasProformas();
                     venta.setCedula(item.getCedula());
-                    venta.setNuevaCredito(item.getNuevaventa());
+                    venta.setNuevoCredito(item.getNuevaventa());
                     venta.setObjVendedorID(item.getObjVendedorID());
                     venta.setObjEstadoID(item.getObjEstadoID());
                     venta.setObjTerminoPagoID(item.objTerminoPagoID);

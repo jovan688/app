@@ -42,7 +42,8 @@ public class sifacApplication extends Application {
         Configuration configuration = new Select().from(Configuration.class).where(String.format("System='0'")).querySingle();
         if(configuration!=null)
             return configuration.getLogin();
-        return "";
+        else
+            return "";
     }
 
 
@@ -50,14 +51,16 @@ public class sifacApplication extends Application {
         Configuration configuration = new Select().from(Configuration.class).where(String.format("System='0'")).querySingle();
         if(configuration!=null)
             return configuration.getObjEmpleadoID();
-        return 0;
+        else
+            return 0;
     }
 
     public String getSsgCuentaID (){
         Configuration configuration = new Select().from(Configuration.class).where(String.format("System='0'")).querySingle();
         if(configuration!=null)
             return configuration.getSsgCuentaID();
-        return null;
+        else
+            return null;
     }
 
     private void crear_usuario(){

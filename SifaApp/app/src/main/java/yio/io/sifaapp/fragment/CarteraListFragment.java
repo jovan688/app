@@ -65,6 +65,14 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
 
     @Override
+    public void onStop() {
+        presenter.onDestroy();
+        catalogoPresenter.onDestroy();
+        super.onStop();
+        Log.d(TAG,"onStop");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

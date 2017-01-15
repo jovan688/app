@@ -157,6 +157,13 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
         pais = listpaises.get(0);
     }
 
+    @Override
+    public void onStop() {
+        presenter.onDestroy();
+        super.onStop();
+        Log.d(TAG,"onStop");
+
+    }
 
     @Override
     public void fechCiudades(List<Ciudad> ciudades) {

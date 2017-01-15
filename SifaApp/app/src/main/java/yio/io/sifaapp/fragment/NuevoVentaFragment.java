@@ -116,7 +116,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
     private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
     private static final String TAG = NuevoVentaFragment.class.getSimpleName();
     View view = null;
-    VentaPresenterImplemt presenter;
+
     CatalogoPresenter catalogoPresenter;
     Customer customer = null;
     ProductoDialog dp = null;
@@ -139,7 +139,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
     CheckBox chknewsale;
 
     public NuevoVentaFragment() {
-        presenter = new VentaPresenterImplemt(this);
+
     }
 
 
@@ -420,6 +420,12 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
         if (adapter == null) {
             adapter = new productAdapter(getContext());
         }
+    }
+
+    @Override
+    public void onStop() {
+        catalogoPresenter.onDestroy();
+        super.onStop();
     }
 
     @OnClick(R.id.btnaceptar)

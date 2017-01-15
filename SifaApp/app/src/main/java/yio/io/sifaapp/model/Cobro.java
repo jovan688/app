@@ -17,8 +17,10 @@ import yio.io.sifaapp.utils.SifacDataBase;
 public class Cobro extends BaseModel {
 
 
+    @Column
+    @PrimaryKey(autoincrement = true)
+    private int id;
 
-    @PrimaryKey
     @Column
     private String Cedula;
 
@@ -55,6 +57,13 @@ public class Cobro extends BaseModel {
     @Column
     private Boolean offline;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCedula() {
         return Cedula;

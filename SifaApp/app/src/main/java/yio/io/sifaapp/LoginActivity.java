@@ -47,6 +47,14 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
     LoginPresenter loginPresenter;
 
     @Override
+    protected void onStop() {
+        loginPresenter.onDestroy();
+        super.onStop();
+        Log.d("LoginActivity","onStop");
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);

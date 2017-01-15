@@ -4,11 +4,9 @@ package yio.io.sifaapp.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -46,7 +44,6 @@ import yio.io.sifaapp.EncargoNuevo.IEncargoView;
 import yio.io.sifaapp.EncargoNuevo.encargos.ItemEncargoAdapter;
 import yio.io.sifaapp.R;
 import yio.io.sifaapp.Venta.AppDialog;
-import yio.io.sifaapp.VentaListActivity;
 import yio.io.sifaapp.adapter.TypeLongClick;
 import yio.io.sifaapp.adapter.productAdapter;
 import yio.io.sifaapp.adapter.setOnLongClickListener;
@@ -191,8 +188,11 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
         LoadRecycler();
     }
 
-
-
+    @Override
+    public void onStop() {
+        presenter.onDestroy();
+        super.onStop();
+    }
 
     @Override
     public void enableInputs() {

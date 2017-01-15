@@ -9,7 +9,7 @@ import com.raizlabs.android.dbflow.annotation.Database;
 @Database(name = SifacDataBase.NAME, version = SifacDataBase.VERSION , foreignKeysSupported = true)
 public class SifacDataBase{
         public static final String NAME = "sifacdb";
-        public static final int VERSION = 6;
+        public static final int VERSION = 7;
 }
 
 

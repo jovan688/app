@@ -10,7 +10,8 @@ public class UpdateInteractorImpl implements IUpdateInteractor {
     IUpdateRepository repository;
 
     public UpdateInteractorImpl( Context context) {
-        repository = new UpdateRepositoryImp(context);
+        if(this.repository == null)
+            this.repository = new UpdateRepositoryImp(context);
     }
 
     @Override
