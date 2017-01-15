@@ -38,6 +38,16 @@ public class AplFacturasProformas {
 
     public String ParamVerificacion;
 
+    public Boolean getNuevaCredito() {
+        return NuevaCredito;
+    }
+
+    public void setNuevaCredito(Boolean nuevaCredito) {
+        NuevaCredito = nuevaCredito;
+    }
+
+    public Boolean NuevaCredito;
+
     public AplFacturasProformas() {
     }
 

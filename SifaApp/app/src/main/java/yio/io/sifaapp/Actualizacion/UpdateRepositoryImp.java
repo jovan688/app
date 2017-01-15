@@ -265,10 +265,11 @@ public class UpdateRepositoryImp implements IUpdateRepository {
 
                     AplFacturasProformas venta = new AplFacturasProformas();
                     venta.setCedula(item.getCedula());
+                    venta.setNuevaCredito(item.getNuevaventa());
                     venta.setObjVendedorID(item.getObjVendedorID());
-                    venta.setObjEstadoID(502); //item.getObjEstadoID());
-                    venta.setObjTerminoPagoID(150);
-                    venta.setObjModalidadPagoID(505); //item.getObjModalidadPagoID());
+                    venta.setObjEstadoID(item.getObjEstadoID());
+                    venta.setObjTerminoPagoID(item.objTerminoPagoID);
+                    venta.setObjModalidadPagoID(item.getObjModalidadPagoID());
                     venta.setObjDescuentoID(item.getObjDescuentoID());
                     venta.setFecha(item.getFecha());
                     venta.setSubtotal(item.getSubtotal());

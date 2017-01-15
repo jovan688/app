@@ -404,6 +404,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             montosindescuento += ((Producto) row).getPrecio_Credito();
             if (!TextUtils.isEmpty(txtDescuento.getText())) {
                 txtcustomercuota.setText(String.valueOf(montosindescuento - Float.parseFloat(txtDescuento.getText().toString())));
+
             }
             else  txtcustomercuota.setText(String.valueOf(montosindescuento ));
 
@@ -528,6 +529,9 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                     venta.setObjVendedorID(((sifacApplication) getActivity().getApplication()).getUsuario());
                     venta.setObservaciones(EditTextObservaciones.getText().toString());
                     venta.setPrima(0);
+                    // buscar monto con descuento
+                    montocondescuento = getMontocondescuento();
+
                     venta.setSaldo(montocondescuento);
                     venta.setSubtotal(montosindescuento);
                     venta.setTotal(montocondescuento);
@@ -582,5 +586,15 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
 //end Bundle
         startActivity(intent);
         getActivity().finish();
+    }
+
+
+    private float getMontocondescuento(){
+
+        if(!TextUtils.isEmpty(txtDescuento.getText().toString()))
+            return montocondescuento = montosindescuento - Float.valueOf(txtDescuento.getText().toString());
+        else
+            return  montosindescuento;
+
     }
 }
