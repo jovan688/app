@@ -272,7 +272,7 @@ public class CustomDialog extends Dialog implements OnDismissListener
     public void initAlertDialog()
     {
         setContentView(alert_dialog);
-        viewdialog=findViewById(alert_dialog);
+        viewdialog=findViewById(viewdialog.getId());
         TextView tvtittle = (TextView)findViewById(R.id.tittle_dialog_alert);
         tvtittle.setText(tittle.toString());
         TextView tvmessage =(TextView)findViewById(R.id.bodymessage_dialog_alert);

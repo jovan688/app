@@ -7,6 +7,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
@@ -27,6 +28,7 @@ import yio.io.sifaapp.model.Devolucion;
 import yio.io.sifaapp.model.Encargo;
 import yio.io.sifaapp.model.EncargoDetalle;
 import yio.io.sifaapp.model.ModelConfiguracion;
+import yio.io.sifaapp.model.Producto;
 import yio.io.sifaapp.model.modelSend.AplFacturasProformaDetalles;
 import yio.io.sifaapp.model.modelSend.AplFacturasProformas;
 import yio.io.sifaapp.model.modelSend.FacturaProformaDetalle;
@@ -378,6 +380,8 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                     Devolucion row = new Select().from(Devolucion.class).where(String.format("Id=%d", devid)).querySingle();
                                     row.setOffline(false);
                                     row.save();
+
+                                    new Delete().from(Devolucion.class).where(String.format("Id=%d", devid)).query();
                                 }
                             }
                             if (contador == 0) {
@@ -456,6 +460,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                     Encargo encargo = new Select().from(Encargo.class).where(String.format("id=%d", encargoID)).querySingle();
                                     encargo.setOffline(false);
                                     encargo.save();
+                                    new Delete().from(Encargo.class).where(String.format("Id=%d", encargoID)).query();
                                 }
                             }
                             if (contador == 0) {
