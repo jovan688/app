@@ -21,7 +21,9 @@ public class ClientePresenterIMP implements  ClientePresenter {
 
     public ClientePresenterIMP(IClienteView view) {
         this.eventbus = GreenRobotEventBus.getInstance();
-        interactor = new ClienteInteractorIMP();
+        if(this.interactor==null)
+            this.interactor = new ClienteInteractorIMP();
+
         this.view = view;
     }
 
@@ -37,6 +39,7 @@ public class ClientePresenterIMP implements  ClientePresenter {
     public void onDestroy() {
         eventbus.unregister(this);
         this.view = null;
+        this.interactor = null;
     }
 
     @Override

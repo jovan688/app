@@ -39,6 +39,7 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
     public void onDestroy() {
         view = null;
         eventbus.unregister(this);
+        this.interactor = null;
     }
 
 

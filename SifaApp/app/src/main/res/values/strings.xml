@@ -79,7 +79,7 @@
     <string name="txt_ruta">RUTAS</string>
     <string name="message.vacio.Error">Campo vacio</string>
     <string name="calendar_date_picker_result_values">  %3$s - %2$s -  %1$s </string>
-    <string name="message.descuento.maximo.Error">Descuento Minimo Erroneo</string>
+    <string name="message.descuento.maximo.Error">Descuento excede el maximo permitido</string>
     <string name="message.descuento.minimo.Error">Descuento Maximo Erroneo</string>
     <string name="message.producto.vacio">Agregue al menos un producto</string>
     <string name="message.lista.total.cartera">Monto Recaudado C$.</string>

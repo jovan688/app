@@ -97,12 +97,12 @@ public class LoginRepositoryImplement implements LoginRepository {
 
         Configuration configuration = new Select()
                                         .from(Configuration.class)
-                                        .where(String.format("Login='%s' and Clave = '%s'", username,password ))
+                                        .where(String.format("Login='%s' and Clave = '%s'", username.toUpperCase(),password ))
                                         .querySingle();
 
         if(configuration!=null)
         {
-            if(configuration.getLogin().equals("System") && configuration.getSession()==false){
+            if(configuration.getLogin().equals("SYSTEM") && configuration.getSession()==false){
                 configuration.setSession(true);
                 configuration.save();
                 postEvent(Events.onSystemSuccess);
@@ -283,7 +283,8 @@ public class LoginRepositoryImplement implements LoginRepository {
                         postEvent(Events.onSuccess, null, "Sincronizando Ciudades ...");
 
                     } else {
-                        postEvent(Events.onSuccess, null, "Error Sincronizando Ciudades ...");
+                        postEvent(Events.onSuccess, null, "Sincronizando Ciudades ...");
+                        //postEvent(Events.onSuccess, null, "Error Sincronizando Ciudades ...");
                     }
                     GetCiudades();
                 }
@@ -316,10 +317,10 @@ public class LoginRepositoryImplement implements LoginRepository {
                         for (Catalog catalog : list) {
                             catalog.save();
                         }
-                        Log.d(TAG, "GetCatalogos");
-                        postEvent(Events.onSuccess, null, "Sincronizando Descuentos...");
-                        GetDescuentos();
                     }
+                    Log.d(TAG, "GetCatalogos");
+                    postEvent(Events.onSuccess, null, "Sincronizando Descuentos...");
+                    GetDescuentos();
                 }
 
                 @Override
@@ -356,9 +357,9 @@ public class LoginRepositoryImplement implements LoginRepository {
                             customer.setOffline(false);
                             customer.save();
                         }
-                        postEvent(Events.onSuccess, null, "Sincronizando Cartera ...");
-                        GetCarteraByCobradorId();
                     }
+                    postEvent(Events.onSuccess, null, "Sincronizando Cartera ...");
+                    GetCarteraByCobradorId();
                 }
 
                 @Override
@@ -387,9 +388,9 @@ public class LoginRepositoryImplement implements LoginRepository {
                         for (Descuento descuento : descuentos) {
                             descuento.save();
                         }
-                        postEvent(Events.onSuccess, null, "Sincronizando Productos ...");
-                        GetProductos();
                     }
+                    postEvent(Events.onSuccess, null, "Sincronizando Productos ...");
+                    GetProductos();
                 }
 
                 @Override
@@ -418,9 +419,10 @@ public class LoginRepositoryImplement implements LoginRepository {
                         for (Categoria categoria : categorias) {
                             categoria.save();
                         }
-                        postEvent(Events.onSuccess, null, "Sincronizando Rutas ...");
-                        GetRutasByCobradorId();
                     }
+                    postEvent(Events.onSuccess, null, "Sincronizando Rutas ...");
+                    GetRutasByCobradorId();
+
                 }
 
                 @Override
@@ -447,9 +449,10 @@ public class LoginRepositoryImplement implements LoginRepository {
                         for (Ciudad ciudad : ciudades) {
                             ciudad.save();
                         }
-                        postEvent(Events.onSuccess, null, "Sincronizando Categorias ...");
-                        GetCategoriasProductos();
                     }
+                    postEvent(Events.onSuccess, null, "Sincronizando Categorias ...");
+                    GetCategoriasProductos();
+
                 }
 
                 @Override
@@ -524,9 +527,9 @@ public class LoginRepositoryImplement implements LoginRepository {
                                     }
                                 }
                             }
-                            postEvent(Events.onSyncCarteraSucess);
+                           // postEvent(Events.onSyncCarteraSucess);
                         }
-
+                        postEvent(Events.onSyncCarteraSucess);
                     }
 
                     @Override
@@ -568,9 +571,10 @@ public class LoginRepositoryImplement implements LoginRepository {
                         for (Ruta ruta : list) {
                             ruta.save();
                         }
-                        postEvent(Events.onSuccess, null, "Sincronizando Clientes ...");
-                        GetClientesByCobradorId();
                     }
+                    postEvent(Events.onSuccess, null, "Sincronizando Clientes ...");
+                    GetClientesByCobradorId();
+
                 }
 
                 @Override
@@ -602,18 +606,19 @@ public class LoginRepositoryImplement implements LoginRepository {
                 @Override
                 public void onResponse(Call<List<Pais>> call, Response<List<Pais>> response) {
                     if (response.body() != null) {
-                        if(server) {
-                            //Limpiamos todos los datos
-                            new Delete().from(Pais.class).where("1=1").query();
+                        //if(server) {
+                        //Limpiamos todos los datos
+                        new Delete().from(Pais.class).where("1=1").query();
 
-                        }
+                        //s}
                         List<Pais> Paises = (List<Pais>) response.body();
                         for (Pais pais : Paises) {
                             pais.save();
                         }
-                        postEvent(Events.onSyncPaisesSucess, null, "Sincronizando Catálogos ...");
-                        GetCatalogos();
                     }
+                    postEvent(Events.onSyncPaisesSucess, null, "Sincronizando Catálogos ...");
+                    GetCatalogos();
+
                 }
 
                 @Override

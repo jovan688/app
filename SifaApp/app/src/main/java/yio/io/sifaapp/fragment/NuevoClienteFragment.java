@@ -145,16 +145,18 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     public void fetchPais(List<Pais> paises) {
         Log.d(TAG,"fechCiudades ");
         this.listpaises = paises;
-        spinnerCountry.setItems(paises);
-        spinnerCountry.setTextColor(getResources().getColor(R.color.colorPurple));
-        spinnerCountry.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                pais = listpaises.get(position);
-            }
-        });
-        spinnerCountry.setSelectedIndex(0);
-        pais = listpaises.get(0);
+        if(this.listpaises!=null && this.listpaises.size() > 0) {
+            spinnerCountry.setItems(paises);
+            spinnerCountry.setTextColor(getResources().getColor(R.color.colorPurple));
+            spinnerCountry.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                    pais = listpaises.get(position);
+                }
+            });
+            spinnerCountry.setSelectedIndex(0);
+            pais = listpaises.get(0);
+        }
     }
 
     @Override
@@ -169,16 +171,18 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     public void fechCiudades(List<Ciudad> ciudades) {
         Log.d(TAG,"fechCiudades ");
         this.listciudades = ciudades;
-        spinnerCity.setItems(ciudades);
-        spinnerCity.setTextColor(getResources().getColor(R.color.colorPurple));
-        spinnerCity.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                ciudad = listciudades.get(position);
-            }
-        });
-        spinnerCity.setSelectedIndex(0);
-        ciudad = listciudades.get(0);
+        if(this.listciudades!=null && this.listciudades.size() > 0) {
+            spinnerCity.setItems(ciudades);
+            spinnerCity.setTextColor(getResources().getColor(R.color.colorPurple));
+            spinnerCity.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                    ciudad = listciudades.get(position);
+                }
+            });
+            spinnerCity.setSelectedIndex(0);
+            ciudad = listciudades.get(0);
+        }
 
     }
 
@@ -186,18 +190,19 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     public void fetchRutas(List<Ruta> rutas) {
         Log.d(TAG,"fetchRutas ");
         this.listrutas = rutas;
-
-        //ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_spinner_item, rutas);
-        spinnerRuta.setItems(rutas);
-        spinnerRuta.setTextColor(getResources().getColor(R.color.colorPurple));
-        spinnerRuta.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                ruta = listrutas.get(position);
-            }
-        });
-        spinnerRuta.setSelectedIndex(0);
-        ruta = listrutas.get(0);
+        if(this.listrutas!=null && this.listrutas.size() > 0) {
+            //ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_spinner_item, rutas);
+            spinnerRuta.setItems(rutas);
+            spinnerRuta.setTextColor(getResources().getColor(R.color.colorPurple));
+            spinnerRuta.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                    ruta = listrutas.get(position);
+                }
+            });
+            spinnerRuta.setSelectedIndex(0);
+            ruta = listrutas.get(0);
+        }
 
     }
 
@@ -278,7 +283,19 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
         boolean cancel = false;
         EditText focus = null;
 
-        if (TextUtils.isEmpty(name)) {
+        if(listrutas.size()==0) {
+            spinnerRuta.setError("No hay rutas Disponibles!");
+            cancel = true;
+        }
+        if(listpaises.size() == 0 ) {
+            spinnerCountry.setError("No hay Pais Disponible!");
+            cancel = true;
+        }
+        if(listciudades.size() == 0 ) {
+            spinnerCity.setError("No hay Ciudades Disponibles!");
+            cancel = true;
+        }
+        else if (TextUtils.isEmpty(name)) {
             editname.setError(getString(R.string.message_vacio_Error));
             focus = editname;
             cancel = true;
@@ -308,7 +325,10 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
             }
         }
         if (cancel) {
-            focus.requestFocus();
+
+            if(focus!=null)
+                focus.requestFocus();
+
         } else {
 
             customer.setNombre1(editname.getText().toString());

@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -253,7 +254,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
     @Override
     public void fetchRutas(List<Ruta> list) {
         this.rutas = list;
-
+        if(this.rutas.size()> 0 && this.rutas!=null){
         //  ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_dropdown_item_1line, rutas);
         if (spinnerRuta != null) {
             spinnerRuta.setItems(rutas);
@@ -267,8 +268,7 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             spinnerRuta.setTextColor(getResources().getColor(R.color.colorPurple));
             spinnerRuta.setSelectedIndex(0);
             r = rutas.get(0);
-
-
+        }
         }
 
     }
@@ -281,35 +281,38 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
     @Override
     public void fetchCuotas(final List<Catalog> cuotas) {
         this.cuotas = cuotas;
-
-        if (spinnerCuotas != null) {
-            spinnerCuotas.setItems(cuotas);
-            spinnerCuotas.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                    cuota = cuotas.get(position);
-                }
-            });
-            spinnerCuotas.setSelectedIndex(0);
-            cuota = cuotas.get(0);
-            spinnerCuotas.setTextColor(getResources().getColor(R.color.colorPurple));
+        if(this.cuotas!=null && this.cuotas.size() > 0) {
+            if (spinnerCuotas != null) {
+                spinnerCuotas.setItems(cuotas);
+                spinnerCuotas.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                        cuota = cuotas.get(position);
+                    }
+                });
+                spinnerCuotas.setSelectedIndex(0);
+                cuota = cuotas.get(0);
+                spinnerCuotas.setTextColor(getResources().getColor(R.color.colorPurple));
+            }
         }
     }
 
     @Override
     public void fetchPlazos(final List<Catalog> plazos) {
         this.plazos = plazos;
-        if (spinnerPlazos != null) {
-            spinnerPlazos.setItems(plazos);
-            spinnerPlazos.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                    plazo = plazos.get(position);
-                }
-            });
-            spinnerPlazos.setTextColor(getResources().getColor(R.color.colorPurple));
-            spinnerPlazos.setSelectedIndex(0);
-            plazo = plazos.get(0);
+        if(this.plazos!=null && this.plazos.size()>0) {
+            if (spinnerPlazos != null) {
+                spinnerPlazos.setItems(plazos);
+                spinnerPlazos.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                        plazo = plazos.get(position);
+                    }
+                });
+                spinnerPlazos.setTextColor(getResources().getColor(R.color.colorPurple));
+                spinnerPlazos.setSelectedIndex(0);
+                plazo = plazos.get(0);
+            }
         }
 
     }
@@ -347,18 +350,24 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
 
     @OnClick(R.id.button_cliente)
     public void onClienteClick() {
-        dc = new CustomerDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, this, r.getStbRutaID());
-        Window window = dc.getWindow();
-        window.setGravity(Gravity.CENTER);
 
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int screenWidth = displaymetrics.widthPixels;
-        int screenHeight = displaymetrics.heightPixels;
+        if(r!=null) {
 
-        window.setLayout(screenWidth - 40, screenHeight - 110);
-        dc.show();
+            dc = new CustomerDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, this, r.getStbRutaID());
+            Window window = dc.getWindow();
+            window.setGravity(Gravity.CENTER);
 
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int screenWidth = displaymetrics.widthPixels;
+            int screenHeight = displaymetrics.heightPixels;
+
+            window.setLayout(screenWidth - 40, screenHeight - 110);
+            dc.show();
+        }
+        else{
+            Toast.makeText(getContext(),"Ruta no seleccionada",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -466,7 +475,13 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
         try
         {
 
-            if (TextUtils.isEmpty(name)) {
+           if(rutas.size()==0) {
+                spinnerRuta.setError("No hay rutas Disponibles!");
+                Toast.makeText(getContext(),"No hay rutas Disponibles!",Toast.LENGTH_SHORT).show();
+                cancel = true;
+            }
+
+            else if (TextUtils.isEmpty(name)) {
                 txtbuscar.setError(getString(R.string.message_vacio_Error));
                 focus = txtbuscar;
                 cancel = true;
@@ -489,7 +504,9 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
                     txtDescuento.setError("Error!! Descuento no puede ser 0.");
                     focus = txtDescuento;
                     cancel = true;
-                } else {
+                }
+                else
+                {
                     for (Descuento item : this.descuentos) {
                         if (item.getPlazoPago().equals(Float.valueOf(plazo.getCodigo()))) {
                             discount = item;
@@ -499,29 +516,20 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
 
                     if (discount == null) {
                         // ERROR NO SE ENCONTRO DESCUENTO
-                        txtDescuento.setError("No se encontró descuento asociado a el plazo seleccionado!");
+                        txtDescuento.setError(String.format("No se encontró descuento asociado al plazo %s \nPosiblemente no se encuentra configurado.", plazo.getDescripcion()));
                         focus = txtDescuento;
                         cancel = true;
                     }
-                    /*else if (descuento < (montosindescuento * discount.getDescuentoMinimo())) {
-                        txtDescuento.setError(getString(R.string.message_descuento_minimo_Error));
-                        focus = txtDescuento;
-                        cancel = true;
-                    } else if (descuento > (montosindescuento * discount.getDescuentoMaximo())) {
-                        txtDescuento.setError(getString(R.string.message_descuento_maximo_Error));
-                        focus = txtDescuento;
-                        cancel = true;
-                    }*/
                     else if (descuento > (montosindescuento * discount.getDescuentoMaximo())) {
                         txtDescuento.setError(getString(R.string.message_descuento_maximo_Error));
                         focus = txtDescuento;
                         cancel = true;
                     }
-
                 }
             }
             if (cancel) {
-                focus.requestFocus();
+                if(focus!=null)
+                    focus.requestFocus();
             }
             else
             {

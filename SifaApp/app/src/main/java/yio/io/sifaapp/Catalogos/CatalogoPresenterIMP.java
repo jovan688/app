@@ -22,7 +22,7 @@ public class CatalogoPresenterIMP implements  CatalogoPresenter {
 
     public CatalogoPresenterIMP(ICatalogoView view) {
         eventbus =  GreenRobotEventBus.getInstance();
-        interactor= new CatalogoInteractorIMP();
+        this.interactor= new CatalogoInteractorIMP();
         this.view = view;
 
     }
@@ -37,6 +37,7 @@ public class CatalogoPresenterIMP implements  CatalogoPresenter {
     public void onDestroy() {
         eventbus.unregister(this);
         this.view = null;
+        this.interactor=null;
     }
 
     @Override

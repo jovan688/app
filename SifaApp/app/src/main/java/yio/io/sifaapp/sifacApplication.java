@@ -67,7 +67,7 @@ public class sifacApplication extends Application {
 
         Configuration configuration = new Configuration();
         configuration.setClave("System");
-        configuration.setLogin("System");
+        configuration.setLogin("SYSTEM");
         configuration.setHasAccess(false);
         configuration.setSsgCuentaID("");
         configuration.setObjEmpleadoID(1);

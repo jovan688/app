@@ -3,6 +3,7 @@ package yio.io.sifaapp.adapter;
 import android.app.Activity;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,12 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import java.util.List;
 
 import butterknife.Bind;
+import yio.io.sifaapp.Actualizacion.Models.Cliente;
 import yio.io.sifaapp.Cartera.IDetallaCarteraView;
 import yio.io.sifaapp.R;
 import yio.io.sifaapp.model.Cartera;
+import yio.io.sifaapp.model.Customer;
 
 
 /**
@@ -67,10 +72,16 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
 
             }
 
+            Customer c = new Select().from(Customer.class).where(String.format("Cedula='%s'",cartera.getCedula())).querySingle();
+
+
             holder.txtviewcustomername.setText(cartera.getNombreCompleto());
             holder.txtviewamount.setText(cartera.getMontoCuota().toString());
             holder.txtviewdatepay.setText(cartera.getFechaAbono().toString());
-            holder.txtviewcity.setText(cartera.getDireccion());
+            if(c.getReferencia()==null)
+                holder.txtviewcity.setText(cartera.getDireccion());
+            else
+                holder.txtviewcity.setText(cartera.getDireccion() + c.getReferencia());
             holder.txtviewNum.setText(String.valueOf(cartera.getOrdenCobro()));
             holder.txtviewcuotas.setText(cartera.getCuotasVencidas().toString());
 

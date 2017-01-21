@@ -223,6 +223,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                     Customer customer = new Select().from(Customer.class).where(String.format("Cedula = '%s'", ParamVerificacion)).querySingle();
                                     customer.setOffline(false);
                                     customer.save();
+
                                 }
                             }
                                 if (contador == 0) {
@@ -314,6 +315,8 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                     Venta venta1 = new Select().from(Venta.class).where(String.format("VentaID=%d", ventaid)).querySingle();
                                     venta1.setOffline(false);
                                     venta1.save();
+
+                                    new Delete().from(Venta.class).where(String.format("VentaID=%d", ventaid)).query();
                                 }
                             }
                             if (contador == 0) {

@@ -56,7 +56,7 @@
         <activity android:name=".DevolucionListActivity" />
         <activity android:name=".EncargoListActivity" />
         <activity android:name=".ActualizarActivity" />
-        <activity android:name=".ConfiguracionActivity"></activity>
+        <activity android:name=".ConfiguracionActivity" android:noHistory="true"></activity>
     </application>
 
 </manifest>

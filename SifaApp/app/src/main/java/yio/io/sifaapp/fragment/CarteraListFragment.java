@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
@@ -205,25 +206,27 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     public void fetchRutas(final List<Ruta> rutas) {
         Log.d(TAG,"fetchRutas ");
         this.rutas = rutas;
-
-        //  ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_dropdown_item_1line, rutas);
-        if (spinnerRuta != null && rutas.size() > 0) {
-            spinnerRuta.setItems(rutas);
-            spinnerRuta.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                    Ruta r = rutas.get(position);
+        if(this.rutas != null) {
+            //  ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_dropdown_item_1line, rutas);
+            if (spinnerRuta != null && rutas.size() > 0) {
+                spinnerRuta.setItems(rutas);
+                spinnerRuta.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                        Ruta r = rutas.get(position);
+                        presenter.getCarteraList(r.getStbRutaID());
+                    }
+                });
+                spinnerRuta.setTextColor(getResources().getColor(R.color.colorPurple));
+                if (rutas.size() > 0 ) {
+                    Ruta r = rutas.get(0);
                     presenter.getCarteraList(r.getStbRutaID());
+                    presenter.GetAmountCobrado(r.getStbRutaID());
                 }
-            });
-            spinnerRuta.setTextColor(getResources().getColor(R.color.colorPurple));
-            if(rutas.size() > 0) {
-                Ruta r = rutas.get(0);
-                presenter.getCarteraList(r.getStbRutaID());
-                presenter.GetAmountCobrado(r.getStbRutaID());
             }
         }
-
+        else
+            Toast.makeText(getContext(),"Rutas no encontradas ", Toast.LENGTH_SHORT).show();
     }
 
     @Override
