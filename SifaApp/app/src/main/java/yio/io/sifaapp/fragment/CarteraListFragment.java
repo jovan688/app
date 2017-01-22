@@ -174,6 +174,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         mItemTouchHelper.startDrag(viewHolder);
+        Log.d("CarteraListFragment","onStartDrag");
     }
 
 

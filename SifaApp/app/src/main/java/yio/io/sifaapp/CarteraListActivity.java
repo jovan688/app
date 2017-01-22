@@ -32,9 +32,11 @@ public class CarteraListActivity extends BaseActivity {
 
             detalle =  (DetalleClienteFragment) getSupportFragmentManager().findFragmentByTag("Detalle");
 
-            if(detalle != null)
+            if(detalle != null) {
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,detalle,"Detalle").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detalle, "Detalle").commit();
+                getSupportFragmentManager().popBackStack();
+            }
             else
             {
                 int position = bottomBar.getCurrentTabPosition();

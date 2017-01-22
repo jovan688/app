@@ -17,7 +17,9 @@ import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,12 +81,18 @@ public class LoginRepositoryImplement implements LoginRepository {
                             public boolean shouldSkipClass(Class<?> clazz) {
                                 return false;
                             }
-                        })
-                        .create();
+                        }).create();
+
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .connectTimeout(10000, TimeUnit.SECONDS)
+                        .readTimeout(10000,TimeUnit.SECONDS).build();
+
                 retrofit = new Retrofit.Builder()
                         .baseUrl(ModelConfiguracion.getURL_SERVER(context))
+                        .client(client)
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
+
             }
         }
         catch (Exception ex){
@@ -134,7 +142,7 @@ public class LoginRepositoryImplement implements LoginRepository {
 
 
                 // Pin del telefono
-                authenticationRequest request = new authenticationRequest(username, password, ModelConfiguracion.getDeviceID(context));
+                authenticationRequest request = new authenticationRequest(username, password, "354885075003026"); //ModelConfiguracion.getDeviceID(context));
                 service = retrofit.create(IServicioRemoto.class);
                 Call<authenticationResponse> authenticationResponseCall = service.AutenticarUsuario(request);
                 authenticationResponseCall.enqueue(new Callback<authenticationResponse>() {
@@ -484,6 +492,7 @@ public class LoginRepositoryImplement implements LoginRepository {
 
             try
             {
+
                 Call<List<CarteraResponse>> carteraResponseCall = service.GetCarteraByCobradorId(configuration.getObjEmpleadoID());
 
                 carteraResponseCall.enqueue(new Callback<List<CarteraResponse>>() {

@@ -18,6 +18,7 @@ public class CarteraListPresenterImplement implements ICarteraListPresenter {
     private EventBus eventbus;
     private IDetallaCarteraView view;
     private ICarteraListInteractor CarteraInteractor;
+    private int rutaId;
 
 
     public CarteraListPresenterImplement(IDetallaCarteraView view) {
@@ -40,6 +41,7 @@ public class CarteraListPresenterImplement implements ICarteraListPresenter {
 
     @Override
     public void getCarteraList(int rutaid) {
+        this.rutaId =rutaid;
         CarteraInteractor.FetchData(rutaid);
     }
 
@@ -61,7 +63,7 @@ public class CarteraListPresenterImplement implements ICarteraListPresenter {
                 setData(event);
                 break;
             case  Events.onSyncOrden:
-                getCarteraList(1);
+                getCarteraList(this.rutaId);
                 break;
             case Events.onUpdateAmount:
                 view.updateAmount((Float)event.getObject());
