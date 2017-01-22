@@ -142,7 +142,7 @@ public class LoginRepositoryImplement implements LoginRepository {
 
 
                 // Pin del telefono
-                authenticationRequest request = new authenticationRequest(username, password, ModelConfiguracion.getDeviceID(context));
+                authenticationRequest request = new authenticationRequest(username, password,ModelConfiguracion.getDeviceID(context)); // "354885075003026"
                 service = retrofit.create(IServicioRemoto.class);
                 Call<authenticationResponse> authenticationResponseCall = service.AutenticarUsuario(request);
                 authenticationResponseCall.enqueue(new Callback<authenticationResponse>() {
@@ -504,7 +504,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                             new Delete().from(Cartera.class).where("1=1").query();
                             new Delete().from(CarteraDetalle.class).where("1=1").query();
                             //Clear all data if exist
-
+                            int orden = 1;
                             List<CarteraResponse> list = (List<CarteraResponse>) response.body();
                             for (CarteraResponse cartera : list) {
                                 if(!cartera.getSccCuentaID().equals("0")) {
@@ -517,7 +517,14 @@ public class LoginRepositoryImplement implements LoginRepository {
                                     c.setMontoCuota(cartera.getMontoCuota());
                                     c.setNombreCompleto(cartera.getNombreCompleto());
                                     c.setOjbCobradorID(cartera.getOjbCobradorID());
-                                    c.setOrdenCobro(Integer.valueOf(cartera.getOrdenCobro()));
+                                    if(cartera.getOrdenCobro().equals("0")){
+                                        c.setOrdenCobro(orden);
+                                        orden++;
+                                    }
+                                    else
+                                    {
+                                        c.setOrdenCobro(Integer.valueOf(cartera.getOrdenCobro()));
+                                    }
                                     c.setOjbCobradorID(cartera.getOjbCobradorID());
                                     c.setPais(cartera.getPais());
                                     c.setRutaAsignada(cartera.getRutaAsignada());
