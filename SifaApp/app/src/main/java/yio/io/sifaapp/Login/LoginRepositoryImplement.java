@@ -142,7 +142,7 @@ public class LoginRepositoryImplement implements LoginRepository {
 
 
                 // Pin del telefono
-                authenticationRequest request = new authenticationRequest(username, password, "354885075003026"); //ModelConfiguracion.getDeviceID(context));
+                authenticationRequest request = new authenticationRequest(username, password, ModelConfiguracion.getDeviceID(context));
                 service = retrofit.create(IServicioRemoto.class);
                 Call<authenticationResponse> authenticationResponseCall = service.AutenticarUsuario(request);
                 authenticationResponseCall.enqueue(new Callback<authenticationResponse>() {

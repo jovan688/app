@@ -116,7 +116,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
 
     @Override
     public void onItemDismiss(int position) {
-        //list.remove(position);
-        //notifyItemRemoved(position);
+        list.remove(position);
+        notifyItemRemoved(position);
     }
 }
