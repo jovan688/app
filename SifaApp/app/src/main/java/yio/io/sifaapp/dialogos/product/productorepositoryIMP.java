@@ -31,7 +31,7 @@ public class productorepositoryIMP implements  productorepository {
     public void getProductsByCustomerId(long customerId) {
        List<CarteraDetalle> detalle = new Select().from(CarteraDetalle.class).where(String.format("ClienteID=%d",customerId)).queryList();
         for (CarteraDetalle fila: detalle) {
-            Producto producto= new Select().from(Producto.class).where(String.format("")).querySingle();
+            Producto producto= new Select().from(Producto.class).where(String.format("SivProductoID=%d", fila.getSivProductoID() )).querySingle();
             productos.add(producto);
         }
 
