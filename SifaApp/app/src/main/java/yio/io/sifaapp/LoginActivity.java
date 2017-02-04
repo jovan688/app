@@ -168,9 +168,9 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
 
     @Override
     public void onSystemSuccess() {
+        hide();
         dlg = null;
-
-        loginPresenter.onDestroy();
+        //loginPresenter.onDestroy();
         Intent intent = new Intent(this, ConfiguracionActivity.class);
         startActivity(intent);
     }

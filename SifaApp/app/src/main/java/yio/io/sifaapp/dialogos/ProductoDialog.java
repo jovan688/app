@@ -39,6 +39,16 @@ public class ProductoDialog extends Dialog  implements IDialogView{
     private setOnLongClickListener mButtonClickListener;
     private long customerId;
     Context context;
+    boolean activos;
+
+    public ProductoDialog(Context context, int themeResId , long customerId,boolean activos,setOnLongClickListener listener) {
+        super(context, themeResId);
+        this.customerId =customerId;
+        this.context = context;
+        mButtonClickListener = listener;
+        this.activos = activos;
+        init();
+    }
 
     public ProductoDialog(Context context, int themeResId , long customerId,setOnLongClickListener listener) {
         super(context, themeResId);
@@ -110,7 +120,7 @@ public class ProductoDialog extends Dialog  implements IDialogView{
         LoadRecycler();
 
         if(customerId != 0)
-            presenter.getProductsByCustomerId(customerId);
+            presenter.getProductsByCustomerId(customerId , activos);
         else
             presenter.getAllProducts();
 

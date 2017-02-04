@@ -43,6 +43,8 @@ public class Producto  extends BaseModel implements Serializable {
     private Integer objCategoriaID;
     @Column
     private Integer objMarcaID;
+    @Column
+    private Boolean Activo;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -53,6 +55,8 @@ public class Producto  extends BaseModel implements Serializable {
     public Producto(Integer sivProductoID) {
         SivProductoID = sivProductoID;
     }
+
+
 
     public Producto(Integer sivProductoID, Integer cantidad_Minima, Float costoPromedio, String descripcion, Float margen_Utilidad_Contado, Float margen_Utilidad_Credito, String nombre, Float precio_Contado, Float precio_Credito, Integer objCategoriaID, Integer objMarcaID) {
         SivProductoID = sivProductoID;
@@ -154,6 +158,14 @@ public class Producto  extends BaseModel implements Serializable {
 
     public void setObjMarcaID(Integer objMarcaID) {
         this.objMarcaID = objMarcaID;
+    }
+
+    public Boolean getActivo() {
+        return Activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        Activo = activo;
     }
 
     // KEEP METHODS - put your custom methods here

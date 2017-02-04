@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import yio.io.sifaapp.Actualizacion.Models.Cliente;
 import yio.io.sifaapp.model.CarteraResponse;
@@ -42,8 +43,8 @@ public interface IServicioRemoto {
     @GET("GetValoresCatalogos")
     Call<List<Catalog>>GetValoresCatalogos();
 
-    @GET("GetProductos")
-    Call<List<Producto>>GetProductos();
+    @GET("GetProductos/{CobradorId}")
+    Call<List<Producto>>GetProductos(@Path("CobradorId") Integer CobradorId);
 
     @GET("GetDescuentos")
     Call<List<Descuento>>GetDescuentos();
@@ -75,4 +76,7 @@ public interface IServicioRemoto {
 
     @POST("CreateCobro")
     Call<String> CreateCobro( @Body Object entity);
+
+    @PUT("CreateCobro")
+    Call<String> ActualizarRefCliente ( @Body Object entity);
 }

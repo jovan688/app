@@ -31,9 +31,11 @@ public class productopresenterIMP implements productopresenter {
     }
 
     @Override
-    public void getProductsByCustomerId(long customerId) {
-        interactor.getProductsByCustomerId(customerId);
+    public void getProductsByCustomerId(long customerId, boolean activos) {
+        interactor.getProductsByCustomerId(customerId, activos);
     }
+
+
 
     @Override
     public void onCreated() {

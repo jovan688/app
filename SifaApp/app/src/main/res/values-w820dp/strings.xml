@@ -81,4 +81,7 @@
     <string name="calendar_date_picker_result_values">  %3$s - %2$s -  %1$s </string>
     <string name="message.descuento.maximo.Error">Descuento excede el maximo permitido</string>
     <string name="message.descuento.minimo.Error">Descuento Maximo Erroneo</string>
+    <string name="ok">Ok</string>
+    <string name="permission_phonestate_rationale">Leer el estado del Telefono</string>
+    <string name="permissions_not_granted">Permiso Denegado</string>
 </resources>

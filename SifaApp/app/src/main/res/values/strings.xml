@@ -83,4 +83,7 @@
     <string name="message.descuento.minimo.Error">Descuento Maximo Erroneo</string>
     <string name="message.producto.vacio">Agregue al menos un producto</string>
     <string name="message.lista.total.cartera">Monto Recaudado C$.</string>
+    <string name="ok">Ok</string>
+    <string name="permission_phonestate_rationale">Leer el estado del Telefono</string>
+    <string name="permissions_not_granted">Permiso Denegado</string>
 </resources>

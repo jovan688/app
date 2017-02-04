@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -33,12 +34,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import yio.io.sifaapp.BaseActivity;
-import yio.io.sifaapp.CarteraListActivity;
 import yio.io.sifaapp.Devolucion.IDevolucionListPresenter;
 import yio.io.sifaapp.Devolucion.IDevolucionListPresenterImpl;
 import yio.io.sifaapp.Devolucion.IDevolucionView;
 import yio.io.sifaapp.DevolucionListActivity;
-import yio.io.sifaapp.EncargoListActivity;
 import yio.io.sifaapp.R;
 import yio.io.sifaapp.Venta.AppDialog;
 import yio.io.sifaapp.adapter.TypeLongClick;
@@ -73,8 +72,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
     TextView txtapellido;
     @Bind(R.id.txtcedula)
     TextView txtcedula;
-    @Bind(R.id.buttonproducto)
-    ImageButton buttonproducto;
+
 
     List<Producto> productos = new ArrayList<Producto>();
     productAdapter adapter = null;
@@ -87,6 +85,10 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
     IDevolucionListPresenter presenter;
     @Bind(R.id.btncancel)
     Button btncancel;
+    @Bind(R.id.buttonproducto)
+    ImageButton buttonproducto;
+    @Bind(R.id.scrollView3)
+    ScrollView scrollView3;
     private Display display;
     List<DevolucionProductos> detalles = new ArrayList<DevolucionProductos>();
 
@@ -130,7 +132,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
     public void onStop() {
         presenter.onDestroy();
         super.onStop();
-        Log.d(TAG,"onStop");
+        Log.d(TAG, "onStop");
 
     }
 
@@ -158,7 +160,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
             return;
         }
 
-        dp = new ProductoDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, customer.getClienteID(), this);
+        dp = new ProductoDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, customer.getClienteID(), false, this);
         Window window = dp.getWindow();
         window.setGravity(Gravity.CENTER);
 
@@ -336,8 +338,8 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
     }
 
     @OnClick(R.id.btncancel)
-    public void cancel(){
-        Intent intent = new Intent(getActivity(),DevolucionListActivity.class);
+    public void cancel() {
+        Intent intent = new Intent(getActivity(), DevolucionListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 //end Bundle

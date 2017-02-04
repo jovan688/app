@@ -5,7 +5,7 @@ package yio.io.sifaapp.dialogos.product;
  */
 public interface productorepository {
     void getAllProducts();
-    void getProductsByCustomerId(long customerId);
+    void getProductsByCustomerId(long customerId , boolean activos);
 
     void getCarteraDetalleByCustomerId(long customerId);
 

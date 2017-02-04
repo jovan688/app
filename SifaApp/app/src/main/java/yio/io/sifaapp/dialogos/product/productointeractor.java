@@ -6,6 +6,6 @@ package yio.io.sifaapp.dialogos.product;
 public interface productointeractor {
 
     void getAllProducts();
-    void getProductsByCustomerId(long customerId);
+    void getProductsByCustomerId(long customerId , boolean activos);
 
 }

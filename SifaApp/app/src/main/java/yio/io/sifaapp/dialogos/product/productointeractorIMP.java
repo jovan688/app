@@ -18,7 +18,8 @@ public class productointeractorIMP implements productointeractor {
     }
 
     @Override
-    public void getProductsByCustomerId(long customerId) {
-        repository.getProductsByCustomerId(customerId);
+    public void getProductsByCustomerId(long customerId, boolean activos) {
+        repository.getProductsByCustomerId(customerId, activos);
     }
+
 }

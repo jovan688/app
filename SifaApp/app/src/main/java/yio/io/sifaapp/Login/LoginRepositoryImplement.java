@@ -276,7 +276,14 @@ public class LoginRepositoryImplement implements LoginRepository {
         if (message != null && message.isHasError()) {
             postEvent(Events.onSigInError, message.getCause() + message.getMessage());
         } else {
-            Call<List<Producto>> productoResponseCall = service.GetProductos();
+
+            Configuration configuration =  new Select()
+                                                    .from(Configuration.class)
+                                                    .where(String.format("System=0"))
+                                                    .querySingle();
+
+
+            Call<List<Producto>> productoResponseCall = service.GetProductos(configuration.getObjEmpleadoID());
             productoResponseCall.enqueue(new Callback<List<Producto>>() {
                 @Override
                 public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
@@ -517,13 +524,19 @@ public class LoginRepositoryImplement implements LoginRepository {
                                     c.setMontoCuota(cartera.getMontoCuota());
                                     c.setNombreCompleto(cartera.getNombreCompleto());
                                     c.setOjbCobradorID(cartera.getOjbCobradorID());
-                                    if(cartera.getOrdenCobro().equals("0")){
+                                    if(cartera.getOrdenCobro()!=null){
+                                        if(cartera.getOrdenCobro().equals("0")){
+                                            c.setOrdenCobro(orden);
+                                            orden++;
+                                        }
+                                        else
+                                        {
+                                            c.setOrdenCobro(Integer.valueOf(cartera.getOrdenCobro()));
+                                        }
+                                    }
+                                    else {
                                         c.setOrdenCobro(orden);
                                         orden++;
-                                    }
-                                    else
-                                    {
-                                        c.setOrdenCobro(Integer.valueOf(cartera.getOrdenCobro()));
                                     }
                                     c.setOjbCobradorID(cartera.getOjbCobradorID());
                                     c.setPais(cartera.getPais());
@@ -538,7 +551,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                                     //c.setProductos(items);
                                     c.save();
                                     for (Productos p : cartera.getProductos()) {
-                                        CarteraDetalle detalle = new CarteraDetalle(p.getSivProductoID(), p.getObjSfaFacturaID(), c.getClienteID(), p.getPrecio().floatValue());
+                                        CarteraDetalle detalle = new CarteraDetalle(c.getClienteID(), p.getObjSfaFacturaID(),p.getSivProductoID(), p.getPrecio().floatValue());
                                         detalle.save();
                                     }
                                 }
