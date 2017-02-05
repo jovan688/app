@@ -13,6 +13,6 @@ public interface IUpdateRepository {
     void GetCLienteContador();
 
     void CountOfflineData();
-
+    void UpdateClienteReferencia();
 
 }

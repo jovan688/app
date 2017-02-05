@@ -516,14 +516,20 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
 
                     if (discount == null) {
                         // ERROR NO SE ENCONTRO DESCUENTO
-                        txtDescuento.setError(String.format("No se encontró descuento asociado al plazo %s \nPosiblemente no se encuentra configurado.", plazo.getDescripcion()));
+                        String error = String.format("No se encontró descuento asociado al plazo %s \nPosiblemente no se encuentra configurado.", plazo.getDescripcion());
+                        txtDescuento.setError(error);
                         focus = txtDescuento;
                         cancel = true;
+                        Toast toast = Toast.makeText( getContext(), error, Toast.LENGTH_LONG);
+                        toast.show();
                     }
                     else if (descuento > (montosindescuento * discount.getDescuentoMaximo())) {
-                        txtDescuento.setError(getString(R.string.message_descuento_maximo_Error));
+                        String error = getString(R.string.message_descuento_maximo_Error);
+                        txtDescuento.setError(error);
                         focus = txtDescuento;
                         cancel = true;
+                        Toast toast = Toast.makeText( getContext(), error, Toast.LENGTH_LONG);
+                        toast.show();
                     }
                 }
             }

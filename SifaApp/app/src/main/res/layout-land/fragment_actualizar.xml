@@ -30,6 +30,62 @@
 
                     <TextView
                         android:layout_width="match_parent"
+                        android:text="Actualizar Referencia"
+                        android:layout_marginLeft="15dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="4"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="gravity"
+                        android:textColor="#212121"
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView11" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+
+
+                    <TextView
+                        android:id="@+id/clientereferencianum"
+                        android:layout_width="60dp"
+                        android:text="100"
+                        android:layout_marginLeft="25dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="25dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/black"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
                         android:text="Actualizar Cliente"
                         android:layout_marginLeft="15dp"
                         android:layout_height="50dp"

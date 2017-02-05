@@ -15,12 +15,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import yio.io.sifaapp.Actualizacion.Models.Cliente;
+import yio.io.sifaapp.Actualizacion.Models.ClienteReferencia;
 import yio.io.sifaapp.model.Cobro;
 import yio.io.sifaapp.model.ContadorModel;
 import yio.io.sifaapp.model.Customer;
@@ -500,6 +505,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
         int encargos  = (int) new Select().from(Encargo.class).where(String.format("offline=1")).queryList().size();
         int devoluciones  = (int) new Select().from(Devolucion.class).where(String.format("offline=1")).queryList().size();
         int ventas  = (int) new Select().from(Venta.class).where(String.format("offline=1")).queryList().size();
+        int referencia  = (int) new Select().from(Customer.class).where(String.format("offlineReferencia=1")).queryList().size();
 
         ContadorModel contador = new ContadorModel();
         contador.setCartera(carteras);
@@ -507,9 +513,83 @@ public class UpdateRepositoryImp implements IUpdateRepository {
         contador.setDevoluciones(devoluciones);
         contador.setEncargos(encargos);
         contador.setVentas(ventas);
+        contador.setReferencia(referencia);
         postEvent(Events.CargarContadores,null,contador);
 
 
+    }
+
+    @Override
+    public void UpdateClienteReferencia() {
+        ResponseMessage message = Network.isPhoneConnected(context);
+        if(message!=null && message.isHasError()){
+            postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
+        }
+        else
+        {
+            postEvent(Events.OnMessage, null, "Sincronizando Referencias ...");
+            // Datos a enviar
+            List<ClienteReferencia> referencias = new ArrayList<ClienteReferencia>();
+
+            List<Customer> list2  = new Select().from(Customer.class).where(String.format("offlineReferencia=1")).queryList();
+
+            contador = list2.size();
+
+            if(list2.size() == 0 ) {
+                postEvent(Events.onReferenceClienteUpdateSucess, null);
+            }
+            else {
+                for (Customer customer : list2) {
+                    ClienteReferencia c = new ClienteReferencia();
+                    c.setClienteID(customer.getClienteID());
+                    c.setReferencia(customer.getReferencia());
+                    referencias.add(c);
+                }
+                if(service==null)
+                    service = retrofit.create(IServicioRemoto.class);
+
+                for (ClienteReferencia cliente : referencias) {
+
+                    Call<Integer> call =  service.ActualizarRefCliente(cliente);
+                    call.enqueue(new Callback<Integer>() {
+
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            contador--;
+                            if(response.body()!=null) {
+                                int id = Integer.parseInt(response.body().toString());
+                                if (id != 0) {
+                                    Customer customer = new Select().from(Customer.class).where(String.format("ClienteID = '%d'", id)).querySingle();
+                                    if(customer!=null) {
+                                        customer.setOfflineReferencia(false);
+                                        customer.save();
+                                    }
+                                }
+                            }
+                            if (contador == 0) {
+                                postEvent(Events.onReferenceClienteUpdateSucess, null);
+                            } else {
+                                postEvent(Events.UpdateClienteReferenciaContador, null, contador);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            contador--;
+                            Log.d("UpdateRepository", String.valueOf(t.getCause()));
+                            postEvent(Events.OnMessage, null, t.getMessage());
+                            if (contador == 0) {
+                                postEvent(Events.onReferenceClienteUpdateSucess, null);
+                            }
+                        }
+                    });
+
+                    //postEvent(Events.onReferenceClienteUpdateSucess, null);
+                }
+                //postEvent(Events.onReferenceClienteUpdateSucess, null);
+            }
+
+        }
     }
 
     private void postEvent(int type, String errorMessage) {

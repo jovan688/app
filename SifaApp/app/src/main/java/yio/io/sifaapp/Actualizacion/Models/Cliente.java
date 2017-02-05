@@ -31,6 +31,25 @@ public class Cliente {
     private Integer objCiudadID;
     private String UsuarioCreacion;
 
+    public String getReferencia() {
+        return Referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        Referencia = referencia;
+    }
+
+    private String Referencia;
+    public int getClienteID() {
+        return ClienteID;
+    }
+
+    public void setClienteID(int clienteID) {
+        ClienteID = clienteID;
+    }
+
+    private int ClienteID;
+
     public Integer getObjTipoEntradaID() {
         return objTipoEntradaID;
     }

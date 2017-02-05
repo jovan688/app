@@ -10,6 +10,16 @@ public class ContadorModel {
     private int cartera;
     private int devoluciones;
 
+    public int getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(int referencia) {
+        this.referencia = referencia;
+    }
+
+    public  int referencia;
+
     public int getEncargos() {
         return encargos;
     }

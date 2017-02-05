@@ -69,6 +69,28 @@ public class Customer extends BaseModel implements Serializable {
     @Column
     private String Referencia;
 
+    public Boolean getOfflineReferencia() {
+        return offlineReferencia;
+    }
+
+    public void setOfflineReferencia(Boolean offlineReferencia) {
+        this.offlineReferencia = offlineReferencia;
+    }
+
+    public Boolean getOfflineOrdenCobro() {
+        return offlineOrdenCobro;
+    }
+
+    public void setOfflineOrdenCobro(Boolean offlineOrdenCobro) {
+        this.offlineOrdenCobro = offlineOrdenCobro;
+    }
+
+    @Column
+    private Boolean offlineReferencia;
+    @Column
+    private Boolean offlineOrdenCobro;
+
+
     public String getReferencia() {
         return Referencia;
     }

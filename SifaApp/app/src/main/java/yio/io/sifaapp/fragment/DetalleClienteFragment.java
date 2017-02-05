@@ -375,6 +375,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         {
             String referencia = String.valueOf(txtreferencia.getText());
             customer.setReferencia(referencia);
+            customer.setOfflineReferencia(true);
             customer.save();
 
         }

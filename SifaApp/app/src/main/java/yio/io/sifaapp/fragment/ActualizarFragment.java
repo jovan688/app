@@ -4,7 +4,6 @@ package yio.io.sifaapp.fragment;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -37,7 +36,7 @@ import yio.io.sifaapp.utils.TypeCounter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ActualizarFragment extends Fragment implements IUpdateView , ILoginView {
+public class ActualizarFragment extends Fragment implements IUpdateView, ILoginView {
 
     private static final String TAG = ActualizarFragment.class.getSimpleName();
 
@@ -59,11 +58,13 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     TextView devolucionnum;
     @Bind(R.id.encargonum)
     TextView encargonum;
+    @Bind(R.id.clientereferencianum)
+    TextView clientereferencianum;
     private int progressStatus = 0;
     private Handler handler = new Handler();
     private IUpdatePresenter presenter;
     private LoginPresenter loginPresenter;
-    int NOTIFICATION_DIALOG=0;
+    int NOTIFICATION_DIALOG = 0;
     private static CustomDialog dlg;
 
     ContadorModel contador = null;
@@ -105,6 +106,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     @Override
     public void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart");
     }
 
 
@@ -113,7 +115,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
         presenter.onDestroy();
         loginPresenter.onDestroy();
         super.onStop();
-        Log.d(TAG,"onStop");
+        Log.d(TAG, "onStop");
 
     }
 
@@ -124,14 +126,15 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
         View view = inflater.inflate(R.layout.fragment_actualizar, container, false);
         ButterKnife.bind(this, view);
 
-        if(this.presenter == null) {
+        if (this.presenter == null) {
             presenter = new UpdatePresenterImpl(this, getActivity().getApplicationContext());
             presenter.onCreated();
         }
-        if(this.loginPresenter == null) {
+        if (this.loginPresenter == null) {
             loginPresenter = new LoginPresenterImplement(this, getActivity().getApplication());
             loginPresenter.onCreated();
         }
+        Log.d(TAG, "onCreateView");
         return view;
     }
 
@@ -142,12 +145,13 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
         presenter.CountOfflineData();
 
         txtmessage.setText("");
+        Log.d(TAG, "onViewCreated");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        // ButterKnife.unbind(this);
 /*
         if(this.presenter !=null) {
             this.presenter.onDestroy();
@@ -158,7 +162,8 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
             this.loginPresenter = null;
         }
 */
-        Log.d(TAG,"onDestroy");
+        Log.d(TAG, "onDestroy");
+        ButterKnife.unbind(this);
     }
 
     @OnClick(R.id.Server)
@@ -170,14 +175,15 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
     @OnClick(R.id.Local)
     public void upload() {
         //setProgress("SUBIENDO Lista del Sistema ");
-       // if(contador.getCartera()!= 0  contador.getClientes()!=0 && contador.getDevoluciones()!= 0 && contador.getVentas()!= 0  && contador.getEncargos() != 0 ) {
+        // if(contador.getCartera()!= 0  contador.getClientes()!=0 && contador.getDevoluciones()!= 0 && contador.getVentas()!= 0  && contador.getEncargos() != 0 ) {
         progressBar.setProgress(progressStatus);
-        presenter.UpdateCliente();
-        Log.d(TAG,"upload");
+        //presenter.UpdateCliente();
+        presenter.UpdateClienteReferencia();
+        Log.d(TAG, "upload");
     }
 
 
-    private void setProgress(final String label ,final int counter) {
+    private void setProgress(final String label, final int counter) {
         progressStatus = 0;
         new Thread(new Runnable() {
             public void run() {
@@ -240,7 +246,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     @Override
     public void disableInputs() {
-       // Server.setEnabled(false);
+        // Server.setEnabled(false);
     }
 
     @Override
@@ -276,7 +282,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     @Override
     public void loginError(String message) {
-        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -296,16 +302,19 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     @Override
     public void UpdateCounter(TypeCounter type, int count) {
-        if(type == TypeCounter.CLIENTE)
-            clientenum.setText(String.valueOf(count));
-        if(type == TypeCounter.DEVOLUCION)
-            devolucionnum.setText(String.valueOf(count));
-        if(type == TypeCounter.VENTA)
-            ventaenum.setText(String.valueOf(count));
-        if(type == TypeCounter.ENCARGO)
-            encargonum.setText(String.valueOf(count));
-        if(type == TypeCounter.COBRO)
-            cateranum.setText(String.valueOf(count));
+        String value = String.valueOf(count);
+        if (type == TypeCounter.CLIENTE)
+            clientenum.setText(value);
+        if (type == TypeCounter.DEVOLUCION)
+            devolucionnum.setText(value);
+        if (type == TypeCounter.VENTA)
+            ventaenum.setText(value);
+        if (type == TypeCounter.ENCARGO)
+            encargonum.setText(value);
+        if (type == TypeCounter.COBRO)
+            cateranum.setText(value);
+        if (type == TypeCounter.REFERENCIA)
+            clientereferencianum.setText(value);
     }
 
     @Override
@@ -340,12 +349,12 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
     @Override
     public void UpdateCliente() {
-        //presenter.UpdateCliente();
+        presenter.UpdateCliente();
     }
 
     @Override
     public void ShowError(String message) {
-        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -356,16 +365,16 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
         ventaenum.setText(String.valueOf(contadores.getVentas()));
         clientenum.setText(String.valueOf(contadores.getClientes()));
         devolucionnum.setText(String.valueOf(contadores.getDevoluciones()));
+        clientereferencianum.setText(String.valueOf(contadores.getReferencia()));
 
-        if(contador.getCartera()== 0 && contador.getClientes()==0 && contador.getDevoluciones()== 0 && contador.getVentas()== 0  && contador.getEncargos() == 0 ) {
+        if (contador.getCartera() == 0 && contador.getClientes() == 0 && contador.getDevoluciones() == 0 && contador.getVentas() == 0 && contador.getEncargos() == 0) {
             Server.setEnabled(true);
-        }
-        else {
+        } else {
             Server.setEnabled(false);
         }
     }
 
-    public void showprogress(String label ){
+    public void showprogress(String label) {
         progressBar.setProgress(progressStatus);
         txtmessage.setText(label.concat(progressStatus + "/" + progressBar.getMax()));
 
@@ -376,7 +385,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
 
         if (confirmacion.length != 0 && confirmacion[0]) {
 
-           getActivity().runOnUiThread(new Runnable() {
+            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     AppDialog.showMessage(getActivity(), "", mensaje,
@@ -401,16 +410,16 @@ public class ActualizarFragment extends Fragment implements IUpdateView , ILogin
                 @Override
                 public void run() {
 
-                      if (dlg != null )dlg.dismiss();
-                        dlg = new CustomDialog(getActivity(), mensaje, false, NOTIFICATION_DIALOG);
-                        dlg.show();
+                    if (dlg != null) dlg.dismiss();
+                    dlg = new CustomDialog(getActivity(), mensaje, false, NOTIFICATION_DIALOG);
+                    dlg.show();
                 }
             });
 
         }
     }
 
-    public void hide(){
+    public void hide() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

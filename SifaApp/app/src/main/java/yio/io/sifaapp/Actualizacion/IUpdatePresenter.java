@@ -17,5 +17,6 @@ public interface IUpdatePresenter {
     void onEventMainThread(Events event);
     void getCLienteContador();
     void CountOfflineData();
+    void UpdateClienteReferencia();
 
 }

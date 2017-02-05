@@ -5,11 +5,15 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import yio.io.sifaapp.Actualizacion.Models.Cliente;
+import yio.io.sifaapp.Actualizacion.Models.ClienteReferencia;
 import yio.io.sifaapp.model.CarteraResponse;
 import yio.io.sifaapp.model.Catalog;
 import yio.io.sifaapp.model.Categoria;
@@ -77,6 +81,13 @@ public interface IServicioRemoto {
     @POST("CreateCobro")
     Call<String> CreateCobro( @Body Object entity);
 
-    @PUT("CreateCobro")
-    Call<String> ActualizarRefCliente ( @Body Object entity);
+    //@FormUrlEncoded
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"} )
+    @PUT("ActualizarRefCliente")
+    Call<Integer> ActualizarRefCliente(
+            @Body ClienteReferencia requestBody
+            //@Field("ClienteID") String ClienteID,
+            //@Field("Referencia") String Referencia
+    );
 }

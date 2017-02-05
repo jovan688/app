@@ -72,6 +72,9 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
     @Override
     public void onEventMainThread(Events event) {
         switch (event.getEventype()){
+            case Events.UpdateClienteReferenciaContador :
+                view.UpdateCounter(TypeCounter.REFERENCIA,(int)event.getObject());
+                break;
             case Events.UpdateClienteContador :
                 view.UpdateCounter(TypeCounter.CLIENTE,(int)event.getObject());
                 break;
@@ -113,6 +116,9 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
                 view.notify("Sincronizacion Completa.");
                 CountOfflineData();
                 break;
+            case Events.onReferenceClienteUpdateSucess:
+                view.UpdateCliente();
+                break;
             case Events.onNetworkFails:
                 view.enableButtons();
                 view.ShowError(event.getErrorMessage());
@@ -128,5 +134,10 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
     @Override
     public void CountOfflineData() {
         interactor.CountOfflineData();
+    }
+
+    @Override
+    public void UpdateClienteReferencia() {
+        interactor.UpdateClienteReferencia();
     }
 }

@@ -5,6 +5,6 @@ package yio.io.sifaapp.utils;
  */
 public enum  TypeCounter {
 
-    CLIENTE , COBRO , DEVOLUCION, ENCARGO , VENTA
+    CLIENTE , COBRO , DEVOLUCION, ENCARGO , VENTA , REFERENCIA
 
 }

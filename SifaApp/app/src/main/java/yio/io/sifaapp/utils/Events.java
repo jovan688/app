@@ -107,6 +107,10 @@ public class Events {
     public  final static int onSystemSuccess =68;
 
     public  final static int goToMainScreen =69;
+    public  final static int onReferenceClienteUpdateSucess =70;
+
+
+    public  final static int UpdateClienteReferenciaContador =71;
 
 
     private  int eventype;

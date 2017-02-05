@@ -48,4 +48,9 @@ public class UpdateInteractorImpl implements IUpdateInteractor {
     public void CountOfflineData() {
         repository.CountOfflineData();
     }
+
+    @Override
+    public void UpdateClienteReferencia() {
+            repository.UpdateClienteReferencia();
+    }
 }

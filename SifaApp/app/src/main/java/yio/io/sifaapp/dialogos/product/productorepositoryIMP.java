@@ -23,7 +23,7 @@ public class productorepositoryIMP implements  productorepository {
 
     @Override
     public void getAllProducts() {
-        productos = new Select().from(Producto.class).where(String.format("Activo=0")).queryList();
+        productos = new Select().from(Producto.class).where(String.format("Activo=1")).queryList();
         postEvent(Events.onFetchDataSucess, productos);
     }
 
