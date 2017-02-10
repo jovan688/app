@@ -26,6 +26,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import yio.io.sifaapp.Actualizacion.Models.Cliente;
 import yio.io.sifaapp.Actualizacion.Models.ClienteReferencia;
+import yio.io.sifaapp.model.Cartera;
 import yio.io.sifaapp.model.Cobro;
 import yio.io.sifaapp.model.ContadorModel;
 import yio.io.sifaapp.model.Customer;
@@ -141,6 +142,8 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                     if(cobro1!=  null) {
                                         cobro1.setOffline(false);
                                         cobro1.save();
+                                        new Delete().from(Cartera.class).where(String.format("SccCuentaID=%d", cobro1.getObjSccCuentaID())).query();
+                                        new Delete().from(Cobro.class).where(String.format("id=%s",ced)).query();
                                         Log.d("REGRESO DE UPDATEACARTERA id =>",ced);
                                     }
                                 }

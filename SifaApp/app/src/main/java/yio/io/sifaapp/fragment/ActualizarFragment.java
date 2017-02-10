@@ -58,8 +58,6 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
     TextView devolucionnum;
     @Bind(R.id.encargonum)
     TextView encargonum;
-    @Bind(R.id.clientereferencianum)
-    TextView clientereferencianum;
     private int progressStatus = 0;
     private Handler handler = new Handler();
     private IUpdatePresenter presenter;
@@ -313,8 +311,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
             encargonum.setText(value);
         if (type == TypeCounter.COBRO)
             cateranum.setText(value);
-        if (type == TypeCounter.REFERENCIA)
-            clientereferencianum.setText(value);
+
     }
 
     @Override
@@ -365,7 +362,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
         ventaenum.setText(String.valueOf(contadores.getVentas()));
         clientenum.setText(String.valueOf(contadores.getClientes()));
         devolucionnum.setText(String.valueOf(contadores.getDevoluciones()));
-        clientereferencianum.setText(String.valueOf(contadores.getReferencia()));
+
 
         if (contador.getCartera() == 0 && contador.getClientes() == 0 && contador.getDevoluciones() == 0 && contador.getVentas() == 0 && contador.getEncargos() == 0) {
             Server.setEnabled(true);

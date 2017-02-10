@@ -239,12 +239,15 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
 
 
             Cobro cobro = new Cobro();
-            cobro.setAbono(true);
+            if(amt == 0)
+                cobro.setAbono(false);
+            else
+                cobro.setAbono(true);
+
             if (amt == cartera.getSaldo())
                 cobro.setCancelo(true);
             else
                 cobro.setCancelo(false);
-
             cobro.setFechaAbono(Calendar.getInstance().getTime());
             cobro.setMontoAbonado(amt);
             cobro.setMotivoNoAbono("");
