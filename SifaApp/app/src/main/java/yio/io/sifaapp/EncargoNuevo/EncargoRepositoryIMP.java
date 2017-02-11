@@ -34,7 +34,7 @@ public class EncargoRepositoryIMP implements  EncargoRepository {
 
     @Override
     public void GetProductos(int categoriaId) {
-        List<Producto> lista = new Select().from(Producto.class).where(String.format("objCategoriaID=%d and Activo=1",categoriaId)).queryList();
+        List<Producto> lista = new Select().from(Producto.class).where(String.format("objCategoriaID=%d",categoriaId)).queryList();
         postEvent(Events.onFetchDataSucess,lista);
     }
 
