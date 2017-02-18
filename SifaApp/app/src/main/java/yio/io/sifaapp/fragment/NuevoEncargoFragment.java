@@ -237,6 +237,7 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
 
     @Override
     public void fetchProductos(List<Producto> productos) {
+        Log.d("fetchProductos",productos.toString());
         this.productos = productos;
         adapter.setData(productos);
         adapter.notifyDataSetChanged();
@@ -385,6 +386,10 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
             encargos.add(txtproductoname.getText().toString());
             Toast.makeText(getContext(), txtproductoname.getText().toString(), Toast.LENGTH_SHORT).show();
             txtproductoname.setText("");
+
+            adapter.setData(productos);
+            adapter.notifyDataSetChanged();
+
             adapterItem = new ItemEncargoAdapter(encargos,getActivity());
             adapterItem.notifyDataSetChanged();
             EncargoRecyclerview.setAdapter(adapterItem);
