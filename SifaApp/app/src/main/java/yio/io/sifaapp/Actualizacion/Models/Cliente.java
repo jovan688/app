@@ -9,13 +9,7 @@ import java.util.Date;
  */
 public class Cliente {
 
-    public Integer getObjRutaID() {
-        return objRutaID;
-    }
 
-    public void setObjRutaID(Integer objRutaID) {
-        this.objRutaID = objRutaID;
-    }
 
     private Integer objRutaID;
     private Integer OrdenCobro;
@@ -30,35 +24,23 @@ public class Cliente {
     private Integer objPaisID;
     private Integer objCiudadID;
     private String UsuarioCreacion;
-
-    public String getReferencia() {
-        return Referencia;
-    }
-
-    public void setReferencia(String referencia) {
-        Referencia = referencia;
-    }
-
-    private String Referencia;
-    public int getClienteID() {
-        return ClienteID;
-    }
-
-    public void setClienteID(int clienteID) {
-        ClienteID = clienteID;
-    }
-
-    private int ClienteID;
+    private Integer objTipoEntradaID;
+    private String ParamVerificacion;
 
     public Integer getObjTipoEntradaID() {
         return objTipoEntradaID;
     }
 
+    public Integer getObjRutaID() {
+        return objRutaID;
+    }
+
+    public void setObjRutaID(Integer objRutaID) {
+        this.objRutaID = objRutaID;
+    }
     public void setObjTipoEntradaID(Integer objTipoEntradaID) {
         this.objTipoEntradaID = objTipoEntradaID;
     }
-
-    private Integer objTipoEntradaID;
 
     public String getParamVerificacion() {
         return ParamVerificacion;
@@ -67,8 +49,6 @@ public class Cliente {
     public void setParamVerificacion(String paramVerificacion) {
         ParamVerificacion = paramVerificacion;
     }
-
-    private String ParamVerificacion;
 
     public Cliente() {
 
