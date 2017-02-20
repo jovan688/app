@@ -59,7 +59,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Large Text"
-                            android:textColor="@color/colorNameItem"
+                            android:textColor="@color/colorRed"
                             android:id="@+id/txtviewcustomername"
                             android:layout_marginLeft="5dp" />
 

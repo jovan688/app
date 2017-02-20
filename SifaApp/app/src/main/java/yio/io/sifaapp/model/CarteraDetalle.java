@@ -20,14 +20,19 @@ public class CarteraDetalle extends BaseModel implements Serializable {
     @PrimaryKey
     @Column
     private int ClienteID;
-
     @PrimaryKey
     @Column
     private  int SivProductoID;
-
     @Column
     private Float Precio;
+    @Column
+    public int objSfaFacturaID;
+    @Column
+    private String cedula;
 
+    public String getCedula() {
+        return cedula;
+    }
     public int getObjSfaFacturaID() {
         return objSfaFacturaID;
     }
@@ -35,11 +40,9 @@ public class CarteraDetalle extends BaseModel implements Serializable {
     public void setObjSfaFacturaID(int objSfaFacturaID) {
         this.objSfaFacturaID = objSfaFacturaID;
     }
-
-    @Column
-
-    public int objSfaFacturaID;
-
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
 
     public CarteraDetalle() {
     }

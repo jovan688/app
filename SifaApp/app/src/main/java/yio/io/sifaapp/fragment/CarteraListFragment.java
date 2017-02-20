@@ -89,6 +89,12 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
         ButterKnife.bind(this, view);
 
+        Init();
+
+    }
+
+    private void Init(){
+        Log.d(TAG,"Init");
         presenter = new CarteraListPresenterImplement(this);
         presenter.onCreated();
 
@@ -107,11 +113,11 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         catalogoPresenter = new CatalogoPresenterIMP(this);
         catalogoPresenter.onCreated();
         catalogoPresenter.getRutas();
-
     }
 
     private void InitAdapter() {
         if (adapter == null) {
+            Log.d(TAG,"INIT ADAPTER");
             adapter = new CustomerAdapter(getActivity(), this, new ArrayList<Cartera>(), this, this);
         }
     }
@@ -119,6 +125,7 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
     @Override
     public void setCarteraList(List<Cartera> data) {
+        Log.d(TAG,"setCarteraList");
         adapter.setData(data);
         adapter.notifyDataSetChanged();
     }
@@ -248,6 +255,13 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     @Override
     public void fetchDescuentos(List<Descuento> descuentos) {
 
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //your code which you want to refresh
+       Init();
     }
 }
 

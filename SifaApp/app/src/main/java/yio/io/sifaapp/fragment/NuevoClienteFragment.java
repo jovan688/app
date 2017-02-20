@@ -270,7 +270,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
         String lastname = editlastname.getText().toString();
         String cid = editcid.getText().toString();
         String address = editAddress.getText().toString();
-        String phone = editphone.toString();
+        String phone = editphone.getText().toString();
 
 
         editname.setError(null);
@@ -337,7 +337,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
             customer.setApellido2("");
             customer.setCedula(editcid.getText().toString());
             customer.setDireccion(editAddress.getText().toString());
-            customer.setTelefonos(editphone.toString());
+            customer.setTelefonos(editphone.getText().toString());
 
             if (spinnerCity.getSelectedIndex() != -1) {
                 ciudad = listciudades.get(spinnerCity.getSelectedIndex());
@@ -345,7 +345,6 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
                 customer.setObjCiudadID(ciudad.getStbCiudadID());
             }
 
-            customer.setTelefonos(editphone.getText().toString());
 
             if (spinnerRuta.getSelectedIndex() != -1) {
                 ruta = listrutas.get(spinnerRuta.getSelectedIndex());

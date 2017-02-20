@@ -31,10 +31,15 @@ public class productopresenterIMP implements productopresenter {
     }
 
     @Override
+    public void getProductsByCustomer(String cedula, boolean activos) {
+        interactor.getProductsByCustomer(cedula,activos);
+    }
+    /*
+    @Override
     public void getProductsByCustomerId(long customerId, boolean activos) {
         interactor.getProductsByCustomerId(customerId, activos);
     }
-
+*/
 
 
     @Override

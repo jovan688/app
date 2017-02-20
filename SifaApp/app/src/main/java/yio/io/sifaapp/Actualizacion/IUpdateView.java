@@ -22,4 +22,6 @@ public interface IUpdateView {
     void UpdateCartera();
     void UpdateCliente();
     void ShowError(String message);
+    void setUpload();
+    void setDownLoad();
 }

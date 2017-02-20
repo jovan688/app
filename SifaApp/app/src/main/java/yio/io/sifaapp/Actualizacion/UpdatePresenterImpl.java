@@ -1,6 +1,7 @@
 package yio.io.sifaapp.Actualizacion;
 
 import android.content.Context;
+import android.util.Log;
 
 import yio.io.sifaapp.model.ContadorModel;
 import yio.io.sifaapp.utils.EventBus;
@@ -51,7 +52,7 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
     @Override
     public void UpdateCliente() {
         interactor.UpdateCliente();
-        view.disableButtons();
+        //view.disableButtons();
     }
 
     @Override
@@ -112,6 +113,8 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
                 view.UpdateCartera();
                 break;
             case Events.onUpdateCobroSucess:
+                Log.d("UpdatePresenterImpl" , "onUpdateCobroSucess");
+                view.setUpload();
                 view.enableButtons();
                 view.notify("Sincronizacion Completa.");
                 CountOfflineData();
@@ -138,6 +141,8 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
 
     @Override
     public void UpdateClienteReferencia() {
+        view.disableButtons();
         interactor.UpdateClienteReferencia();
+
     }
 }

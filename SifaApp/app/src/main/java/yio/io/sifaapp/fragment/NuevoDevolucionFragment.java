@@ -130,6 +130,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
 
     @Override
     public void onStop() {
+        dc.dismiss();
         presenter.onDestroy();
         super.onStop();
         Log.d(TAG, "onStop");
@@ -159,8 +160,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
             showmessage("Seleccione un Cliente");
             return;
         }
-
-        dp = new ProductoDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, customer.getClienteID(), false, this);
+        dp = new ProductoDialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen, customer.getCedula(), false, this);
         Window window = dp.getWindow();
         window.setGravity(Gravity.CENTER);
 
@@ -254,7 +254,7 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
             try {
                 Devolucion devolucion = new Devolucion();
                 devolucion.setCedula(customer.getCedula());
-                devolucion.setObjSccCuentaID(Integer.parseInt((((sifacApplication) getActivity().getApplication()).getSsgCuentaID())));
+                devolucion.setObjSccCuentaID( customer.getClienteID()); //Integer.parseInt((((sifacApplication) getActivity().getApplication()).getSsgCuentaID())));
                 devolucion.setObjStbRutaID(customer.getStbRutaID());
                 devolucion.setObjSivProductoID(productos.get(0).getSivProductoID());
                 devolucion.setTotalDevolucion(productos.get(0).getPrecio_Credito());

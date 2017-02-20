@@ -8,7 +8,7 @@ import yio.io.sifaapp.utils.Events;
 public interface productopresenter {
 
     void getAllProducts();
-    void getProductsByCustomerId(long customerId , boolean activos);
+    void getProductsByCustomer(String cedula , boolean activos);
 
     void onCreated();
     void onDestroy();

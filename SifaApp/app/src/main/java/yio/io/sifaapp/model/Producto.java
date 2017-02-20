@@ -168,6 +168,11 @@ public class Producto  extends BaseModel implements Serializable {
         Activo = activo;
     }
 
+    @Override
+    public String toString() {
+        return getNombre()+" " + getDescripcion() +" " + getPrecio_Credito() + " " + getSivProductoID();
+    }
+
     // KEEP METHODS - put your custom methods here
     // KEEP METHODS END
     public Object isMatch(CharSequence constraint) {
@@ -175,4 +180,6 @@ public class Producto  extends BaseModel implements Serializable {
             return true;
         return false;
     }
+
+
 }

@@ -20,12 +20,16 @@ public class Cliente {
     private Integer objGeneroID;
     private String Cedula;
     private String Direccion;
-    private String Telefonos;
+    private Integer objTipoEntradaID;
+    private String NumeroTelefono;
     private Integer objPaisID;
     private Integer objCiudadID;
     private String UsuarioCreacion;
-    private Integer objTipoEntradaID;
     private String ParamVerificacion;
+
+    public Cliente() {
+
+    }
 
     public Integer getObjTipoEntradaID() {
         return objTipoEntradaID;
@@ -48,10 +52,6 @@ public class Cliente {
 
     public void setParamVerificacion(String paramVerificacion) {
         ParamVerificacion = paramVerificacion;
-    }
-
-    public Cliente() {
-
     }
 
     public Integer getOrdenCobro() {
@@ -119,12 +119,12 @@ public class Cliente {
         Direccion = direccion;
     }
 
-    public String getTelefonos() {
-        return Telefonos;
+    public String getNumeroTelefono() {
+        return NumeroTelefono;
     }
 
-    public void setTelefonos(String telefonos) {
-        Telefonos = telefonos;
+    public void setNumeroTelefono(String numeroTelefono) {
+        NumeroTelefono = numeroTelefono;
     }
 
     public Integer getObjPaisID() {

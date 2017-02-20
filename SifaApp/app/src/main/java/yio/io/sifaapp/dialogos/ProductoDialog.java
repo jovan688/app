@@ -37,22 +37,23 @@ public class ProductoDialog extends Dialog  implements IDialogView{
     RecyclerView ProductRecyclerview;
     productopresenter presenter ;
     private setOnLongClickListener mButtonClickListener;
-    private long customerId;
+    //private long customerId;
     Context context;
     boolean activos;
+    private  String cedula;
 
-    public ProductoDialog(Context context, int themeResId , long customerId,boolean activos,setOnLongClickListener listener) {
+    public ProductoDialog(Context context, int themeResId , String cedula,boolean activos,setOnLongClickListener listener) {
         super(context, themeResId);
-        this.customerId =customerId;
+        this.cedula =cedula;
         this.context = context;
         mButtonClickListener = listener;
         this.activos = activos;
         init();
     }
 
-    public ProductoDialog(Context context, int themeResId , long customerId,setOnLongClickListener listener) {
+    public ProductoDialog(Context context, int themeResId , String cedula,setOnLongClickListener listener) {
         super(context, themeResId);
-        this.customerId =customerId;
+        this.cedula =cedula;
         this.context = context;
         mButtonClickListener = listener;
         init();
@@ -60,7 +61,7 @@ public class ProductoDialog extends Dialog  implements IDialogView{
 
     public ProductoDialog(Context context, int themeResId , setOnLongClickListener listener) {
         super(context, themeResId);
-        this.customerId =customerId;
+        //this.customerId =customerId;
         this.context = context;
         mButtonClickListener = listener;
 
@@ -119,8 +120,8 @@ public class ProductoDialog extends Dialog  implements IDialogView{
 
         LoadRecycler();
 
-        if(customerId != 0)
-            presenter.getProductsByCustomerId(customerId , activos);
+        if(cedula!=null )
+            presenter.getProductsByCustomer(cedula , activos);
         else
             presenter.getAllProducts();
 
@@ -134,8 +135,8 @@ public class ProductoDialog extends Dialog  implements IDialogView{
         ProductRecyclerview.addItemDecoration(new DividerItemDecoration2(context, DividerItemDecoration2.VERTICAL_LIST));
     }
 
-    public void SetCustomerID(int customerID){
-        customerId = customerID;
+    public void SetCustomerID(String cedula){
+        this.cedula = cedula;
     }
 
     @Override

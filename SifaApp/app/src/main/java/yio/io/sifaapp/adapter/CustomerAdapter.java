@@ -50,6 +50,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
 
     public void setData(List<Cartera> lista) {
         this.list = lista;
+        Log.d("CustomerAdapter","setCarteraList");
     }
 
 
@@ -63,19 +64,24 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
     @Override
     public void onBindViewHolder(final CustomerViewHolder holder, int position) {
         if (list.get(position) instanceof Cartera) {
+            //Log.d("onBindViewHolder", "Dentro");
 
             Cartera cartera = this.list.get(position);
+            //if( position == 0) {
+            Log.d("Position " , String.valueOf(position) + "getCobrado " +  String.valueOf(cartera.getCobrado()) );
 
-            if (!cartera.getCobrado()) {
+            Cartera cartera2 = new Select().from(Cartera.class).where(String.format("id=%d", cartera.getId())).querySingle();
 
-                holder.txtviewcustomername.setTextColor(activity.getResources().getColor(R.color.colorRed));
+            if (cartera2.getCobrado()) {
+
+                holder.txtviewcustomername.setTextColor(activity.getResources().getColor(R.color.colorNameItem));
 
             }
 
             Customer c = new Select().from(Customer.class).where(String.format("Cedula='%s'",cartera.getCedula())).querySingle();
 
 
-            holder.txtviewcustomername.setText(cartera.getNombreCompleto());
+            holder.txtviewcustomername.setText(String.valueOf(position) + cartera.getNombreCompleto());
             holder.txtviewamount.setText(cartera.getMontoCuota().toString());
             holder.txtviewdatepay.setText(cartera.getFechaAbono().toString());
             if(c.getReferencia()==null)
@@ -92,13 +98,14 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                        mDragStartListener.onStartDrag(holder);
+                        //mDragStartListener.onStartDrag(holder);
                     }
                     return false;
                 }
             });
 
         }
+        else Log.d("onBindViewHolder", "No es Tipo Cartera");
     }
 
     @Override

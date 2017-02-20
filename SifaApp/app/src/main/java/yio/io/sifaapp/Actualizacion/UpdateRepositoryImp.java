@@ -93,81 +93,84 @@ public class UpdateRepositoryImp implements IUpdateRepository {
     @Override
     public void UpdateCartera() {
 
-        Log.d("LLAMANDO A UPDATEACARTERA ","d");
+        Log.d("LLAMANDO A UPDATEACARTERA ", "d");
 
         ResponseMessage message = Network.isPhoneConnected(context);
-        if(message!=null && message.isHasError()){
-            postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
-        }
-        else {
+        if (message != null && message.isHasError()) {
+            postEvent(Events.onNetworkFails, message.getCause() + message.getMessage());
+        } else {
+
+            try {
+                postEvent(Events.OnMessage, null, "Sincronizando Cartera ...");
+                List<Cobro> list = new Select().from(Cobro.class).where(String.format("offline=1")).queryList();
+                contador = list.size();
+                Log.d("UpdateRepositoryImp ", String.valueOf(contador));
+                if (contador == 0) {
+                    postEvent(Events.onUpdateCobroSucess, null);
+                } else {
+
+                    for (Cobro item : list) {
 
 
-            List<Cobro> list = new Select().from(Cobro.class).where(String.format("offline=1")).queryList();
-            contador = list.size();
-            Log.d("UpdateRepositoryImp " , String.valueOf(contador));
-            if (contador == 0) {
-                postEvent(Events.onUpdateCobroSucess, null);
-            }
-            else {
+                        cobro c = new cobro();
+                        c.setObjStbRutaID(item.getObjStbRutaID());
+                        c.setAbono(item.getAbono());
+                        c.setCancelo(item.getCancelo());
+                        String fech = new SimpleDateFormat("yyyy-MM-dd").format(item.getFechaAbono());
+                        c.setFechaAbono(fech);
+                        c.setMontoAbonado(item.getMontoAbonado());
+                        c.setMotivoNoAbono(item.getMotivoNoAbono());
+                        c.setCedula(item.getCedula());
+                        c.setSaldo(item.getSaldo());
+                        c.setUsuarioCreacion(String.valueOf(item.getUsuarioCreacion()));
+                        c.setObjCobradorID(item.getObjCobradorID());
+                        c.setObjSccCuentaID(String.valueOf(item.getObjSccCuentaID()));
+                        c.setParamVerificacion(String.valueOf(item.getId()));
 
-                for (Cobro item : list) {
+                        Call<String> call = service.CreateCobro(c);
 
-
-                    cobro c  = new cobro();
-                    c.setObjStbRutaID(item.getObjStbRutaID());
-                    c.setAbono(item.getAbono());
-                    c.setCancelo(item.getCancelo());
-                    String fech = new SimpleDateFormat("yyyy-MM-dd").format(item.getFechaAbono());
-                    c.setFechaAbono(fech);
-                    c.setMontoAbonado(item.getMontoAbonado());
-                    c.setMotivoNoAbono(item.getMotivoNoAbono());
-                    c.setCedula(item.getCedula());
-                    c.setSaldo(item.getSaldo());
-                    c.setUsuarioCreacion(String.valueOf(item.getUsuarioCreacion()));
-                    c.setObjCobradorID(item.getObjCobradorID());
-                    c.setObjSccCuentaID(String.valueOf(item.getObjSccCuentaID()));
-                    c.setParamVerificacion(String.valueOf(item.getId()));
-
-                    Call<String> call = service.CreateCobro(c);
-
-                    call.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            contador--;
-                            if(!response.body().equals("-1")) {
-                                int id = Integer.parseInt(response.body().split("\\|")[0]);
-                                if (id != 0) {
-                                    String ced = response.body().split("\\|")[1];
-                                    Cobro cobro1 = new Select().from(Cobro.class).where(String.format("id=%s",ced)).querySingle();
-                                    if(cobro1!=  null) {
-                                        cobro1.setOffline(false);
-                                        cobro1.save();
-                                        new Delete().from(Cartera.class).where(String.format("SccCuentaID=%d", cobro1.getObjSccCuentaID())).query();
-                                        new Delete().from(Cobro.class).where(String.format("id=%s",ced)).query();
-                                        Log.d("REGRESO DE UPDATEACARTERA id =>",ced);
+                        call.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                contador--;
+                                if (!response.body().equals("-1")) {
+                                    int id = Integer.parseInt(response.body().split("\\|")[0]);
+                                    if (id != 0) {
+                                        String ced = response.body().split("\\|")[1];
+                                        Cobro cobro1 = new Select().from(Cobro.class).where(String.format("id=%d", Integer.parseInt(ced))).querySingle();
+                                        if (cobro1 != null) {
+                                            cobro1.setOffline(false);
+                                            cobro1.save();
+                                            new Delete().from(Cartera.class).where(String.format("SccCuentaID=%d", cobro1.getObjSccCuentaID())).query();
+                                            new Delete().from(Cobro.class).where(String.format("id=%d", cobro1.getId())).query();
+                                            Log.d("REGRESO DE UPDATEACARTERA id =>", ced);
+                                        }
                                     }
                                 }
-                            }
-                            if (contador == 0) {
-                                postEvent(Events.onUpdateCobroSucess, null);
-                            } else {
+                                if (contador == 0) {
+                                    postEvent(Events.onUpdateCobroSucess, null);
+                                } else {
 
-                                postEvent(Events.UpdateCobroContador, null, contador);
+                                    postEvent(Events.UpdateCobroContador, null, contador);
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            contador--;
-                            Log.d("UpdateRepository", String.valueOf(t.getCause()));
-                            postEvent(Events.OnMessage, null, t.getMessage());
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                contador--;
+                                Log.d("UpdateRepository", String.valueOf(t.getCause()));
+                                postEvent(Events.OnMessage, null, t.getMessage());
+                            }
+                        });
+                    }
                 }
-            }
 
-            //postEvent(Events.onUpdateCobroSucess, null);
-           // postEvent(Events.OnMessage, null, "Sincronizando Cobros ...");
+                //postEvent(Events.onUpdateCobroSucess, null);
+                // postEvent(Events.OnMessage, null, "Sincronizando Cobros ...");
+
+            } catch (Exception ex) {
+                postEvent(Events.OnMessage, null, ex.getMessage());
+            }
         }
     }
 
@@ -192,7 +195,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
             else
             {
                 for (Customer customer : list) {
-                    Cliente c = new Cliente();
+                     Cliente c = new Cliente();
                     c.setApellido1(customer.getApellido1());
                     c.setApellido2(customer.getApellido2());
                     c.setCedula(customer.getCedula());
@@ -204,7 +207,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     c.setObjGeneroID(customer.getObjGeneroID());
                     c.setOrdenCobro(customer.getOrdenCobro());
                     c.setObjRutaID(customer.getStbRutaID());
-                    c.setTelefonos(customer.getTelefonos());
+                    c.setNumeroTelefono(customer.getTelefonos());
                     c.setObjTipoEntradaID(2);
                     // Nuevo CAMBIO
                     c.setUsuarioCreacion(((sifacApplication) context.getApplicationContext()).getUsuarioName());
@@ -266,6 +269,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
             postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
         }
         else {
+            postEvent(Events.OnMessage, null, "Sincronizando Ventas ...");
 
             List<Venta> list = new Select().from(Venta.class).where(String.format("offline=1")).queryList();
             contador = list.size();
@@ -356,6 +360,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
         }
         else {
 
+            postEvent(Events.OnMessage, null, "Sincronizando Devoluciones ...");
             List<Devolucion> list = new Select().from(Devolucion.class).where(String.format("offline=1")).queryList();
             contador = list.size();
             if (contador == 0) {
@@ -424,7 +429,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
             postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
         }
         else {
-
+            postEvent(Events.OnMessage, null, "Sincronizando Encargo... ");
             List<Encargo> list = new Select().from(Encargo.class).where(String.format("offline=1")).queryList();
             contador = list.size();
 
@@ -433,7 +438,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
             }
             else
             {
-                postEvent(Events.OnMessage, null, "Sincronizando Encargo... ");
+
 
                 for (Encargo item : list) {
                     encargo _encargo = new encargo();
@@ -562,7 +567,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                             if(response.body()!=null) {
                                 int id = Integer.parseInt(response.body().toString());
                                 if (id != 0) {
-                                    Customer customer = new Select().from(Customer.class).where(String.format("ClienteID = '%d'", id)).querySingle();
+                                    Customer customer = new Select().from(Customer.class).where(String.format("ClienteID = %d", id)).querySingle();
                                     if(customer!=null) {
                                         customer.setOfflineReferencia(false);
                                         customer.save();

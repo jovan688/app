@@ -64,6 +64,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
     private LoginPresenter loginPresenter;
     int NOTIFICATION_DIALOG = 0;
     private static CustomDialog dlg;
+    int cont = 0;
 
     ContadorModel contador = null;
 
@@ -168,6 +169,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
     public void download() {
         //setProgress("BAJANDO Lista del Sistema ", 100);
         loginPresenter.DownloadServer();
+        Server.setBackground(getResources().getDrawable(R.drawable.round_button2));
     }
 
     @OnClick(R.id.Local)
@@ -175,9 +177,12 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
         //setProgress("SUBIENDO Lista del Sistema ");
         // if(contador.getCartera()!= 0  contador.getClientes()!=0 && contador.getDevoluciones()!= 0 && contador.getVentas()!= 0  && contador.getEncargos() != 0 ) {
         progressBar.setProgress(progressStatus);
-        //presenter.UpdateCliente();
+        //disableButtons();
+        Local.setBackground(getResources().getDrawable(R.drawable.round_button2));
         presenter.UpdateClienteReferencia();
+        cont++;
         Log.d(TAG, "upload");
+        Log.d("COnt", String.valueOf(cont));
     }
 
 
@@ -222,6 +227,10 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
         //Local.setEnabled(true);
         // Server.setEnabled(false);
         //Server.setEnabled(true);
+        Log.d(TAG,"enableButtons");
+        Local.setEnabled(true);
+        Server.setEnabled(true);
+
     }
 
     @Override
@@ -235,6 +244,9 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
                 Server.setEnabled(false);
             }
         });*/
+        Log.d(TAG,"disableButtons");
+        Local.setEnabled(false);
+        Server.setEnabled(false);
     }
 
     @Override
@@ -261,6 +273,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
 
     @Override
     public void authenticate() {
+        setDownLoad();
         showStatus("Descarga Completa", true);
     }
 
@@ -322,6 +335,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
     @Override
     public void notify(String message) {
         txtmessage.setText(message);
+        Log.d(TAG,"NOTIFY");
     }
 
     @Override
@@ -355,6 +369,18 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
     }
 
     @Override
+    public void setUpload() {
+        Local.setBackground(getResources().getDrawable(R.drawable.round_button));
+        Log.d(TAG,"setUpload");
+    }
+
+    @Override
+    public void setDownLoad() {
+        Server.setBackground(getResources().getDrawable(R.drawable.round_button));
+        Log.d(TAG,"setDownLoad");
+    }
+
+    @Override
     public void CountOfflineData(ContadorModel contadores) {
         contador = contadores;
         cateranum.setText(String.valueOf(contadores.getCartera()));
@@ -362,13 +388,15 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
         ventaenum.setText(String.valueOf(contadores.getVentas()));
         clientenum.setText(String.valueOf(contadores.getClientes()));
         devolucionnum.setText(String.valueOf(contadores.getDevoluciones()));
-
-
+        Log.d(TAG,"CountOfflineData");
+        /*
         if (contador.getCartera() == 0 && contador.getClientes() == 0 && contador.getDevoluciones() == 0 && contador.getVentas() == 0 && contador.getEncargos() == 0) {
             Server.setEnabled(true);
         } else {
             Server.setEnabled(false);
         }
+        */
+        enableButtons();
     }
 
     public void showprogress(String label) {
@@ -427,5 +455,6 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
         });
 
     }
+
 
 }

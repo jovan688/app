@@ -23,7 +23,9 @@ public class CarteraListPresenterImplement implements ICarteraListPresenter {
 
     public CarteraListPresenterImplement(IDetallaCarteraView view) {
         this.view = view;
-        this.CarteraInteractor = new CarteraListInteractorImplement();
+        if(this.CarteraInteractor == null)
+            this.CarteraInteractor = new CarteraListInteractorImplement();
+
         this.eventbus = GreenRobotEventBus.getInstance();
     }
 
@@ -37,6 +39,7 @@ public class CarteraListPresenterImplement implements ICarteraListPresenter {
     public void onDestroy() {
         eventbus.unregister(this);
         view = null;
+
     }
 
     @Override

@@ -58,6 +58,9 @@ public class Cartera  extends BaseModel implements Serializable {
     @Column
     private  Integer CuotasVencidas;
 
+    @Column
+    private  String Color;
+
 
     public Boolean getOffline() {
         return offline;
@@ -104,7 +107,16 @@ public class Cartera  extends BaseModel implements Serializable {
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
 
+    public String getColor() {
+        return Color;
+    }
+
+    public void setColor(String color) {
+        Color = color;
+    }
+
     public Cartera() {
+
     }
 
     public Cartera(Long id) {
