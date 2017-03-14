@@ -25,6 +25,8 @@ import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +47,7 @@ import yio.io.sifaapp.adapter.productAdapter;
 import yio.io.sifaapp.adapter.setOnLongClickListener;
 import yio.io.sifaapp.dialogos.CustomerDialog;
 import yio.io.sifaapp.dialogos.ProductoDialog;
+import yio.io.sifaapp.model.Cartera;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Devolucion;
 import yio.io.sifaapp.model.DevolucionProductos;
@@ -237,24 +240,31 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
 
         boolean cancel = false;
         TextView focus = null;
+        try
+        {
+            if (customer == null) {
+                showmessage("Seleccione un Cliente");
+                cancel = true;
+            }
+            if (productos.size() == 0) {
+                showmessage("Seleccione al menos un Producto.");
+                cancel = true;
+            }
 
-        if (customer == null) {
-            showmessage("Seleccione un Cliente");
-            cancel = true;
-        }
-        if (productos.size() == 0) {
-            showmessage("Seleccione al menos un Producto.");
-            cancel = true;
-        }
-        if (cancel) {
+            Cartera cartera = (Cartera) new Select().from(Cartera.class)
+                    .where(String.format("Cedula='%s'", customer.getCedula()))
+                    .querySingle();
 
-        } else {
+            if (cartera == null) {
+                showmessage("No se encontró registro de Cartera!");
+                cancel = true;
+            }
+            if (cancel == false) {
 
 
-            try {
                 Devolucion devolucion = new Devolucion();
                 devolucion.setCedula(customer.getCedula());
-                devolucion.setObjSccCuentaID( customer.getClienteID()); //Integer.parseInt((((sifacApplication) getActivity().getApplication()).getSsgCuentaID())));
+                devolucion.setObjSccCuentaID(Integer.parseInt(cartera.getSccCuentaID())); //Integer.parseInt((((sifacApplication) getActivity().getApplication()).getSsgCuentaID())));
                 devolucion.setObjStbRutaID(customer.getStbRutaID());
                 devolucion.setObjSivProductoID(productos.get(0).getSivProductoID());
                 devolucion.setTotalDevolucion(productos.get(0).getPrecio_Credito());
@@ -272,11 +282,15 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
                 devolucion.setOffline(true);
                 devolucion.save();
 
-            } catch (Exception ex) {
+            }
+
+        }
+        catch (Exception ex) {
                 cancel = true;
                 Log.d("Exception", ex.getMessage());
+                showmessage(ex.getMessage());
             }
-        }
+
 
         return cancel;
     }
