@@ -81,7 +81,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
             Customer c = new Select().from(Customer.class).where(String.format("Cedula='%s'",cartera.getCedula())).querySingle();
 
 
-            holder.txtviewcustomername.setText(String.valueOf(position) + cartera.getNombreCompleto());
+            holder.txtviewcustomername.setText(cartera.getNombreCompleto());
             holder.txtviewamount.setText(cartera.getMontoCuota().toString());
             holder.txtviewdatepay.setText(cartera.getFechaAbono().toString());
             if(c.getReferencia()==null)
