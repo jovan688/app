@@ -110,6 +110,7 @@
                 android:layout_toRightOf="@+id/cfglbl_deviceid"
                 android:background="@drawable/style_textbox"
                 android:enabled="false"
+                android:textColor="@color/bpblack"
                 android:lines="1"
                 android:paddingBottom="1dp"
                 android:paddingTop="8dp"

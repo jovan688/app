@@ -106,6 +106,7 @@
                             android:background="@drawable/style_textbox"
                             android:enabled="false"
                             android:lines="1"
+                            android:textColor="@color/bpblack"
                             android:paddingBottom="1dp"
                             android:paddingTop="8dp"
                             android:textSize="14dp"
