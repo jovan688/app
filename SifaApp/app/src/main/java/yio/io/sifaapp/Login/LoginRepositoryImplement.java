@@ -551,7 +551,7 @@ public class LoginRepositoryImplement implements LoginRepository {
                                     //c.setProductos(items);
                                     c.save();
                                     for (Productos p : cartera.getProductos()) {
-                                        CarteraDetalle detalle = new CarteraDetalle(c.getClienteID(), p.getObjSfaFacturaID(),p.getSivProductoID(), p.getPrecio().floatValue());
+                                        CarteraDetalle detalle = new CarteraDetalle(c.getClienteID(), p.getObjSfaFacturaID(),p.getSivProductoID(), p.getPrecio().floatValue(), c.getCedula());
                                         detalle.save();
                                     }
                                 }

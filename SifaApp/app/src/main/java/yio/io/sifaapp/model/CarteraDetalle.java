@@ -47,11 +47,12 @@ public class CarteraDetalle extends BaseModel implements Serializable {
     public CarteraDetalle() {
     }
 
-    public CarteraDetalle(int clienteID, int objSfaFacturaID, int sivProductoID, Float precio) {
+    public CarteraDetalle(int clienteID, int objSfaFacturaID, int sivProductoID, Float precio, String cedula) {
         ClienteID = clienteID;
         this.objSfaFacturaID = objSfaFacturaID;
         SivProductoID = sivProductoID;
         Precio = precio;
+        this.cedula = cedula;
     }
 
     public int getClienteID() {
