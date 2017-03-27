@@ -73,10 +73,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
             Cartera cartera2 = new Select().from(Cartera.class).where(String.format("id=%d", cartera.getId())).querySingle();
 
             if (cartera2.getCobrado()) {
-
                 holder.txtviewcustomername.setTextColor(activity.getResources().getColor(R.color.colorNameItem));
-
             }
+            else
+                holder.txtviewcustomername.setTextColor(activity.getResources().getColor(R.color.colorRed));
 
             Customer c = new Select().from(Customer.class).where(String.format("Cedula='%s'",cartera.getCedula())).querySingle();
 
