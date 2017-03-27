@@ -106,7 +106,6 @@
                             android:background="@drawable/style_textbox"
                             android:enabled="false"
                             android:lines="1"
-                            android:text="asdjakshdkhajs"
                             android:textColor="@color/bpblack"
                             android:paddingBottom="1dp"
                             android:paddingTop="8dp"
@@ -189,22 +188,26 @@
                             android:layout_marginLeft="10dp"
                             android:id="@+id/btnsignoff" />
 
+
+
                         <EditText
-                            android:id="@+id/cfgtextv_detallecodempresa"
-                            android:layout_width="fill_parent"
-                            android:layout_height="28dp"
-                            android:background="@drawable/style_textbox"
-                            android:nextFocusDown="@+id/cfgtextv_detalleuser"
-                            android:nextFocusRight="@+id/cfgtextv_detalleuser"
-                            android:nextFocusUp="@+id/cfgtextv_detalleurlws"
-                            android:paddingBottom="1dp"
-                            android:paddingTop="8dp"
-                            android:singleLine="true"
-                            android:textSize="12dp"
-                            android:textStyle="bold"
-                            android:layout_above="@+id/btnsaveconfg"
-                            android:layout_alignRight="@+id/btnsaveconfg"
-                            android:layout_alignEnd="@+id/btnsaveconfg" />
+                                                    android:id="@+id/cfgtextv_detallecodempresa"
+                                                    android:layout_width="fill_parent"
+                                                    android:layout_height="28dp"
+                                                    android:layout_below="@+id/separator3"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginTop="5dp"
+                                                    android:layout_toRightOf="@+id/cfglbl_codempresa"
+                                                    android:background="@drawable/style_textbox"
+                                                    android:nextFocusDown="@+id/cfgtextv_detalleuser"
+                                                    android:nextFocusRight="@+id/cfgtextv_detalleuser"
+                                                    android:nextFocusUp="@+id/cfgtextv_detalleurlws"
+                                                    android:paddingBottom="1dp"
+                                                    android:paddingTop="8dp"
+                                                    android:singleLine="true"
+                                                    android:textSize="12dp"
+                                                    android:layout_marginRight="5dp"
+                                                    android:textStyle="bold" />
 
 
                     </RelativeLayout>
