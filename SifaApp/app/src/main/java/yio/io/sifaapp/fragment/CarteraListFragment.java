@@ -143,9 +143,11 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
     @Override
     public void updateAmount(Float amount) {
-        txtviewTotal.setText("");
-        txtviewTotal.setText(getResources().getText(R.string.message_lista_total_cartera));
-        txtviewTotal.setText(txtviewTotal.getText()+ " "+ String.valueOf(amount));
+        if(txtviewTotal!=null) {
+            txtviewTotal.setText("");
+            txtviewTotal.setText(getResources().getText(R.string.message_lista_total_cartera));
+            txtviewTotal.setText(txtviewTotal.getText() + " " + String.valueOf(amount));
+        }
     }
 
     @Override
