@@ -1,38 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/mnseach"
-        android:icon="@drawable/ic_search_black_24dp"
-        app:showAsAction="ifRoom"
-        android:title="CARTERA">
-    </item>
-    <item
-        android:id="@+id/mncontact"
 
-        app:showAsAction="ifRoom"
-        android:title="REGISTRO DE VENTAS">
-    </item>
-    <item
-        android:id="@+id/mncartera"
+    <item android:id="@+id/mnseach"
+        android:title="Search"
+        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        app:showAsAction="collapseActionView|ifRoom"
+        android:actionViewClass="android.widget.SearchView"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
 
-        app:showAsAction="ifRoom"
-        android:title="DEVOLUCIONES">
-    </item>
-    <item
-        android:id="@+id/mnupdate"
-        app:showAsAction="ifRoom"
-        android:title="ACTUALIZACION DE DATOS">
-    </item>
-    <item
-        android:id="@+id/mnconfig"
-        app:showAsAction="ifRoom"
-        android:title="CONFIGURACION">
-    </item>
-    <item
-        android:id="@+id/mnsession"
-        app:showAsAction="ifRoom"
-        android:title="CERRAR SESION">
-    </item>
+
+
+
 
 </menu>

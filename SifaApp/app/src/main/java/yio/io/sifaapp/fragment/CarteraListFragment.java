@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -265,5 +267,11 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         //your code which you want to refresh
        Init();
     }
+
+    public void Query(String query){
+        if (adapter != null)
+            adapter.getFilter().filter(query);
+    }
+
 }
 

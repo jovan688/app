@@ -102,6 +102,15 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
     }
     */
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+        loginPresenter.onDestroy();
+        Log.d(TAG, "onStop");
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -111,11 +120,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
 
     @Override
     public void onStop() {
-        presenter.onDestroy();
-        loginPresenter.onDestroy();
         super.onStop();
-        Log.d(TAG, "onStop");
-
     }
 
     @Override

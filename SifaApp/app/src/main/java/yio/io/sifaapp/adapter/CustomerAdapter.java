@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -26,14 +29,14 @@ import yio.io.sifaapp.model.Customer;
 /**
  * Created by STARK on 19/06/2016.
  */
-public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> implements ItemTouchHelperAdapter {
+public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> implements ItemTouchHelperAdapter , Filterable {
 
     IDetallaCarteraView view;
     List<Cartera> list = null;
     private OnItemClickListener listener;
     private final OnStartDragListener mDragStartListener;
     Activity activity;
-
+    private List<Cartera> mOriginalValues;
 
     public CustomerAdapter(Activity a, IDetallaCarteraView view, List<Cartera> dataset, OnStartDragListener mDragStartListener, OnItemClickListener listener) {
         this.list = dataset;
@@ -125,5 +128,56 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerViewHolder> im
     public void onItemDismiss(int position) {
         list.remove(position);
         notifyItemRemoved(position);
+    }
+
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                List<Cartera> FilteredArrList = new ArrayList<Cartera>();
+                if (mOriginalValues  == null && list!=null)
+                    mOriginalValues  = new ArrayList<Cartera>(list); // guardar los datos originales en  mOriginalValues
+                if (constraint == null || constraint.length() == 0)
+                {
+                    // setear los valores originales a returnar
+                    results.count = mOriginalValues.size();
+                    results.values = mOriginalValues;
+                }
+                else {
+                    constraint = constraint.toString().toLowerCase();
+                    for (int i = 0; i < mOriginalValues.size(); i++) {
+                        try {
+                            Cartera data = mOriginalValues.get(i);
+                            Object obj = data.isMatch(constraint);
+                            if (Boolean.valueOf(obj.toString()))
+                                FilteredArrList.add(data);
+                            results.count = FilteredArrList.size();
+                            results.values = FilteredArrList;
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (results == null || (results != null && results.values == null) || (results != null && results.values != null && ((List<Customer>) results.values).size() == 0)) {
+                        // setear los valores originales a returnar
+                        results.count = mOriginalValues.size();
+                        results.values = mOriginalValues;
+                    }
+                }
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                    list =  (results!=null && results.values!=null)?(List<Cartera>)results.values:new ArrayList<Cartera>(); //contiene los datos filtrados
+                    notifyDataSetChanged();  //notificar al base adapter que hay nuevo valores que han sido filtrados
+            }
+        };
+            return filter;
     }
 }

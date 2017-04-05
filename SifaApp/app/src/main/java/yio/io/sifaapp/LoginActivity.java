@@ -48,10 +48,16 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
 
     @Override
     protected void onStop() {
-        loginPresenter.onDestroy();
         super.onStop();
-        Log.d("LoginActivity","onStop");
 
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loginPresenter.onDestroy();
+        Log.d("LoginActivity","onStop");
     }
 
     @Override
@@ -181,7 +187,8 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
         txtusername.setEnabled(enabled);
     }
 
-    private void attemptLogin() {
+    private void attemptLogin()
+    {
         txtusername.setError(null);
         txtpassword.setError(null);
 
@@ -232,6 +239,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    hide();
                     dlg = new CustomDialog(mycontext, mensaje, false, NOTIFICATION_DIALOG);
                     dlg.show();
                 }
@@ -240,7 +248,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
     }
 
     public void hide(){
-        if (dlg != null && dlg.isShowing())
+        if (dlg != null )//&& dlg.isShowing())
             dlg.dismiss();
     }
 }

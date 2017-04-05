@@ -1,11 +1,17 @@
 package yio.io.sifaapp;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
@@ -20,6 +26,8 @@ public class CarteraListActivity extends BaseActivity {
 
     private BottomBar bottomBar;
     private  int position ;
+    private  boolean list =false;
+    CarteraListFragment test = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,8 @@ public class CarteraListActivity extends BaseActivity {
             {
                 int position = bottomBar.getCurrentTabPosition();
                 if (position == 0) {
-                    CarteraListFragment test = (CarteraListFragment) getSupportFragmentManager().findFragmentByTag("ListaCartera");
+                    list = true;
+                    test = (CarteraListFragment) getSupportFragmentManager().findFragmentByTag("ListaCartera");
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, test, "ListaCartera").commit();
                 }
                 if (position == 1) {
@@ -95,6 +104,7 @@ public class CarteraListActivity extends BaseActivity {
             public void onMenuTabSelected(@IdRes int menuItemId) {
                 if (menuItemId == R.id.mnlist) {
                     Fragment fragment = new CarteraListFragment();
+                    test = (CarteraListFragment) fragment;
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.fragment_container,fragment,"ListaCartera").commit();
                     position = 0;
@@ -117,9 +127,9 @@ public class CarteraListActivity extends BaseActivity {
 
             @Override
             public void onMenuTabReSelected(@IdRes int menuItemId) {
-                if (menuItemId == R.id.mnseach) {
+                //if (menuItemId == R.id.mnseach) {
                     // The user reselected item number one, scroll your content to top.
-                }
+                //}
             }
         });
 
@@ -131,6 +141,7 @@ public class CarteraListActivity extends BaseActivity {
     public BottomBar getBottomBar(){
         return  bottomBar;
     }
+
 
 
     @Override
@@ -149,4 +160,39 @@ public class CarteraListActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        if(getSupportFragmentManager().findFragmentByTag("ListaCartera") instanceof  CarteraListFragment ) {
+
+            inflater.inflate(R.menu.menu, menu);
+            this.menu = menu;
+            SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView search = (SearchView) menu.findItem(R.id.mnseach).getActionView();
+
+            search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.d("SearchView", query);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if(test!=null)
+                        test.Query(newText);
+                    Log.d("SearchView-newText", newText);
+                    return false;
+                }
+            });
+        }
+        return true;
+    }
+
 }

@@ -479,7 +479,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                                     Encargo encargo = new Select().from(Encargo.class).where(String.format("id=%d", encargoID)).querySingle();
                                     encargo.setOffline(false);
                                     encargo.save();
-                                    new Delete().from(Encargo.class).where(String.format("Id=%d", encargoID)).query();
+                                    new Delete().from(Encargo.class).where(String.format("id=%d", encargoID)).query();
                                 }
                             }
                             if (contador == 0) {

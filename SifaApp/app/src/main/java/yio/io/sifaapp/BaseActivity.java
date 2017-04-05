@@ -1,20 +1,30 @@
 package yio.io.sifaapp;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.roughike.bottombar.BottomBar;
+
+import java.io.Console;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,10 +44,7 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
     @Bind(R.id.fragment_container)
     FrameLayout fragmentContainer;
     NavigationDrawerFragment drawerFragment =null;
-
-
-
-
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +56,39 @@ public class BaseActivity extends AppCompatActivity  implements NavigationDrawer
 
 
     }
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        this.menu = menu;
+        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView search = (SearchView) menu.findItem(R.id.mnseach).getActionView();
 
+        search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("SearchView",     query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                Log.d("SearchView-newText",     newText);
+                return false;
+            }
+        });
+
+            return true;
+    }*/
 
     private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //stoolbar.inflateMenu(R.menu.main);
+        //toolbar.inflateMenu(R.menu.menu);
         setSupportActionBar(toolbar);
 
     }

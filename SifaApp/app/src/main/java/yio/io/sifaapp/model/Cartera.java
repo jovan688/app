@@ -244,4 +244,10 @@ public class Cartera  extends BaseModel implements Serializable {
         this.ojbCobradorID = ojbCobradorID;
     }
 
+
+    public Object isMatch(CharSequence constraint) {
+        if (getNombreCompleto().toLowerCase().contains(constraint.toString()))
+            return true;
+        return false;
+    }
 }

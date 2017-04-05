@@ -18,9 +18,11 @@ public class LoginPresenterImplement implements LoginPresenter {
     private EventBus eventbus;
     private ILoginView loginView;
     private LoginInteractor loginInteractor;
+    private Context context;
 
     public LoginPresenterImplement(ILoginView loginView , Context context) {
         this.loginView = loginView;
+        this.context = context;
         if(this.loginInteractor == null)
             this.loginInteractor = new LoginInteractorImplement(context);
 
@@ -57,7 +59,8 @@ public class LoginPresenterImplement implements LoginPresenter {
             loginView.showProgress();
             loginView.Sync("Validando Credenciales.....");
         }
-        loginInteractor.doSignIn(username,password);
+        if(loginInteractor!=null)
+         loginInteractor.doSignIn(username,password);
     }
 
     @Override
@@ -80,6 +83,7 @@ public class LoginPresenterImplement implements LoginPresenter {
                 break;
             case Events.onSyncCarteraSucess:
                 onSyncCarteraSucess();
+
                 break;
             case Events.onSystemSuccess:
                     loginView.onSystemSuccess();
@@ -112,7 +116,10 @@ public class LoginPresenterImplement implements LoginPresenter {
             loginView.showProgress();
             loginView.Sync("Conectando con el Servidor .....");
         }
-        loginInteractor.DownloadServer();
+        if(loginInteractor !=null) {
+           // this.loginInteractor = new LoginInteractorImplement(context);
+            this.loginInteractor.DownloadServer();
+        }
     }
 
 
@@ -188,10 +195,14 @@ public class LoginPresenterImplement implements LoginPresenter {
 
 
     private void  onSyncCarteraSucess(){
+        Log.d("onResponse", "onSyncCarteraSucess...");
         if(loginView!=null){
+            Log.d("onResponse", "Dentro de loginView...");
+
             loginView.hideProgress();
             loginView.authenticate();
         }
+        Log.d("onResponse", "loginView =..." + loginView == null ? "NULL" : "no es nulll");
     }
 
 }

@@ -86,4 +86,5 @@
     <string name="ok">Ok</string>
     <string name="permission_phonestate_rationale">Leer el estado del Telefono</string>
     <string name="permissions_not_granted">Permiso Denegado</string>
+    <string name="search_hint">Buscar...</string>
 </resources>
