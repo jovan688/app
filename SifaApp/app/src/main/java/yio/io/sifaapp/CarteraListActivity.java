@@ -42,8 +42,8 @@ public class CarteraListActivity extends BaseActivity {
 
             if(detalle != null) {
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detalle, "Detalle").commit();
-                getSupportFragmentManager().popBackStack();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detalle, "Detalle").addToBackStack(null).commit();
+                //getSupportFragmentManager().popBackStack();
             }
             else
             {
@@ -51,7 +51,9 @@ public class CarteraListActivity extends BaseActivity {
                 if (position == 0) {
                     list = true;
                     test = (CarteraListFragment) getSupportFragmentManager().findFragmentByTag("ListaCartera");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, test, "ListaCartera").commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, test, "ListaCartera")
+                            .addToBackStack(null)
+                            .commit();
                 }
                 if (position == 1) {
                     NuevoClienteFragment test = (NuevoClienteFragment) getSupportFragmentManager().findFragmentByTag("NuevoCliente");

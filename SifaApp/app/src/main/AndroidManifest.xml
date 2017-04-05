@@ -50,7 +50,8 @@
         </service>
 
         <activity android:name=".Main2Activity" />
-        <activity android:name=".CarteraListActivity" />
+        <activity android:name=".CarteraListActivity" android:configChanges="orientation|keyboardHidden|screenSize" />
+
         <activity android:name=".BaseActivity" />
         <activity android:name=".VentaListActivity" />
         <activity android:name=".DevolucionListActivity" />
