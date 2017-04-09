@@ -48,6 +48,31 @@
                 android:textColor="@color/colorBlack"
                 android:background="@color/colorGrayLigth"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorGrayLigth"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:layout_gravity="center"
+                    android:text="@string/cliente.orden"
+                    android:textColor="@color/colorPurple"
+                    android:id="@+id/textView14" />
+
+                <EditText
+                    android:id="@+id/txtorden"
+                    android:text="100"
+                    android:paddingLeft="12dp"
+                    android:paddingBottom="12dp"
+                    android:textColor="@color/colorPurple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtcustomerAddr"

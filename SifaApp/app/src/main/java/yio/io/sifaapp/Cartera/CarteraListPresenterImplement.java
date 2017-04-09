@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import yio.io.sifaapp.fragment.DetalleClienteFragment;
 import yio.io.sifaapp.model.Cartera;
 import yio.io.sifaapp.utils.EventBus;
 import yio.io.sifaapp.utils.Events;
@@ -31,7 +32,8 @@ public class CarteraListPresenterImplement implements ICarteraListPresenter {
 
     @Override
     public void onCreated() {
-        eventbus.unregister(this);
+        if(eventbus.isRegistered(this))
+            eventbus.unregister(this);
         eventbus.register(this);
     }
 

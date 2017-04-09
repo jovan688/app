@@ -1,5 +1,7 @@
 package yio.io.sifaapp.Cartera;
 
+import yio.io.sifaapp.model.Cartera;
+import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.utils.Events;
 
 /**
@@ -11,4 +13,5 @@ public interface IClientePresenter {
     void  onDestroy();
     void getCliente(int customerid);
     void  onEventMainThread(Events event);
+    void executeUpdateOrden(int from , int to , Cartera customer);
 }

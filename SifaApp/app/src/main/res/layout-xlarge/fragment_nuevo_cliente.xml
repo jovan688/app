@@ -85,7 +85,20 @@
                         android:text="@string/customer.form.genero.female"
                         android:id="@+id/female" />
 
+
+
                 </RadioGroup>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:hint="Orden"
+                    android:background="@drawable/mybotton2"
+                    android:id="@+id/editORDEN"
+                    android:inputType="number"
+                    android:layout_gravity="center_horizontal" />
 
                 <EditText
                     android:layout_width="match_parent"

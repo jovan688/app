@@ -53,4 +53,9 @@ public class UpdateInteractorImpl implements IUpdateInteractor {
     public void UpdateClienteReferencia() {
             repository.UpdateClienteReferencia();
     }
+
+    @Override
+    public void UpdateClienteOrden() {
+        repository.UpdateClienteOrden();
+    }
 }

@@ -31,15 +31,16 @@ public class LoginPresenterImplement implements LoginPresenter {
 
     @Override
     public void onCreated() {
-        eventbus.unregister(this);
-        eventbus.register(this);
+        if( eventbus.isRegistered(this))
+            eventbus.unregister(this);
 
+        eventbus.register(this);
     }
 
     @Override
     public void onDestroy() {
-        loginView = null;
         eventbus.unregister(this);
+        loginView = null;
         loginInteractor = null;
     }
 

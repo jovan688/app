@@ -5,14 +5,11 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import yio.io.sifaapp.Actualizacion.Models.Cliente;
 import yio.io.sifaapp.Actualizacion.Models.ClienteReferencia;
 import yio.io.sifaapp.model.CarteraResponse;
 import yio.io.sifaapp.model.Catalog;
@@ -20,6 +17,7 @@ import yio.io.sifaapp.model.Categoria;
 import yio.io.sifaapp.model.Ciudad;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Descuento;
+import yio.io.sifaapp.model.OrdenesClientes;
 import yio.io.sifaapp.model.Pais;
 import yio.io.sifaapp.model.Producto;
 import yio.io.sifaapp.model.Ruta;
@@ -90,4 +88,8 @@ public interface IServicioRemoto {
             //@Field("ClienteID") String ClienteID,
             //@Field("Referencia") String Referencia
     );
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"} )
+    @PUT("ReubicarCliente")
+    Call<Boolean> ReubicarCliente(@Body OrdenesClientes OrdenesClientes);//@Body OrdenesClientes requestBody);
 }

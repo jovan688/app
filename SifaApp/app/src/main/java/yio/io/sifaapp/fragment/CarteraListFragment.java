@@ -1,9 +1,11 @@
 package yio.io.sifaapp.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -63,16 +65,13 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     private ItemTouchHelper mItemTouchHelper;
 
 
-    public CarteraListFragment() {
-    }
-
+    public CarteraListFragment() {}
 
     @Override
-    public void onStop() {
+    public void onDestroy() {
+        super.onDestroy();
         presenter.onDestroy();
         catalogoPresenter.onDestroy();
-        super.onStop();
-        Log.d(TAG,"onStop");
     }
 
     @Override
@@ -100,13 +99,11 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         presenter = new CarteraListPresenterImplement(this);
         presenter.onCreated();
 
-
         InitAdapter();
 
         CustomerRecyclerview.setHasFixedSize(true);
         CustomerRecyclerview.setAdapter(adapter);
         CustomerRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
@@ -156,7 +153,6 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        presenter.onDestroy();
         Log.d(TAG,"onDestroyView : UnBind");
     }
 
@@ -164,7 +160,6 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
     public void onDetach() {
         super.onDetach();
         ButterKnife.unbind(this);
-        presenter.onDestroy();
         Log.d(TAG,"onDetach : UnBind");
     }
 
@@ -272,6 +267,5 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         if (adapter != null)
             adapter.getFilter().filter(query);
     }
-
 }
 

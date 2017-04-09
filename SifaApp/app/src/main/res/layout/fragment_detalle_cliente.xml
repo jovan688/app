@@ -49,6 +49,32 @@
                 android:background="@color/colorGrayLigth"
                 />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorGrayLigth"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:layout_gravity="center"
+                    android:text="@string/cliente.orden"
+                    android:textColor="@color/colorPurple"
+                    android:id="@+id/textView14" />
+
+                <EditText
+                    android:id="@+id/txtorden"
+                    android:text="100"
+                    android:paddingLeft="12dp"
+                    android:paddingBottom="12dp"
+                    android:textColor="@color/colorPurple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/txtcustomerAddr"
                 android:layout_width="match_parent"
@@ -145,7 +171,8 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="2dp"
                 android:hint="Referencia"
                 android:scrollbars="vertical"
                 android:layout_weight="1"
@@ -186,7 +213,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GUARDAR REFERENCIA"
+                    android:text="GUARDAR"
                     android:id="@+id/btnreferencia"
                     android:background="@color/colorPurple"
                     android:layout_marginTop="5dp"

@@ -31,16 +31,17 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
 
     @Override
     public void onCreated() {
-        eventbus.unregister(this);
-        eventbus.register(this);
+        if(eventbus.isRegistered(this))
+            eventbus.unregister(this);
 
+        eventbus.register(this);
     }
 
     @Override
     public void onDestroy() {
-        view = null;
-        eventbus.unregister(this);
+        this.view = null;
         this.interactor = null;
+        eventbus.unregister(this);
     }
 
 
@@ -96,9 +97,14 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
                 break;
             case Events.CargarContadores:
                 view.CountOfflineData((ContadorModel) event.getObject());
+                eventbus.unregister(this);
                 break;
             case Events.OnMessage :
                 view.notify((String)event.getObject());
+                Log.d("notify", (String)event.getObject());
+                break;
+            case  Events.UpdateClienteOrdenSucess:
+                this.UpdateClienteReferencia(); // Empieza con el orden y despues va a actualizar la referencia.
                 break;
             case Events.onClienteUpdateSucess :
                 view.UpdateVentas(); // Ahora que sincronize las ventas
@@ -118,9 +124,13 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
                 view.enableButtons();
                 view.notify("Sincronizacion Completa.");
                 CountOfflineData();
+                //eventbus.unregister(this);
                 break;
             case Events.onReferenceClienteUpdateSucess:
                 view.UpdateCliente();
+                break;
+            case Events.UpdateClienteOrdenError:
+                view.ShowError(event.getErrorMessage());
                 break;
             case Events.onNetworkFails:
                 view.enableButtons();
@@ -141,8 +151,14 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
 
     @Override
     public void UpdateClienteReferencia() {
-        view.disableButtons();
+        //view.disableButtons();
         interactor.UpdateClienteReferencia();
 
+    }
+
+    @Override
+    public void UpdateClienteOrden() {
+        view.disableButtons();
+        interactor.UpdateClienteOrden();
     }
 }

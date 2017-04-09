@@ -72,36 +72,6 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
         // Required empty public constructor
 
     }
-    /*
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(this.presenter !=null) {
-            this.presenter.onDestroy();
-            this.presenter =null;
-        }
-        if(this.loginPresenter != null) {
-            this.loginPresenter.onDestroy();
-            this.loginPresenter = null;
-        }
-        Log.d(TAG,"onDestroy");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if(this.presenter !=null) {
-            this.presenter.onDestroy();
-            this.presenter =null;
-        }
-        if(this.loginPresenter != null) {
-            this.loginPresenter.onDestroy();
-            this.loginPresenter = null;
-        }
-        Log.d(TAG,"onDestroy");
-    }
-    */
-
 
     @Override
     public void onDestroy() {
@@ -111,17 +81,6 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
         Log.d(TAG, "onStop");
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -155,17 +114,6 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // ButterKnife.unbind(this);
-/*
-        if(this.presenter !=null) {
-            this.presenter.onDestroy();
-            this.presenter =null;
-        }
-        if(this.loginPresenter != null) {
-            this.loginPresenter.onDestroy();
-            this.loginPresenter = null;
-        }
-*/
         Log.d(TAG, "onDestroy");
         ButterKnife.unbind(this);
     }
@@ -184,7 +132,8 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
         progressBar.setProgress(progressStatus);
         //disableButtons();
         Local.setBackground(getResources().getDrawable(R.drawable.round_button2));
-        presenter.UpdateClienteReferencia();
+        presenter.onCreated();
+        presenter.UpdateClienteOrden();
         cont++;
         Log.d(TAG, "upload");
         Log.d("COnt", String.valueOf(cont));
@@ -222,16 +171,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
 
     @Override
     public void enableButtons() {
-        /*getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Local.setEnabled(true);
-                Server.setEnabled(true);
-            }
-        });*/
-        //Local.setEnabled(true);
-        // Server.setEnabled(false);
-        //Server.setEnabled(true);
+
         Log.d(TAG,"enableButtons");
         Local.setEnabled(true);
         Server.setEnabled(true);
@@ -240,15 +180,6 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
 
     @Override
     public void disableButtons() {
-        //Local.setEnabled(false);
-        //Server.setEnabled(false);
-        /*getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Local.setEnabled(false);
-                Server.setEnabled(false);
-            }
-        });*/
         Log.d(TAG,"disableButtons");
         Local.setEnabled(false);
         Server.setEnabled(false);
@@ -340,7 +271,7 @@ public class ActualizarFragment extends Fragment implements IUpdateView, ILoginV
     @Override
     public void notify(String message) {
         txtmessage.setText(message);
-        Log.d(TAG,"NOTIFY");
+        Log.d(TAG,"NOTIFY" + message);
     }
 
     @Override

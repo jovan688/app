@@ -47,13 +47,6 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
     LoginPresenter loginPresenter;
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
-
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         loginPresenter.onDestroy();

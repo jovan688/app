@@ -96,7 +96,6 @@ public class Events {
     public  final static int UpdateCobroContador =61;
     public  final static int onUpdateCobroSucess =62;
     public  final static int onNetworkFails =63;
-
     public  final static int onCarteraDetalleDataSucess =64;
 
     public  final static int onSingOff =65;
@@ -108,9 +107,16 @@ public class Events {
 
     public  final static int goToMainScreen =69;
     public  final static int onReferenceClienteUpdateSucess =70;
+    public  final static int UpdateClienteReferenciaContador = 71;
+
+    public  final static int UpdateClienteOrden =72;
+    public  final static int UpdateClienteOrdenSucess =73;
+    public  final static int UpdateClienteOrdenError = 74;
+
+    public final static int onSyncOrdenERROR=75;
+    public final static int onSyncCLienteOrden=76;
 
 
-    public  final static int UpdateClienteReferenciaContador =71;
 
 
     private  int eventype;

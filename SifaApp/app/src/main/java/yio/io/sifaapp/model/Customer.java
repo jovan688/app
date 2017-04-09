@@ -69,6 +69,10 @@ public class Customer extends BaseModel implements Serializable {
     @Column
     private String Referencia;
 
+
+    @Column
+    private Boolean newOrden;
+
     public Boolean getOfflineReferencia() {
         return offlineReferencia;
     }
@@ -267,6 +271,14 @@ public class Customer extends BaseModel implements Serializable {
 
     public void setOjbCobradorID(Integer ojbCobradorID) {
         this.ojbCobradorID = ojbCobradorID;
+    }
+
+    public Boolean getNewOrden() {
+        return newOrden;
+    }
+
+    public void setNewOrden(Boolean newOrden) {
+        this.newOrden = newOrden;
     }
 
     // KEEP METHODS - put your custom methods here

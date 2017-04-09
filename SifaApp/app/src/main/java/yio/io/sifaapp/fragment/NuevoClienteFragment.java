@@ -86,6 +86,8 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     RadioButton male;
     private final String TAG = this.getClass().getSimpleName();
     View view = null;
+    @Bind(R.id.editORDEN)
+    EditText editORDEN;
 
     public NuevoClienteFragment() {
         presenter = new ClientePresenterIMP(this);
@@ -107,7 +109,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(presenter != null) {
+        if (presenter != null) {
             presenter.getCiudades();
             presenter.getRutas();
             presenter.getGenero();
@@ -143,9 +145,9 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
     @Override
     public void fetchPais(List<Pais> paises) {
-        Log.d(TAG,"fechCiudades ");
+        Log.d(TAG, "fechCiudades ");
         this.listpaises = paises;
-        if(this.listpaises!=null && this.listpaises.size() > 0) {
+        if (this.listpaises != null && this.listpaises.size() > 0) {
             spinnerCountry.setItems(paises);
             spinnerCountry.setTextColor(getResources().getColor(R.color.colorPurple));
             spinnerCountry.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
@@ -163,15 +165,15 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     public void onStop() {
         presenter.onDestroy();
         super.onStop();
-        Log.d(TAG,"onStop");
+        Log.d(TAG, "onStop");
 
     }
 
     @Override
     public void fechCiudades(List<Ciudad> ciudades) {
-        Log.d(TAG,"fechCiudades ");
+        Log.d(TAG, "fechCiudades ");
         this.listciudades = ciudades;
-        if(this.listciudades!=null && this.listciudades.size() > 0) {
+        if (this.listciudades != null && this.listciudades.size() > 0) {
             spinnerCity.setItems(ciudades);
             spinnerCity.setTextColor(getResources().getColor(R.color.colorPurple));
             spinnerCity.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
@@ -188,9 +190,9 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
     @Override
     public void fetchRutas(List<Ruta> rutas) {
-        Log.d(TAG,"fetchRutas ");
+        Log.d(TAG, "fetchRutas ");
         this.listrutas = rutas;
-        if(this.listrutas!=null && this.listrutas.size() > 0) {
+        if (this.listrutas != null && this.listrutas.size() > 0) {
             //ArrayAdapter<Ruta> adapter = new ArrayAdapter<Ruta>(getContext(), android.R.layout.simple_spinner_item, rutas);
             spinnerRuta.setItems(rutas);
             spinnerRuta.setTextColor(getResources().getColor(R.color.colorPurple));
@@ -208,7 +210,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
     @Override
     public void fetchGeneros(List<Catalog> generos) {
-        Log.d(TAG,"fetchGeneros ");
+        Log.d(TAG, "fetchGeneros ");
         this.generos = generos;
     }
 
@@ -230,7 +232,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
 
                             if (AppDialog.OK_BUTTOM == actionId) {
                                 _dialog.dismiss();
-                                Intent i = new Intent(getActivity() , CarteraListActivity.class);
+                                Intent i = new Intent(getActivity(), CarteraListActivity.class);
                                 startActivity(i);
                             }
                         }
@@ -271,7 +273,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
         String cid = editcid.getText().toString();
         String address = editAddress.getText().toString();
         String phone = editphone.getText().toString();
-
+        String orden = editORDEN.getText().toString();
 
         editname.setError(null);
         editlastname.setError(null);
@@ -283,19 +285,18 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
         boolean cancel = false;
         EditText focus = null;
 
-        if(listrutas.size()==0) {
+        if (listrutas.size() == 0) {
             spinnerRuta.setError("No hay rutas Disponibles!");
             cancel = true;
         }
-        if(listpaises.size() == 0 ) {
+        if (listpaises.size() == 0) {
             spinnerCountry.setError("No hay Pais Disponible!");
             cancel = true;
         }
-        if(listciudades.size() == 0 ) {
+        if (listciudades.size() == 0) {
             spinnerCity.setError("No hay Ciudades Disponibles!");
             cancel = true;
-        }
-        else if (TextUtils.isEmpty(name)) {
+        } else if (TextUtils.isEmpty(name)) {
             editname.setError(getString(R.string.message_vacio_Error));
             focus = editname;
             cancel = true;
@@ -315,7 +316,13 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
             editphone.setError(getString(R.string.message_vacio_Error));
             focus = editphone;
             cancel = true;
-        } else if (!TextUtils.isEmpty(cid)) {
+        }
+        else if (TextUtils.isEmpty(orden)) {
+            editORDEN.setError("Orden requerido");
+            focus = editORDEN;
+            cancel = true;
+        }
+        else if (!TextUtils.isEmpty(cid)) {
             ValidarCedula validarCedula = new ValidarCedula();
             validarCedula.setCedula(cid);
             if (!validarCedula.isCedulaValida()) {
@@ -326,7 +333,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
         }
         if (cancel) {
 
-            if(focus!=null)
+            if (focus != null)
                 focus.requestFocus();
 
         } else {
@@ -359,7 +366,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
             }
             //customer.setObjGeneroID();
 
-            if(male.isChecked()) {
+            if (male.isChecked()) {
                 for (Catalog catalog : generos) {
                     if (catalog.getCodigo().equals("M")) {
                         customer.setGenero(catalog.getNombre());
@@ -367,8 +374,7 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
                         break;
                     }
                 }
-            }
-            else {
+            } else {
                 for (Catalog catalog : generos) {
                     if (catalog.getCodigo().equals("F")) {
                         customer.setGenero(catalog.getNombre());
@@ -377,8 +383,9 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
                     }
                 }
             }
+            customer.setOrdenCobro(Integer.parseInt(orden));
             customer.setOjbCobradorID(((sifacApplication) getActivity().getApplication()).getUsuario());
-            customer.setOrdenCobro(0);
+            //customer.setOrdenCobro(0);
             customer.setOffline(true);
             customer.save();
         }
@@ -386,8 +393,8 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
     }
 
     @OnClick(R.id.btncancelar)
-    public void cancelar(){
-        Intent intent = new Intent(getActivity(),CarteraListActivity.class);
+    public void cancelar() {
+        Intent intent = new Intent(getActivity(), CarteraListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 //end Bundle

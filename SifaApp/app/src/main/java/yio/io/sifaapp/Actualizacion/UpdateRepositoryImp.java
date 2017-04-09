@@ -15,10 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import yio.io.sifaapp.Actualizacion.Models.Cliente;
 import yio.io.sifaapp.Actualizacion.Models.ClienteReferencia;
+import yio.io.sifaapp.Actualizacion.Models.OrdenCliente;
 import yio.io.sifaapp.model.Cartera;
 import yio.io.sifaapp.model.Cobro;
 import yio.io.sifaapp.model.ContadorModel;
@@ -34,7 +31,7 @@ import yio.io.sifaapp.model.Devolucion;
 import yio.io.sifaapp.model.Encargo;
 import yio.io.sifaapp.model.EncargoDetalle;
 import yio.io.sifaapp.model.ModelConfiguracion;
-import yio.io.sifaapp.model.Producto;
+import yio.io.sifaapp.model.OrdenesClientes;
 import yio.io.sifaapp.model.modelSend.AplFacturasProformaDetalles;
 import yio.io.sifaapp.model.modelSend.AplFacturasProformas;
 import yio.io.sifaapp.model.modelSend.FacturaProformaDetalle;
@@ -57,14 +54,15 @@ import yio.io.sifaapp.utils.ResponseMessage;
 public class UpdateRepositoryImp implements IUpdateRepository {
 
 
-    Retrofit retrofit = null;
-    IServicioRemoto service;
-    int contador = 0;
-    Context context;
+    private Retrofit retrofit = null;
+    private IServicioRemoto service;
+    private int contador = 0;
+    private Context context;
+
     public UpdateRepositoryImp(Context context) {
         this.context = context;
-
-        try {
+        try
+        {
             if (retrofit == null) {
                 Gson gson = new GsonBuilder()
                         .setExclusionStrategies(new ExclusionStrategy() {
@@ -603,6 +601,102 @@ public class UpdateRepositoryImp implements IUpdateRepository {
         }
     }
 
+    @Override
+    public void UpdateClienteOrden() {
+        try
+        {
+            //postEvent(Events.OnMessage, null, "Sincronizando el Orden de los clientes ...");
+            Log.d("onResponse","Entrando a UpdateClienteOrden");
+
+            ResponseMessage message = Network.isPhoneConnected(context);
+            if(message!=null && message.isHasError()){
+                postEvent(Events.onNetworkFails,message.getCause() + message.getMessage());
+            }
+            else
+            {
+                List<OrdenCliente> lista = new ArrayList<OrdenCliente>();
+
+                List<Customer> list = new Select().from(Customer.class).where("newOrden=1").queryList();
+                for (Customer customer: list ) {
+                    lista.add(new OrdenCliente(customer.getClienteID(),customer.getOrdenCobro(),customer.getStbRutaID()));
+                }
+
+                if(lista.size()==0) {
+                    postEvent(Events.UpdateClienteOrdenSucess);
+                }
+                else
+                {
+                    postEvent(Events.OnMessage, null, String.format("Sincronizando el Orden de los clientes ,  %d  registros ...", lista.size()));
+
+                    if (this.service == null)
+                        this.service = retrofit.create(IServicioRemoto.class);
+
+                    OrdenesClientes ordenes = new OrdenesClientes();
+                    ordenes.setOrdenClientes(lista);
+                    Log.d("onResponse", String.valueOf(lista.size()));
+
+                    Call<Boolean> call  =service.ReubicarCliente(ordenes);
+
+                    call.enqueue(new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            if (response.body() != null) {
+                                List<Customer> list = new Select().from(Customer.class).where("newOrden=1").queryList();
+                                for (Customer customer : list) {
+                                    customer.setNewOrden(false);
+                                    customer.save();
+                                    Log.d("onResponse", "FOR");
+                                }
+                                Log.d("onResponse", "TERMINO EL FOR");
+                            }
+                            postEvent(Events.UpdateClienteOrdenSucess);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+                            Log.d("onResponse", "onFailure");
+                            postEvent(Events.UpdateClienteOrdenError, t.getMessage());
+                        }
+                    });
+                }
+            }
+        }
+        catch (Exception ex){
+            postEvent(Events.OnMessage, null, ex.getMessage());
+        }
+    }
+
+    private void postEvent(int type) {
+        postEvent(type, null);
+    }
+
+    private void postEvent(int type, String errorMessage) {
+        Events event = new Events();
+        event.setEventype(type);
+        if (errorMessage != null) {
+            event.setErrorMessage(errorMessage);
+        }
+
+        EventBus eventBus = GreenRobotEventBus.getInstance();
+        eventBus.post(event);
+
+    }
+
+    private void postEvent(int type, String errorMessage , Object o) {
+        Events event = new Events();
+        event.setEventype(type);
+        if (errorMessage != null) {
+            event.setErrorMessage(errorMessage);
+        }
+        if(o!=null) {
+            event.setObject(o);
+        }
+        EventBus eventBus = GreenRobotEventBus.getInstance();
+        eventBus.post(event);
+
+    }
+
+/* ANTES
     private void postEvent(int type, String errorMessage) {
         Events event = new Events();
         event.setEventype(type);
@@ -627,5 +721,5 @@ public class UpdateRepositoryImp implements IUpdateRepository {
         eventBus.post(event);
 
     }
-
+*/
 }

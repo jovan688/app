@@ -33,4 +33,9 @@ public class GreenRobotEventBus implements  EventBus {
     public void post(Object event) {
         bus.post(event);
     }
+
+    @Override
+    public boolean isRegistered(Object subscriber) {
+      return   bus.isRegistered(subscriber);
+    }
 }

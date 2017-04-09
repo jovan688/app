@@ -18,5 +18,6 @@ public interface IUpdatePresenter {
     void getCLienteContador();
     void CountOfflineData();
     void UpdateClienteReferencia();
+    void UpdateClienteOrden();
 
 }

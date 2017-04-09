@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,9 +25,14 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import yio.io.sifaapp.Cartera.CarteraListInteractorImplement;
+
 import yio.io.sifaapp.Cartera.ClientePresenteImpl;
+import yio.io.sifaapp.Cartera.ICarteraListInteractor;
+import yio.io.sifaapp.Cartera.ICarteraListPresenter;
 import yio.io.sifaapp.Cartera.IClientePresenter;
 import yio.io.sifaapp.Cartera.IDetallaCartera;
+import yio.io.sifaapp.Cartera.IDetallaCarteraView;
 import yio.io.sifaapp.Cartera.productoPresenter;
 import yio.io.sifaapp.Cartera.productoPresenterImp;
 import yio.io.sifaapp.CarteraListActivity;
@@ -82,13 +86,18 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
     Button btnreferencia;
     @Bind(R.id.scrollView)
     ScrollView scrollView;
-    Long CarteraID ;
+    Long CarteraID;
     private static final String TAG = DetalleClienteFragment.class.getSimpleName();
+    @Bind(R.id.txtorden)
+    EditText txtorden;
+    int oldorden =0;
+    String oldreferencia = "";
+
 
     public DetalleClienteFragment() {
-        presenter = new productoPresenterImp(this);
-        clientePresenter = new ClientePresenteImpl(this);
-        cartera = null;
+        this.presenter = new productoPresenterImp(this);
+        this.clientePresenter = new ClientePresenteImpl(this);
+        this.cartera = null;
 
     }
 
@@ -98,7 +107,8 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         if (getArguments() != null) {
             Bundle bundle = getArguments();
             CarteraID = (Long) bundle.getSerializable("CarteraID");
-            cartera = new Select().from(Cartera.class).where(String.format("id=%d",CarteraID)).querySingle();
+            cartera = new Select().from(Cartera.class).where(String.format("id=%d", CarteraID)).querySingle();
+
         }
 
     }
@@ -124,24 +134,17 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
     }
 
     @Override
-    public void onStop() {
+    public void onDestroy() {
         presenter.onDestroy();
         clientePresenter.onDestroy();
-        super.onStop();
-        Log.d(TAG,"onStop");
+        super.onDestroy();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
 
-    }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        clientePresenter.onDestroy();
-        presenter.onDestroy();
         ButterKnife.unbind(this);
     }
 
@@ -151,8 +154,11 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
             @Override
             public void onButtonClick(int actionId, Object o) {
                 if (!save((Float) o)) {
+                    presenter.onDestroy();
+                    clientePresenter.onDestroy();
                     Intent i = new Intent(getActivity(), CarteraListActivity.class);
                     startActivity(i);
+
                 }
 
             }
@@ -192,6 +198,8 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
                         public void onButtonClick(AlertDialog _dialog, int actionId) {
                             if (AppDialog.OK_BUTTOM == actionId) {
                                 _dialog.dismiss();
+                                presenter.onDestroy();
+                                clientePresenter.onDestroy();
                                 Intent i = new Intent(getActivity(), CarteraListActivity.class);
                                 startActivity(i);
                             }
@@ -237,9 +245,8 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         if (cartera.getCobrado() == false) {
 
 
-
             Cobro cobro = new Cobro();
-            if(amt == 0)
+            if (amt == 0)
                 cobro.setAbono(false);
             else
                 cobro.setAbono(true);
@@ -262,7 +269,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
 
             cartera.setCobrado(true);
             cartera.save();
-            Log.d(TAG,"Se ha Guardado el Cobro");
+            Log.d(TAG, "Se ha Guardado el Cobro");
 
         } else {
             cancelar = true;
@@ -288,6 +295,9 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
             btnabonar.setAlpha((float) 0.5);
             btnnoabonar.setEnabled(false);
             btnabonar.setAlpha((float) 0.5);
+        }
+        if(cartera!=null){
+            txtorden.setText(String.valueOf(cartera.getOrdenCobro()));
         }
     }
 
@@ -316,15 +326,23 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         if (customer != null) {
             txtviewtelefono.setText(customer.getTelefonos());
             txtreferencia.setText(customer.getReferencia());
+            oldorden = customer.getOrdenCobro();
+            oldreferencia =customer.getReferencia();
+          /*  if(customer.getOrdenCobro()!=0)
+                txtorden.setText(customer.getOrdenCobro().toString());
+            else
+                txtorden.setText(customer.getOrdenCobro().toString()); */
+
         }
-        clientePresenter.onDestroy();
+        //clientePresenter.onDestroy();
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
-        clientePresenter.onDestroy();
-        presenter.onDestroy();
+        //clientePresenter.onDestroy();
+        //presenter.onDestroy();
     }
 
     public void showmessage(final String message) {
@@ -355,41 +373,60 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
     }
 
     @OnClick(R.id.btnreferencia)
-    public void save_referencia(){
+    public void save_referencia() {
         if (!savereferencia()) {
-            AppDialog.showMessage(getActivity(), "", "Se ha Guardado la referencia Correctamente!",
-                    AppDialog.DialogType.DIALOGO_ALERTA,
-                    new AppDialog.OnButtonClickListener() {
-                        @Override
-                        public void onButtonClick(AlertDialog _dialog, int actionId) {
-                            if (AppDialog.OK_BUTTOM == actionId) {
-                                _dialog.dismiss();
-                                Intent i = new Intent(getActivity(), CarteraListActivity.class);
-                                startActivity(i);
-                            }
-                        }
-                    });
+            int nuevo_orden = Integer.parseInt(txtorden.getText().toString());
+            clientePresenter.executeUpdateOrden(oldorden,nuevo_orden,cartera);
         }
     }
 
-    private boolean savereferencia(){
+    @Override
+    public void UpdatedOrden(boolean value) {
+        AppDialog.showMessage(getActivity(), "", "Se ha Guardado Correctamente!",
+                AppDialog.DialogType.DIALOGO_ALERTA,
+                new AppDialog.OnButtonClickListener() {
+                    @Override
+                    public void onButtonClick(AlertDialog _dialog, int actionId) {
+                        if (AppDialog.OK_BUTTOM == actionId) {
+                            _dialog.dismiss();
+                            presenter.onDestroy();
+                            clientePresenter.onDestroy();
+                            Intent i = new Intent(getActivity(), CarteraListActivity.class);
+                            startActivity(i);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onMessage(String message) {
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG);
+        toast.show();    }
+
+
+    private boolean savereferencia() {
         boolean cancelar = false;
         try
         {
             String referencia = String.valueOf(txtreferencia.getText());
-            customer.setReferencia(referencia);
-            customer.setOfflineReferencia(true);
+
+            if(!referencia.isEmpty() && !referencia.equals(oldreferencia)) {
+                customer.setReferencia(referencia);
+                customer.setOfflineReferencia(true);
+            }
+
+            int nuevo_orden = Integer.parseInt(txtorden.getText().toString());
+
+            if(nuevo_orden!=oldorden) {
+                customer.setNewOrden(true);
+            }
             customer.save();
 
-        }
-        catch (Exception ex ) {
+        } catch (Exception ex) {
             cancelar = true;
-            Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
         }
         return cancelar;
     }
-
-
-
 
 }

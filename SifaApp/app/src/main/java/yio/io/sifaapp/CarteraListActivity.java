@@ -105,10 +105,10 @@ public class CarteraListActivity extends BaseActivity {
             @Override
             public void onMenuTabSelected(@IdRes int menuItemId) {
                 if (menuItemId == R.id.mnlist) {
-                    Fragment fragment = new CarteraListFragment();
-                    test = (CarteraListFragment) fragment;
+                    test = new CarteraListFragment();
+                    //test = (CarteraListFragment) fragment;
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.fragment_container,fragment,"ListaCartera").commit();
+                    manager.beginTransaction().replace(R.id.fragment_container,test,"ListaCartera").commit();
                     position = 0;
                 }
                 if(menuItemId == R.id.mncontact){
@@ -137,6 +137,7 @@ public class CarteraListActivity extends BaseActivity {
 
         bottomBar.selectTabAtPosition(position,true);
         // Disable the left bar on tablets and behave exactly the same on mobile and tablets instead.
+
 
     }
     @Override

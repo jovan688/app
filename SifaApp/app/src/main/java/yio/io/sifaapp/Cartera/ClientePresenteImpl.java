@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import yio.io.sifaapp.model.Cartera;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Producto;
 import yio.io.sifaapp.utils.EventBus;
@@ -48,7 +49,20 @@ public class ClientePresenteImpl implements IClientePresenter {
         switch (event.getEventype()){
             case Events.onFetchClienteSucess :
                 setData(event);
+                break;
+            case Events.onSyncCLienteOrden:
+                view.UpdatedOrden((Boolean)event.getObject());
+                break;
+
+            case Events.onSyncOrdenERROR:
+                view.onMessage(event.getErrorMessage());
+                break;
         }
+    }
+
+    @Override
+    public void executeUpdateOrden(int from, int to, Cartera customer) {
+        interactor.executeUpdateOrden(from,to,customer);
     }
 
     private void setData(Events event){

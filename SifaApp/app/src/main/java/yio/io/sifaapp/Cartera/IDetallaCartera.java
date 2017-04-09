@@ -13,5 +13,8 @@ public interface IDetallaCartera {
 
     void  onSetCarteraDetalle(List<Producto> detalles);
     void  onSetCliente(Customer customer);
+    void  UpdatedOrden(boolean value);
+    void onMessage(String message);
+
 
 }

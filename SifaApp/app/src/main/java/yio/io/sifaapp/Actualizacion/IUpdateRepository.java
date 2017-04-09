@@ -15,4 +15,6 @@ public interface IUpdateRepository {
     void CountOfflineData();
     void UpdateClienteReferencia();
 
+    void UpdateClienteOrden();
+
 }

@@ -39,7 +39,7 @@ public class CarteraListRepositoryImplement implements ICarteraListRepository {
         List<Cartera>  list ;
         if(fromPosition > toPosition) {
             Log.d(TAG,String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition));
-            list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition)).queryList();
+            list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d and StbRutaID = %d", toPosition, fromPosition,cartera.getStbRutaID())).queryList();
             for (Cartera i : list) {
                 i.setOrdenCobro(i.getOrdenCobro()+ 1 );
                 i.save();
@@ -49,7 +49,7 @@ public class CarteraListRepositoryImplement implements ICarteraListRepository {
             // fromposition < topposition
             Log.d(TAG,String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition));
             //list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d", fromPosition , toPosition)).queryList();
-            list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d", fromPosition)).queryList();
+            list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >%d And OrdenCobro <= %d and StbRutaID = %d", fromPosition ,toPosition , cartera.getStbRutaID())).queryList();
             for (Cartera i : list) {
                 i.setOrdenCobro(i.getOrdenCobro()- 1 );
                 i.save();

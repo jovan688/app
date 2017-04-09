@@ -13,4 +13,5 @@ public interface IUpdateInteractor {
     void GetClienteCounter();
     void CountOfflineData();
     void UpdateClienteReferencia();
+    void UpdateClienteOrden();
 }
