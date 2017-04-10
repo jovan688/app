@@ -108,6 +108,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
             Bundle bundle = getArguments();
             CarteraID = (Long) bundle.getSerializable("CarteraID");
             cartera = new Select().from(Cartera.class).where(String.format("id=%d", CarteraID)).querySingle();
+            oldorden= cartera.getOrdenCobro();
 
         }
 
@@ -326,7 +327,7 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
         if (customer != null) {
             txtviewtelefono.setText(customer.getTelefonos());
             txtreferencia.setText(customer.getReferencia());
-            oldorden = customer.getOrdenCobro();
+            //oldorden = customer.getOrdenCobro();
             oldreferencia =customer.getReferencia();
           /*  if(customer.getOrdenCobro()!=0)
                 txtorden.setText(customer.getOrdenCobro().toString());
