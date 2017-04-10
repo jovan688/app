@@ -208,7 +208,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GUARDAR REFERENCIA"
+                    android:text="GUARDAR"
                     android:id="@+id/btnreferencia"
                     android:background="@color/colorPurple"
                     android:layout_marginTop="5dp"
