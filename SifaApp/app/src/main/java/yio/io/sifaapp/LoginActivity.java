@@ -6,8 +6,11 @@ import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +27,7 @@ import yio.io.sifaapp.Login.ILoginView;
 import yio.io.sifaapp.Login.LoginPresenter;
 import yio.io.sifaapp.Login.LoginPresenterImplement;
 import yio.io.sifaapp.Venta.AppDialog;
+import yio.io.sifaapp.model.ModelConfiguracion;
 import yio.io.sifaapp.utils.CustomDialog;
 
 public class LoginActivity extends AccountAuthenticatorActivity implements ILoginView {
@@ -203,7 +207,21 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
 
         if (cancel) {
             focus.requestFocus();
-        } else {
+        } else
+        {
+            if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.M ) {
+
+                if ( ModelConfiguracion.getDeviceID(this).equals("0")) {
+
+                    TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+                    String device = tm.getDeviceId();
+
+                    SharedPreferences pref = getSharedPreferences("VConfiguracion", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putString("device_id", device);
+                    edit.commit();
+                }
+            }
             loginPresenter.validateLogin(username, password);
             //showProgress();
         }
