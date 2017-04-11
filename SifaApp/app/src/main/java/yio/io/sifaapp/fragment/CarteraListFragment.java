@@ -105,9 +105,11 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         CustomerRecyclerview.setAdapter(adapter);
         CustomerRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        /*
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(CustomerRecyclerview);
+        */
 
         catalogoPresenter = new CatalogoPresenterIMP(this);
         catalogoPresenter.onCreated();
