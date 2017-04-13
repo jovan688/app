@@ -209,7 +209,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements ILogi
             focus.requestFocus();
         } else
         {
-            if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.M ) {
+            if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M ) {
 
                 if ( ModelConfiguracion.getDeviceID(this).equals("0")) {
 
