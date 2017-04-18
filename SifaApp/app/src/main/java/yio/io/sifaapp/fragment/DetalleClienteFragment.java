@@ -377,7 +377,9 @@ public class DetalleClienteFragment extends Fragment implements IDetallaCartera 
     public void save_referencia() {
         if (!savereferencia()) {
             int nuevo_orden = Integer.parseInt(txtorden.getText().toString());
-            clientePresenter.executeUpdateOrden(oldorden,nuevo_orden,cartera);
+            if(nuevo_orden!=oldorden) {
+                clientePresenter.executeUpdateOrden(oldorden, nuevo_orden, cartera);
+            }
         }
     }
 

@@ -1,8 +1,13 @@
 package yio.io.sifaapp.Cartera;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.raizlabs.android.dbflow.sql.SQLiteType;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.sql.language.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,28 +40,44 @@ public class CarteraListRepositoryImplement implements ICarteraListRepository {
 
     @Override
     public void update(int fromPosition,int toPosition  ,Cartera cartera) {
+        try {
+           // List<Cartera> list;
+            if (fromPosition > toPosition) {
+                Log.d(TAG, String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition));
 
-        List<Cartera>  list ;
-        if(fromPosition > toPosition) {
-            Log.d(TAG,String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition));
+                Update.table(Cartera.class)
+                        .set("OrdenCobro=OrdenCobro+1")
+                        .where(String.format("OrdenCobro  >=%d And OrdenCobro < %d and StbRutaID = %d", toPosition, fromPosition, cartera.getStbRutaID()))
+                        .async()
+                        .execute();
+            /*
             list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d and StbRutaID = %d", toPosition, fromPosition,cartera.getStbRutaID())).queryList();
             for (Cartera i : list) {
                 i.setOrdenCobro(i.getOrdenCobro()+ 1 );
                 i.save();
             }
-        }
-        else {
-            // fromposition < topposition
-            Log.d(TAG,String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition));
-            //list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d", fromPosition , toPosition)).queryList();
+            */
+            } else {
+                // fromposition < topposition
+                Log.d(TAG, String.format("OrdenCobro  >=%d And OrdenCobro < %d", toPosition, fromPosition));
+                //list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d", fromPosition , toPosition)).queryList();
+                Update.table(Cartera.class)
+                        .set("OrdenCobro= OrdenCobro-1")
+                        .where(String.format("OrdenCobro  >%d And OrdenCobro <= %d and StbRutaID = %d", fromPosition, toPosition, cartera.getStbRutaID()))
+                        .async()
+                        .execute();
+            /*
             list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >%d And OrdenCobro <= %d and StbRutaID = %d", fromPosition ,toPosition , cartera.getStbRutaID())).queryList();
             for (Cartera i : list) {
                 i.setOrdenCobro(i.getOrdenCobro()- 1 );
                 i.save();
+            }*/
             }
+            cartera.save();
+        } catch (Exception ex) {
+            Log.d(TAG, ex.getMessage());
         }
-        cartera.save();
-        postEvent(Events.onSyncOrden,null);
+        postEvent(Events.onSyncOrden, null);
     }
 
     @Override

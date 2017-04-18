@@ -8,6 +8,7 @@ import com.raizlabs.android.dbflow.sql.language.Update;
 import java.util.List;
 import java.util.Objects;
 
+import yio.io.sifaapp.Actualizacion.Models.Cliente;
 import yio.io.sifaapp.model.Cartera;
 import yio.io.sifaapp.model.Customer;
 import yio.io.sifaapp.model.Producto;
@@ -33,9 +34,41 @@ public class ClienteRepositoryImpl implements IClienteRepository {
 
     @Override
     public void executeUpdateOrden(int fromPosition, int toPosition, Cartera customer) {
-        try {
+        try
+        {
+            String query = "";
+
             if (fromPosition > toPosition) {
                 Log.d("executeUpdateOrden" , "fromPosition > toPosition");
+
+                query =String.format("OrdenCobro  >=%d And OrdenCobro < %d and StbRutaID = %d", toPosition, fromPosition , customer.getStbRutaID());
+
+                Update.table(Cartera.class)
+                        .set("OrdenCobro= OrdenCobro + 1")
+                        .where(query)
+                        .async()
+                        .execute();
+
+                query =String.format("c.OrdenCobro  >=%d And c.OrdenCobro < %d and c.StbRutaID = %d", toPosition + 1, fromPosition + 1, customer.getStbRutaID());
+
+                String clause = "ClienteID  in ( select c.ClienteID from Cartera c where " + query + " ) ";
+
+
+                Update.table(Customer.class)
+                        .set("newOrden = 1 , OrdenCobro = ( select c.OrdenCobro from Cartera c where  c.ClienteID = ClienteID and " + query + " ) ")
+                        .where(clause)
+                        .async()
+                        .execute();
+
+
+/*
+                Update.table(Customer.class)
+                        .set("OrdenCobro= OrdenCobro + 1 , newOrden = 1")
+                        .where(clause)
+                        .async()
+                        .execute();
+                        */
+                /*
                 List<Cartera> list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >=%d And OrdenCobro < %d and StbRutaID = %d", toPosition, fromPosition , customer.getStbRutaID())).queryList();
                 for (Cartera i : list) {
                     int orden = i.getOrdenCobro() + 1;
@@ -50,11 +83,39 @@ public class ClienteRepositoryImpl implements IClienteRepository {
                         cliente.save();
                     }
                 }
+                */
                 customer.setOrdenCobro(toPosition);
                 customer.save();
 
-            } else {
+            }
+            else
+            {
                 Log.d("executeUpdateOrden" , "fromPosition < toPosition");
+
+                query = String.format("OrdenCobro  >%d And OrdenCobro <= %d and StbRutaID = %d", fromPosition , toPosition , customer.getStbRutaID());
+
+                Update.table(Cartera.class)
+                        .set("OrdenCobro = OrdenCobro - 1")
+                        .where(query)
+                        .async()
+                        .execute();
+
+
+                query = String.format("c.OrdenCobro  >%d And c.OrdenCobro <= %d and c.StbRutaID = %d", fromPosition - 1 , toPosition - 1, customer.getStbRutaID());
+
+                String clause = "ClienteID  in ( select c.ClienteID from Cartera c where " + query + " ) ";
+
+
+
+                Update.table(Customer.class)
+                        .set("newOrden = 1 , OrdenCobro = ( select c.OrdenCobro from Cartera c where  c.ClienteID = ClienteID and " + query + " ) ")
+                        .where(clause)
+                        .async()
+                        .execute();
+
+
+
+                /*
                 List<Cartera> list = new Select().from(Cartera.class).where(String.format("OrdenCobro  >%d And OrdenCobro <= %d and StbRutaID = %d", fromPosition , toPosition , customer.getStbRutaID())).queryList();
                 for (Cartera i : list) {
                     int orden = i.getOrdenCobro() -1;
@@ -69,6 +130,7 @@ public class ClienteRepositoryImpl implements IClienteRepository {
                         cliente.save();
                     }
                 }
+                */
                 customer.setOrdenCobro(toPosition);
                 customer.save();
             }
