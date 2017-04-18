@@ -9,12 +9,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.sql.language.Update;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,8 +80,14 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                             }
                         })
                         .create();
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .connectTimeout(10200, TimeUnit.SECONDS)
+                        .readTimeout(10000,TimeUnit.SECONDS).build();
+
+
                 retrofit = new Retrofit.Builder()
                         .baseUrl(ModelConfiguracion.getURL_SERVER(context))
+                        .client(client)
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
             }
@@ -634,20 +643,26 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                     OrdenesClientes ordenes = new OrdenesClientes();
                     ordenes.setOrdenClientes(lista);
                     Log.d("onResponse", String.valueOf(lista.size()));
-
+                    Gson g = new Gson();
+                    String d = g.toJson(ordenes);
                     Call<Boolean> call  =service.ReubicarCliente(ordenes);
 
                     call.enqueue(new Callback<Boolean>() {
                         @Override
                         public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                             if (response.body() != null) {
-                                List<Customer> list = new Select().from(Customer.class).where("newOrden=1").queryList();
+
+                                // Actualizar de Manera Masiva sin ciclos.
+                                Update.table(Customer.class).set("newOrden=0").where("newOrden=1").async().execute();
+
+                                /*List<Customer> list = new Select().from(Customer.class).where("newOrden=1").queryList();
                                 for (Customer customer : list) {
                                     customer.setNewOrden(false);
                                     customer.save();
                                     Log.d("onResponse", "FOR");
                                 }
                                 Log.d("onResponse", "TERMINO EL FOR");
+                                */
                             }
                             postEvent(Events.UpdateClienteOrdenSucess);
                         }
@@ -655,7 +670,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
                         @Override
                         public void onFailure(Call<Boolean> call, Throwable t) {
                             Log.d("onResponse", "onFailure");
-                            postEvent(Events.UpdateClienteOrdenError, t.getMessage());
+                            postEvent(Events.UpdateClienteOrdenError, t.toString());
                         }
                     });
                 }

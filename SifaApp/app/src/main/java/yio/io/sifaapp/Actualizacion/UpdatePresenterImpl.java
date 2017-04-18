@@ -101,7 +101,7 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
                 break;
             case Events.OnMessage :
                 view.notify((String)event.getObject());
-                Log.d("notify", (String)event.getObject());
+                //Log.d("notify", (String)event.getObject());
                 break;
             case  Events.UpdateClienteOrdenSucess:
                 this.UpdateClienteReferencia(); // Empieza con el orden y despues va a actualizar la referencia.
@@ -131,10 +131,17 @@ public class UpdatePresenterImpl implements IUpdatePresenter {
                 break;
             case Events.UpdateClienteOrdenError:
                 view.ShowError(event.getErrorMessage());
+                view.notify(event.getErrorMessage());
+                view.setUpload();
+                view.enableButtons();
+                CountOfflineData();
                 break;
             case Events.onNetworkFails:
                 view.enableButtons();
                 view.ShowError(event.getErrorMessage());
+                view.notify(event.getErrorMessage());
+                view.setUpload();
+                CountOfflineData();
                 break;
         }
     }
