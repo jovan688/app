@@ -85,8 +85,14 @@ public class VentaListFragment extends Fragment implements OnItemClickListener, 
     }
 
     @Override
-    public void onStop() {
+    public void onDestroy() {
+        super.onDestroy();
         presenter.onDestroy();
+
+    }
+    @Override
+    public void onStop() {
+        //presenter.onDestroy();
         super.onStop();
     }
 

@@ -430,10 +430,15 @@ public class NuevoVentaFragment extends Fragment implements IVenta, ICatalogoVie
             adapter = new productAdapter(getContext());
         }
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        catalogoPresenter.onDestroy();
 
+    }
     @Override
     public void onStop() {
-        catalogoPresenter.onDestroy();
+        //catalogoPresenter.onDestroy();
         super.onStop();
     }
 

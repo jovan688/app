@@ -85,10 +85,15 @@ public class EncargoListFragment extends Fragment implements IEncargoView {
         presenter.onDestroy();
         Log.d(TAG,"onDestroyView : UnBind");
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
 
+    }
     @Override
     public void onStop() {
-        presenter.onDestroy();
+        //presenter.onDestroy();
         super.onStop();
         Log.d(TAG,"onStop");
 

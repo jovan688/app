@@ -189,8 +189,15 @@ public class NuevoEncargoFragment extends Fragment implements IEncargoView, setO
     }
 
     @Override
-    public void onStop() {
+    public void onDestroy() {
+        super.onDestroy();
         presenter.onDestroy();
+
+    }
+
+    @Override
+    public void onStop() {
+       // presenter.onDestroy();
         super.onStop();
     }
 

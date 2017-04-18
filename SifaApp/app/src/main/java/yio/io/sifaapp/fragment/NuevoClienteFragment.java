@@ -160,10 +160,15 @@ public class NuevoClienteFragment extends Fragment implements IClienteView {
             pais = listpaises.get(0);
         }
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
 
+    }
     @Override
     public void onStop() {
-        presenter.onDestroy();
+        //presenter.onDestroy();
         super.onStop();
         Log.d(TAG, "onStop");
 

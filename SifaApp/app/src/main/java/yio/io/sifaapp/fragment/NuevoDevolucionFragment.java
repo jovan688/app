@@ -130,11 +130,17 @@ public class NuevoDevolucionFragment extends Fragment implements IDevolucionView
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
 
+    }
     @Override
     public void onStop() {
-        dc.dismiss();
-        presenter.onDestroy();
+        if(dc!=null)
+            dc.dismiss();
+        //presenter.onDestroy();
         super.onStop();
         Log.d(TAG, "onStop");
 
