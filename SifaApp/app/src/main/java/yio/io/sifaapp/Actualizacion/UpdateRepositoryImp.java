@@ -624,10 +624,13 @@ public class UpdateRepositoryImp implements IUpdateRepository {
             else
             {
                 List<OrdenCliente> lista = new ArrayList<OrdenCliente>();
-
-                List<Customer> list = new Select().from(Customer.class).where("newOrden=1").queryList();
+                int c =0;
+                List<Customer> list = new Select().from(Customer.class).where("newOrden=1 and OrdenCobro is not null").orderBy("StbRutaID , OrdenCobro").queryList();
                 for (Customer customer: list ) {
+                    if(customer!=null)
                     lista.add(new OrdenCliente(customer.getClienteID(),customer.getOrdenCobro(),customer.getStbRutaID()));
+                    Log.d("c", String.valueOf(c));
+                    c++;
                 }
 
                 if(lista.size()==0) {
@@ -677,7 +680,7 @@ public class UpdateRepositoryImp implements IUpdateRepository {
             }
         }
         catch (Exception ex){
-            postEvent(Events.OnMessage, null, ex.getMessage());
+            postEvent(Events.UpdateClienteOrdenError, ex.getMessage());
         }
     }
 

@@ -1,6 +1,9 @@
 package yio.io.sifaapp.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -18,7 +21,7 @@ import yio.io.sifaapp.utils.SifacDataBase;
  * Created by JUANCARLOS on 26/07/2016.
  */
 @Table(databaseName = SifacDataBase.NAME)
-public class Cartera  extends BaseModel implements Serializable {
+public class Cartera  extends BaseModel implements Serializable  {
 
     @Column
     @PrimaryKey
@@ -61,6 +64,16 @@ public class Cartera  extends BaseModel implements Serializable {
     @Column
     private  String Color;
 
+    @Column
+    private  Boolean reordenado;
+
+    public Boolean getReordenado() {
+        return reordenado;
+    }
+
+    public void setReordenado(Boolean reordenado) {
+        this.reordenado = reordenado;
+    }
 
     public Boolean getOffline() {
         return offline;
@@ -250,4 +263,42 @@ public class Cartera  extends BaseModel implements Serializable {
             return true;
         return false;
     }
+/*
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    public static final Parcelable.Creator<Cartera> CREATOR = new Parcelable.Creator<Cartera>() {
+        @Override
+        public Cartera createFromParcel(Parcel in) {
+            return new Cartera(in);
+        }
+
+        @Override
+        public Cartera[] newArray(int size) {
+            return new Cartera[size];
+        }
+    };
+
+    public Cartera(Parcel parcel) {
+        super();
+        readFromParcel(parcel);
+    }
+
+    private void readFromParcel(Parcel parcel) {
+        id = parcel.readLong();
+        numero = parcel.readInt();
+        fecha = parcel.readLong();
+        total = parcel.readFloat();
+        nombre = parcel.readString();
+        codEstado = parcel.readString();
+        descEstado = parcel.readString();
+    }
+*/
 }
