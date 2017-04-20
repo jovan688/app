@@ -96,8 +96,10 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
 
     private void Init(){
         Log.d(TAG,"Init");
-        presenter = new CarteraListPresenterImplement(this);
-        presenter.onCreated();
+        if(presenter== null) {
+            presenter = new CarteraListPresenterImplement(this);
+            presenter.onCreated();
+        }
 
         InitAdapter();
 
@@ -110,10 +112,11 @@ public class CarteraListFragment extends Fragment implements ICatalogoView, IDet
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(CustomerRecyclerview);
         */
-
-        catalogoPresenter = new CatalogoPresenterIMP(this);
-        catalogoPresenter.onCreated();
-        catalogoPresenter.getRutas();
+        if(catalogoPresenter ==null) {
+            catalogoPresenter = new CatalogoPresenterIMP(this);
+            catalogoPresenter.onCreated();
+            catalogoPresenter.getRutas();
+        }
     }
 
     private void InitAdapter() {
